@@ -1,3 +1,9 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
-surely the ide did not create another repo right
+<script>
+</script>
+<main>
+    <h1>Oh that's useful</h1>
+</main>
+
+<style>
+
+</style>

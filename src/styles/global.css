@@ -1,0 +1,54 @@
+/* GLOBALS */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    all: unset;
+}
+
+body, html {
+    overflow-x: hidden;
+    color: black;
+    scroll-behavior: smooth;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.d-none {
+    display: none;
+}
+
+/* SELECTION */
+::selection {
+    color: white;
+    background: rgb(28, 28, 28);
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar {
+    width: 0.65vw;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
