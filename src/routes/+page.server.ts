@@ -16,5 +16,5 @@ export const load = async () => {
         throw sverror(500, "Could not get the nifty stuff!")
     }
 
-    return {data};
+    return {nifties: data};
 }

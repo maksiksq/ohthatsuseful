@@ -32,5 +32,8 @@
 		"onlyBuiltDependencies": [
 			"esbuild"
 		]
+	},
+	"dependencies": {
+		"@supabase/supabase-js": "^2.55.0"
 	}
 }
