@@ -2,12 +2,12 @@ import {error as sverror, type RequestHandler} from '@sveltejs/kit';
 import {SECRET_API_CONTROL_KEY} from "$env/static/private";
 import {PUBLIC_DEV} from "$lib";
 import {getSupabaseDataClient} from "$lib/utils/getSupabaseDataClient";
-import {getPuppeteerData} from "$lib/utils/func/getPuppeteerData";
+import {updatePuppeteerData} from "$lib/utils/func/updatePuppeteerData";
 
 export const POST: RequestHandler = async ({request}) => {
     const authHeader = request.headers.get('authorization');
 
-    console.log(await getPuppeteerData('https://thoseawesomeguys.com/prompts/'));
+    console.log(await updatePuppeteerData('https://thoseawesomeguys.com/prompts/'));
 
     if (!authHeader?.startsWith('Bearer ')) {
         throw sverror(400, 'missing or invalid auth header');

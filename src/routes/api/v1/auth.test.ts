@@ -3,7 +3,7 @@ import {checkKey} from "$lib/utils/checkKey";
 import SECRET_API_CONTROL_KEY from '$env/static/private';
 
 
-describe('checkJWT', () => {
+describe('checkKey', () => {
     it('fails if no header', () => {
         expect(checkKey(null)).toBe(false);
     });
