@@ -10,7 +10,6 @@ const { data } = $props();
         <a href={nift.link}>🔗 link</a>
         <p>{nift.comment}</p>
         <img src="https://placehold.it/100x100.jpg" alt="placeholder">
-
     </div>
     {/each}
 </main>
