@@ -2,13 +2,18 @@
 const { data } = $props();
 
 const sendkey = async () => {
-    const response = await fetch('/api/v1/screenshots', {
-        method: 'POST',
-        body: 'failure.',
-        headers: {
-            'authorization': `Bearer wrongle`
-        }
-    });
+    try {
+        await fetch('/api/v1/screenshots', {
+            method: 'POST',
+            body: 'failure.',
+            headers: {
+                'authorization': `Bearer wrongle`
+            }
+        });
+    } catch (error) {
+        console.error(error);
+    }
+
 };
 </script>
 <main>
