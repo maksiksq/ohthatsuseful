@@ -1,0 +1,2 @@
+- [ ] : finish the thing
+- [ ] : maybe add a copyright field for things where that's necessary
