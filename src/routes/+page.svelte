@@ -3,7 +3,7 @@ const { data } = $props();
 
 const sendkey = async () => {
     try {
-        await fetch('/api/v1/screenshots', {
+        await fetch('/api/v1/update-all-data', {
             method: 'POST',
             body: 'failure.',
             headers: {
