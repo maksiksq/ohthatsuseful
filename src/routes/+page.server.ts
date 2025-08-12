@@ -1,6 +1,6 @@
 import {getSupabaseDataClient} from "$lib/utils/getSupabaseDataClient";
-import {PUBLIC_DEV} from "$env/static/public"
 import {error as sverror} from "@sveltejs/kit";
+import {PUBLIC_DEV} from "$lib";
 
 export const prerender = true;
 
