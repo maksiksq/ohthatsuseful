@@ -14,6 +14,7 @@ import {enhance} from "$app/forms";
         I'm a card
         hi
         <a href={nift.link}>🔗 link</a>
+        <p>{nift.metadesc}</p>
         <p>{nift.comment}</p>
         <img src="https://placehold.it/100x100.jpg" alt="placeholder">
     </div>

@@ -51,7 +51,7 @@ export const updatePuppeteerData = async (link: string) => {
         });
 
         if (!faviconUrl) {
-            console.warn('No favicon link, trying /favicon.ico');
+            console.warn('No favicon link, trying /favicon.ico: ', link);
             faviconUrl = `${link}/favicon.ico`;
         }
 
@@ -63,11 +63,23 @@ export const updatePuppeteerData = async (link: string) => {
 
         const favExtension = faviconUrl.split('.').pop();
         if (!favExtension) {
-            if (PUBLIC_DEV) console.error("No favicon extension (caught junk?)");
-            return {success: false}
+            if (PUBLIC_DEV) console.warn("No favicon extension. Site has no favicon?: ", link);
+        } else {
+            const favBlob = await favRes.blob();
+            await storeImageInSupabaseBucket(favBlob, 'favicons', `fav-${title}`, favExtension);
         }
-        const favBlob = await favRes.blob();
-        await storeImageInSupabaseBucket(favBlob, 'favicons', `fav-${title}`, favExtension);
+
+
+
+        // TODO: figure out if i need it (when making ui?)
+        // Store the meta description
+        let metadesc = await page.evaluate(() => {
+            const descELem: HTMLLinkElement | null = document.querySelector('meta[name="description"]') || document.querySelector('meta[name="og:description"]') || document.querySelector('meta[name="twitter:description"]');
+            if (!descELem) {
+                return null;
+            }
+            return descELem.getAttribute('content');
+        });
 
 
         //
@@ -80,7 +92,8 @@ export const updatePuppeteerData = async (link: string) => {
             .update({
                 screenshot: `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/screenshots/${title}.webp`,
                 title: title,
-                favicon: `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/favicons/fav-${title}.${favExtension}`
+                favicon: favExtension ? `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/favicons/fav-${title}.${favExtension}` : `/img/favicon-skill-issue.svg`,
+                metadesc: metadesc ?? 'No meta description provided by the site',
             })
             .eq('link', link);
 
