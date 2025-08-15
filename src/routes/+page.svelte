@@ -7,6 +7,7 @@ import {enhance} from "$app/forms";
     <h1>Oh that's useful</h1>
     {#each data.nifties as nift (nift.id)}
     <div class="card">
+        <img src={nift.favicon} alt="favicon">
         I'm a card
         hi
         <a href={nift.link}>🔗 link</a>

@@ -32,7 +32,6 @@ export const POST: RequestHandler = async ({request}) => {
     for (const nift of data) {
         const res = await updatePuppeteerData(nift.link);
         if (!res.success) console.error("Something went wrong when getting data");
-
     }
 
     if (PUBLIC_DEV) console.log("Update successful!");

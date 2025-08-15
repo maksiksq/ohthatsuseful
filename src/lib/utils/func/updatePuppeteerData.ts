@@ -2,6 +2,7 @@ import puppeteer from "puppeteer";
 import {storePuppeteerScreenshot} from "$lib/utils/func/storePuppeteerScreenshot";
 import {getSupabaseAdminClient} from "$lib/utils/getSupabaseAdminClient";
 import {PUBLIC_SUPABASE_URL} from "$env/static/public";
+import {PUBLIC_DEV} from "$lib";
 
 export const updatePuppeteerData = async (link: string) => {
     try {
@@ -17,7 +18,10 @@ export const updatePuppeteerData = async (link: string) => {
         // Getting title
         const title = await page.title();
 
-        if (!title) {console.error(400, 'No title (oh no)'); return {success: false}}
+        if (!title) {
+            console.error(400, 'No title (oh no)');
+            return {success: false}
+        }
 
         // Getting screenshot
         const buffer = await page.screenshot({
@@ -34,6 +38,22 @@ export const updatePuppeteerData = async (link: string) => {
             return {success: false};
         }
 
+        // getting favicon
+        let favicon = await page.evaluate(() => {
+            const iconLink: HTMLLinkElement | null = document.querySelector('link[rel~="icon"][type="image/svg+xml"]')
+                || document.querySelector('link[rel="icon"]')
+                || document.querySelector('link[rel="shortcut icon"]');
+            if (!iconLink) {
+                return null;
+            }
+            return iconLink.href;
+        });
+
+        if (!favicon) {
+            console.warn('No favicon link, trying /favicon.ico');
+            favicon = `${link}/favicon.ico`;
+        }
+
         //
         // Updating all te data
         //
@@ -41,7 +61,11 @@ export const updatePuppeteerData = async (link: string) => {
 
         const {error: upderror} = await supabase
             .from('nifties')
-            .update({screenshot: `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/screenshots/${title}.webp`})
+            .update({
+                screenshot: `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/screenshots/${title}.webp`,
+                title: title,
+                favicon: favicon
+            })
             .eq('link', link);
 
 
@@ -50,7 +74,7 @@ export const updatePuppeteerData = async (link: string) => {
             return {success: false};
         }
 
-
+        await browser.close();
         return {success: true};
     } catch (error) {
         console.error('Something went wrong miserably oh no', error);
