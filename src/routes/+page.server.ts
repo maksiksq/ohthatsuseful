@@ -10,14 +10,13 @@ export const actions = {
     testApi: async (event) => {
         console.log('testApi called');
         try {
-            const res = await event.fetch('/api/v1/update-all-data', {
+             await event.fetch('/api/v1/update-all-data', {
                 method: 'POST',
                 body: 'blank',
                 headers: {
                     'authorization': `Bearer ${SECRET_API_CONTROL_KEY}`
                 }
             });
-            console.log(res);
         } catch (error) {
             console.error(error);
         }

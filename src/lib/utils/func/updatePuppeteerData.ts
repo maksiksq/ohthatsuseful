@@ -1,8 +1,13 @@
 import puppeteer from "puppeteer";
 import {storePuppeteerScreenshot} from "$lib/utils/func/storePuppeteerScreenshot";
+import {getSupabaseAdminClient} from "$lib/utils/getSupabaseAdminClient";
+import {PUBLIC_SUPABASE_URL} from "$env/static/public";
 
 export const updatePuppeteerData = async (link: string) => {
     try {
+        //
+        // Getting all the data
+        //
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
 
@@ -16,18 +21,39 @@ export const updatePuppeteerData = async (link: string) => {
 
         // Getting screenshot
         const buffer = await page.screenshot({
-            type: 'png',
+            type: 'webp',
             fullPage: true
         }) as Uint8Array<ArrayBuffer>;
 
-        const blob = new Blob([buffer], {type: "image/png"});
+        const blob = new Blob([buffer], {type: "image/webp"});
 
-        await storePuppeteerScreenshot(blob, title);
-        
+        // storing the screenshot in a bucket
+        const res = await storePuppeteerScreenshot(blob, title);
+        if (!res.success) {
+            console.error('Failed to store screenshot miserably', res);
+            return {success: false};
+        }
+
+        //
+        // Updating all te data
+        //
+        const supabase = getSupabaseAdminClient();
+
+        const {error: upderror} = await supabase
+            .from('nifties')
+            .update({screenshot: `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/screenshots/${title}.webp`})
+            .eq('link', link);
+
+
+        if (upderror) {
+            console.error('Failed to update site data miserably', upderror);
+            return {success: false};
+        }
+
 
         return {success: true};
     } catch (error) {
-        console.error('Failed to update site data miserably', error);
+        console.error('Something went wrong miserably oh no', error);
         return {success: false};
     }
 }

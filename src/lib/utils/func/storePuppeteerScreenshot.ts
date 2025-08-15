@@ -10,8 +10,8 @@ export const storePuppeteerScreenshot = async (blob: Blob, name: string) => {
     const {error} = await supabase
         .storage
         .from('screenshots')
-        .upload(`${name}.png`, blob, {
-            contentType: 'image/png',
+        .upload(`${name}.webp`, blob, {
+            contentType: 'image/webp',
             upsert: true,
         });
 
