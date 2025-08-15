@@ -1,5 +1,5 @@
 import puppeteer from "puppeteer";
-import {storePuppeteerScreenshot} from "$lib/utils/func/storePuppeteerScreenshot";
+import {storeImageInSupabaseBucket} from "$lib/utils/func/storeImageInSupabaseBucket";
 import {getSupabaseAdminClient} from "$lib/utils/getSupabaseAdminClient";
 import {PUBLIC_SUPABASE_URL} from "$env/static/public";
 import {PUBLIC_DEV} from "$lib";
@@ -31,15 +31,16 @@ export const updatePuppeteerData = async (link: string) => {
 
         const blob = new Blob([buffer], {type: "image/webp"});
 
-        // storing the screenshot in a bucket
-        const res = await storePuppeteerScreenshot(blob, title);
+        // Storing the screenshot in a bucket
+        const res = await storeImageInSupabaseBucket(blob, 'screenshots', title, 'webp');
         if (!res.success) {
             console.error('Failed to store screenshot miserably', res);
             return {success: false};
         }
 
-        // getting favicon
-        let favicon = await page.evaluate(() => {
+        // Getting favicon and storing it in a bucket,
+        // I would just get a link to it, but that would probably be bad performance-wise on-scale
+        let faviconUrl = await page.evaluate(() => {
             const iconLink: HTMLLinkElement | null = document.querySelector('link[rel~="icon"][type="image/svg+xml"]')
                 || document.querySelector('link[rel="icon"]')
                 || document.querySelector('link[rel="shortcut icon"]');
@@ -49,10 +50,25 @@ export const updatePuppeteerData = async (link: string) => {
             return iconLink.href;
         });
 
-        if (!favicon) {
+        if (!faviconUrl) {
             console.warn('No favicon link, trying /favicon.ico');
-            favicon = `${link}/favicon.ico`;
+            faviconUrl = `${link}/favicon.ico`;
         }
+
+        const favRes = await fetch(faviconUrl);
+        if (!favRes.ok) {
+            if (PUBLIC_DEV) console.error(favRes);
+            return {success: false}
+        }
+
+        const favExtension = faviconUrl.split('.').pop();
+        if (!favExtension) {
+            if (PUBLIC_DEV) console.error("No favicon extension (caught junk?)");
+            return {success: false}
+        }
+        const favBlob = await favRes.blob();
+        await storeImageInSupabaseBucket(favBlob, 'favicons', `fav-${title}`, favExtension);
+
 
         //
         // Updating all te data
@@ -64,7 +80,7 @@ export const updatePuppeteerData = async (link: string) => {
             .update({
                 screenshot: `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/screenshots/${title}.webp`,
                 title: title,
-                favicon: favicon
+                favicon: `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/favicons/fav-${title}.${favExtension}`
             })
             .eq('link', link);
 

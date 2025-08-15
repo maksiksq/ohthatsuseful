@@ -1,6 +1,6 @@
 import {getSupabaseAdminClient} from "$lib/utils/getSupabaseAdminClient";
 
-export const storePuppeteerScreenshot = async (blob: Blob, name: string) => {
+export const storeImageInSupabaseBucket = async (blob: Blob, bucket: string, name: string, extension: string) => {
     const supabase = getSupabaseAdminClient();
 
     if (!blob || !name) {
@@ -9,9 +9,9 @@ export const storePuppeteerScreenshot = async (blob: Blob, name: string) => {
 
     const {error} = await supabase
         .storage
-        .from('screenshots')
-        .upload(`${name}.webp`, blob, {
-            contentType: 'image/webp',
+        .from(bucket)
+        .upload(`${name}.${extension}`, blob, {
+            contentType: `image/${extension}`,
             upsert: true,
         });
 
@@ -19,6 +19,8 @@ export const storePuppeteerScreenshot = async (blob: Blob, name: string) => {
         console.log(error);
         return {success: false};
     }
+
+    console.log(`Stored ${name}.${extension} successfully`);
 
     return {success: true};
 }
