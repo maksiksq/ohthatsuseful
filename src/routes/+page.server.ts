@@ -7,12 +7,14 @@ import {SECRET_API_CONTROL_KEY} from "$env/static/private";
 // export const prerender = true;
 
 export const actions = {
-    testApi: async (event) => {
-        console.log('testApi called');
+    testApiUpdateAll: async (event) => {
+        console.log('testApiAll called');
         try {
-             await event.fetch('/api/v1/update-all-data', {
+            await event.fetch('/api/v1/update', {
                 method: 'POST',
-                body: 'blank',
+                body: JSON.stringify({
+                    link: null
+                }),
                 headers: {
                     'authorization': `Bearer ${SECRET_API_CONTROL_KEY}`
                 }
@@ -20,7 +22,24 @@ export const actions = {
         } catch (error) {
             console.error(error);
         }
-    }};
+    },
+    testApiUpdateSpecific: async (event) => {
+        console.log('testApiSpecific called');
+        try {
+             await event.fetch('/api/v1/update', {
+                method: 'POST',
+                body: JSON.stringify({
+                    link: 'https://cssgrid-generator.netlify.app/'
+                }),
+                headers: {
+                    'authorization': `Bearer ${SECRET_API_CONTROL_KEY}`
+                }
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+};
 
 export const load = async () => {
     const supabase = getSupabaseDataClient();

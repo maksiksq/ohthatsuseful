@@ -5,8 +5,11 @@ import {enhance} from "$app/forms";
 </script>
 <main>
     <h1>Oh that's useful</h1>
-    <form method="POST" action="?/testApi" use:enhance>
+    <form method="POST" action="?/testApiUpdateAll" use:enhance>
         <button type="submit">reeeeeeeeeeeeeeee</button>
+    </form>
+    <form method="POST" action="?/testApiUpdateSpecific" use:enhance>
+        <button type="submit">specific reeeeeeeeeeeeeeeee</button>
     </form>
     {#each data.nifties as nift (nift.id)}
     <div class="card">
