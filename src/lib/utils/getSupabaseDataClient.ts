@@ -7,5 +7,4 @@ export const getSupabaseDataClient = () => {
         return supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
     }
     return supabase;
-
 }

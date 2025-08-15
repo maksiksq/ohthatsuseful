@@ -1,4 +1,3 @@
-import {getSupabaseDataClient} from "$lib/utils/getSupabaseDataClient";
 import {getSupabaseAdminClient} from "$lib/utils/getSupabaseAdminClient";
 
 export const storePuppeteerScreenshot = async (blob: Blob, name: string) => {

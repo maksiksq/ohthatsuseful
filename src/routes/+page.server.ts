@@ -1,8 +1,27 @@
 import {getSupabaseDataClient} from "$lib/utils/getSupabaseDataClient";
 import {error as sverror} from "@sveltejs/kit";
 import {PUBLIC_DEV} from "$lib";
+import {SECRET_API_CONTROL_KEY} from "$env/static/private";
 
-export const prerender = true;
+// cfg enable later
+// export const prerender = true;
+
+export const actions = {
+    testApi: async (event) => {
+        console.log('testApi called');
+        try {
+            const res = await event.fetch('/api/v1/update-all-data', {
+                method: 'POST',
+                body: 'blank',
+                headers: {
+                    'authorization': `Bearer ${SECRET_API_CONTROL_KEY}`
+                }
+            });
+            console.log(res);
+        } catch (error) {
+            console.error(error);
+        }
+    }};
 
 export const load = async () => {
     const supabase = getSupabaseDataClient();

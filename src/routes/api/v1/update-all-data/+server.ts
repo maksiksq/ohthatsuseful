@@ -7,7 +7,7 @@ import {updatePuppeteerData} from "$lib/utils/func/updatePuppeteerData";
 export const POST: RequestHandler = async ({request}) => {
     const authHeader = request.headers.get('authorization');
 
-    console.log(await updatePuppeteerData('https://thoseawesomeguys.com/prompts/'));
+    if (PUBLIC_DEV) console.log("hi");
 
     if (!authHeader?.startsWith('Bearer ')) {
         throw sverror(400, 'missing or invalid auth header');
@@ -31,7 +31,11 @@ export const POST: RequestHandler = async ({request}) => {
         throw sverror(500, "Could not get the nifty stuff!")
     }
 
+    for (const nift of data) {
+        await updatePuppeteerData(nift.link)
+    }
 
+    if (PUBLIC_DEV) console.log("Update successful!");
 
     return new Response(JSON.stringify({ success: true }), {
         headers: { "Content-Type": "application/json" }

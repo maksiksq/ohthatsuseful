@@ -23,6 +23,7 @@ export const updatePuppeteerData = async (link: string) => {
         const blob = new Blob([buffer], {type: "image/png"});
 
         await storePuppeteerScreenshot(blob, title);
+        
 
         return {success: true};
     } catch (error) {
