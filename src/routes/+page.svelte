@@ -1,9 +1,10 @@
 <script lang="ts">
     import TagSeg from "./TagSeg.svelte";
-
-    const {data} = $props();
+    import confetti from "canvas-confetti";
     import {enhance} from "$app/forms";
     import {onMount} from "svelte";
+
+    const {data} = $props();
 
     let devOverlay = $state(false);
     const summonDevOverlay = (e: KeyboardEvent) => {
@@ -44,6 +45,23 @@
             "sweet",
             "gee",
             "gosh",
+            "bless",
+            "my",
+            "goodness",
+            "crumbs",
+            "mercy",
+            "zoinks",
+            "yippee",
+            "boy",
+            "la la",
+            "booyah",
+            "crisp",
+            "wicked",
+            "heavens",
+            "dangit",
+            "yowza",
+            "derp",
+            "heckin",
         ]
 
     // Easter egg (cursed)
@@ -56,12 +74,20 @@
         const rotate = () => wowie = wowies[Math.floor(Math.random() * wowies.length)]; rotationCount += 1; discovered = new Set(discovered).add(wowie);
         if (manually) rotate();
         wowiesInterval = setInterval(() => rotate(), 15000)
-        if (rotationCount > 10) addiction = true;
+        if (rotationCount > 25) addiction = true;
     }
 
     let wowiesInterval: ReturnType<typeof setInterval>
     onMount(() => {
         rotateWowies();
+    })
+
+    let congratulations = $state(false);
+    $effect(() => {
+        if (discoveredCount.toString() === wowies.length.toString()) {
+            congratulations = true;
+            confetti();
+        }
     })
 
 </script>
@@ -86,7 +112,10 @@
 <main>
     <section class="h1-seg">
         {#if addiction}
-            <p class="addiction">{discoveredCount.toString() === wowies.length.toString() ? "🎉🎉🎉" : `Congratulations, on your newly found gambling addiction! ${discoveredCount}/${wowies.length}`}</p>
+            <div class="addiction">
+            <p>{congratulations ? "🎉🎉🎉" : `Congratulations, on your newly found gambling addiction! ${discoveredCount}/${wowies.length}`}</p>
+            <canvas id="confetti-canvas"></canvas>
+            </div>
         {/if}
         <h1>oh <span class="wowie" role="button" tabindex="-1" onclick={() => rotateWowies(true)} onkeydown={(e: KeyboardEvent) => {if (e.key === 'Enter') rotateWowies(true)}}>{wowie}</span>,<br> that's useful</h1>
     </section>
@@ -110,6 +139,15 @@
 </main>
 
 <style>
+    .addiction {
+        position: absolute;
+        top: 7vh;
+        left: 50%;
+        text-align: center;
+        transform: translateX(-50%);
+        z-index: -1;
+    }
+
     :global {
         body {
             background-image: url("/img/fancy.svg");

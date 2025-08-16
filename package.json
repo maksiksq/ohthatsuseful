@@ -35,6 +35,8 @@
 	},
 	"dependencies": {
 		"@supabase/supabase-js": "^2.55.0",
+		"@types/canvas-confetti": "^1.9.0",
+		"canvas-confetti": "^1.9.3",
 		"jose": "^6.0.12",
 		"puppeteer": "^24.16.1"
 	}
