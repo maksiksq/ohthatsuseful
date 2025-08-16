@@ -74,6 +74,7 @@
     main {
         display: flex;
         flex-direction: column;
+        align-items: center;
 
         & .h1-seg {
             width: 100%;

@@ -13,7 +13,7 @@
             <ul>
                 {#each values as tag (tag)}
                     <li>
-                        <p class="tag">{tag}</p>
+                        <button class="tag">#{tag}</button>
                     </li>
                 {/each}
             </ul>
@@ -24,13 +24,32 @@
 <style>
     .tag-seg {
         width: 70%;
+        flex-direction: row;
 
         & .tag-seg-search {
             width: 30%;
+            display: flex;
+            justify-content: center;
+
+            & .search {
+                all: unset;
+                width: 40%;
+                background-color: white;
+                border: 1px solid #151515;
+                border-radius: 2px;
+                color: #6F6F6F;
+                padding: 0.2rem 2rem 0.2rem 0.7rem;
+                font-size: 1rem;
+            }
+
+            & .search::placeholder {
+                color: #6F6F6F;
+            }
         }
 
         & .tag-seg-tags {
             width: 70%;
+            padding-left: 1rem;
 
             display: grid;
             grid-template-columns: auto 1fr;
@@ -40,13 +59,19 @@
             }
 
             & ul {
+                display: flex;
+                padding-left: 1rem;
+
                 & li {
+                    padding-left: 0.7rem;
                     & .tag {
                         color: #6F6F6F;
+                        cursor: pointer;
 
                         &:hover {
                             transition: all 0.1s;
                             transform: scale(1.003);
+                            color: black;
                         }
                     }
                 }
