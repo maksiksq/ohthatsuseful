@@ -2,3 +2,4 @@
 - [ ] : maybe add a copyright field for things where that's necessary
 - [ ] : make sure the puppeteer serverless function doesn't take too long ; (Vercel has 300s limit at max) or move to something else (abuse Supabase's edge functions?)
 - [ ] : figure out whether to update fields on insert in db or not
+- [ ] : implement override

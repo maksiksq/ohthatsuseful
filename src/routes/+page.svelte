@@ -78,7 +78,7 @@
 
         & .h1-seg {
             width: 100%;
-            margin-top: 13.2vh;
+            margin-top: 7.125rem;
 
             & h1 {
                 font-size: 6.25rem;
@@ -92,6 +92,24 @@
                 line-height: 1em;
 
                 max-width: 60vw;
+            }
+        }
+
+        /* + tag seg, a component */
+
+        & .content-seg {
+            width: 100%;
+            margin-top: 3vh;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            align-items: center;
+
+            box-sizing: border-box;
+            padding: 1rem 2rem 0 2rem;
+
+            & .card {
+                width: 25%;
             }
         }
     }
