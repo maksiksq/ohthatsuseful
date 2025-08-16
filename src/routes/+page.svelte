@@ -8,13 +8,17 @@
             devOverlay = !devOverlay;
         }
     };
+
+
+    let query = $state('');
+    let selectedTags = $state('');
 </script>
 
 
 <svelte:window onkeydown={summonDevOverlay}/>
 <svelte:head>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com"/>
 </svelte:head>
 
 <!-- dev only -->
@@ -29,10 +33,24 @@
 
 <main>
     <section class="h1-seg">
-        <h1>Oh wowie that's useful</h1>
+        <h1>oh wowie that's useful</h1>
     </section>
     <section class="tag-seg">
         Search and a tags weeeeeeeeeeeeha
+        <input name="query" id="query" class="search" type="text" autocomplete="off" placeholder="Search..."
+               bind:value={query}/>
+        <button class="sr-only">Search</button>
+        {#each Object.entries(data.tags) as [key, values] (key)}
+            <p>{key}</p>
+                <ul>
+                    {#each values as tag}
+                        <li>
+                            {tag}
+                        </li>
+                    {/each}
+                </ul>
+        {/each}
+
     </section>
     <section class="content-seg">
         {#each data.nifties as nift (nift.id)}

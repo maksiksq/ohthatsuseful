@@ -44,14 +44,27 @@ export const actions = {
 export const load = async () => {
     const supabase = getSupabaseDataClient();
 
-    const {data, error: selerror} = await supabase
+    const {data: nifties, error: selerror} = await supabase
         .from('nifties')
         .select('*');
 
-    if (selerror || !data) {
+    if (selerror || !nifties) {
         if (PUBLIC_DEV) console.error(selerror);
         throw sverror(500, "Could not get the nifty stuff!")
     }
 
-    return {nifties: data};
+    type TagCategories = {
+        what: string[];
+        which: string[];
+        why: string[];
+    };
+    const keys = ['what', 'which', 'why'] as const;
+    type TagKey = typeof keys[number];
+
+    const tags = keys.reduce((acc, key: TagKey) => {
+        acc[key] = [...new Set(nifties.flatMap(n => n.tags[key] || []))];
+        return acc;
+    }, {} as TagCategories);
+
+    return {nifties, tags};
 }
