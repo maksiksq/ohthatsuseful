@@ -1,6 +1,4 @@
 <script lang="ts">
-    import {dev} from "$app/environment";
-
     const {data} = $props();
     import {enhance} from "$app/forms";
 
@@ -10,10 +8,14 @@
             devOverlay = !devOverlay;
         }
     };
-
 </script>
 
-<svelte:window onkeydown={summonDevOverlay}></svelte:window>
+
+<svelte:window onkeydown={summonDevOverlay}/>
+<svelte:head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+</svelte:head>
 
 <!-- dev only -->
 <div class={`dev-overlay ${devOverlay ? '' : 'd-none'}`}>
@@ -27,7 +29,7 @@
 
 <main>
     <section class="h1-seg">
-        <h1>Oh that's useful</h1>
+        <h1>Oh wowie that's useful</h1>
     </section>
     <section class="tag-seg">
         Search and a tags weeeeeeeeeeeeha
@@ -48,6 +50,14 @@
 </main>
 
 <style>
+    :global {
+        body {
+            background-image: url("/img/fancy.svg");
+            background-size: cover;
+            font-family: 'Montserrat', sans-serif;
+        }
+    }
+
     main {
         display: flex;
         flex-direction: column;
@@ -62,8 +72,20 @@
         }
 
         & .h1-seg {
+            margin-top: 13.2vh;
+
             & h1 {
-                font-size: 2rem;
+                font-size: 6.25rem;
+                /*this originally was Onest but apparently figma just uses */
+                /*the wrong font for Onest and that is not Onest???*/
+                /*Could not find what the actual font in there was. Typical enshittified software.*/
+                /*This one looks better tho so whatever*/
+                font-family: 'Rozanova', sans-serif;
+                font-weight: bold;
+                text-align: center;
+                line-height: 1em;
+
+                max-width: 60vw;
             }
         }
     }

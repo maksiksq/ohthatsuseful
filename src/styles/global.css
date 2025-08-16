@@ -1,4 +1,6 @@
 /* GLOBALS */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Onest:wght@100..900&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -10,7 +12,7 @@ a {
 
 body, html {
     overflow-x: hidden;
-    color: black;
+    color: #151515;
     scroll-behavior: smooth;
 }
 
@@ -34,6 +36,13 @@ body, html {
 ::selection {
     color: white;
     background: rgb(28, 28, 28);
+}
+
+/* FONTS */
+@font-face {
+    font-family: Rozanova;
+    /*noinspection CssUnknownTarget*/
+    src: url('/fonts/RozanovaHUM-Demo-SemiBold.otf');
 }
 
 /* SCROLLBAR */
