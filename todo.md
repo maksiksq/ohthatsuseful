@@ -5,4 +5,5 @@
 - [ ] : implement override
 - [ ] : change svg background color when hovering over an image
 - [ ] : play around with h1 size again later and rethink the design with a fresh head pls
-- [ ] : rotate h1 on click
+- [x] : rotate h1 on click
+- [ ] : maybe add animation to easter egg but later

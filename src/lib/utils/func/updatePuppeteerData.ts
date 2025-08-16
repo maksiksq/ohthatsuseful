@@ -4,6 +4,12 @@ import {getSupabaseAdminClient} from "$lib/utils/getSupabaseAdminClient";
 import {PUBLIC_SUPABASE_URL} from "$env/static/public";
 import {PUBLIC_DEV} from "$lib";
 
+const delay = (time: number) => {
+    return new Promise(function(resolve) {
+        setTimeout(resolve, time)
+    });
+}
+
 export const updatePuppeteerData = async (link: string) => {
     try {
         //
@@ -12,8 +18,11 @@ export const updatePuppeteerData = async (link: string) => {
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
 
-        await page.goto(link);
+        await page.goto(link, {waitUntil: "networkidle0"});
+        await page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/115 Safari/537.36");
         await page.setViewport({width: 1536, height: 864});
+
+        await delay(10000);
 
         // Getting title
         const title = await page.title();
@@ -26,7 +35,7 @@ export const updatePuppeteerData = async (link: string) => {
         // Getting screenshot
         const buffer = await page.screenshot({
             type: 'webp',
-            fullPage: true
+            fullPage: false,
         }) as Uint8Array<ArrayBuffer>;
 
         const blob = new Blob([buffer], {type: "image/webp"});

@@ -73,7 +73,7 @@
         if (wowiesInterval) clearInterval(wowiesInterval);
         const rotate = () => wowie = wowies[Math.floor(Math.random() * wowies.length)]; rotationCount += 1; discovered = new Set(discovered).add(wowie);
         if (manually) rotate();
-        wowiesInterval = setInterval(() => rotate(), 15000)
+        wowiesInterval = setInterval(() => rotate(), 10000)
         if (rotationCount > 25) addiction = true;
     }
 
@@ -108,7 +108,7 @@
         <button type="submit">Update Specific (REEE)</button>
     </form>
 </div>
-
+<aside class="nift-aside"></aside>
 <main>
     <section class="h1-seg">
         {#if addiction}
@@ -129,9 +129,9 @@
                     I'm a card
                     hi
                     <a href={nift.link}>🔗 link</a>
-                    <p>{nift.metadesc}</p>
-                    <p>{nift.comment}</p>
-                    <img src="https://placehold.it/100x100.jpg" alt="placeholder">
+<!--                    <p>{nift.metadesc}</p>-->
+<!--                    <p>{nift.comment}</p>-->
+                    <img src={nift.screenshot} alt={nift.name}>
                 </div>
             </div>
         {/each}
@@ -194,6 +194,7 @@
 
                 & .wowie {
                     color: #ffdc8e;
+                    font-family: 'Rozanova', sans-serif;
                     -webkit-text-stroke: 1px black;
                     cursor: pointer;
                 }
