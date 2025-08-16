@@ -43,6 +43,7 @@ export const POST: RequestHandler = async ({request}) => {
         );
         const failures = results.filter(r => !r.success);
         if (failures.length) {
+            if (PUBLIC_DEV) console.info("Partially updated!");
             console.error("Failed to update: ", failures)
             return new Response(JSON.stringify({success: false, failures}), {
                 headers: {"Content-Type": "application/json"},

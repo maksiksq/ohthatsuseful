@@ -32,6 +32,11 @@ export const updatePuppeteerData = async (link: string) => {
             return {success: false}
         }
 
+        if (title === "Just a moment...") {
+            console.error(400, 'Got CAPTCHA\'d: ', link);
+            return {success: false}
+        }
+
         // Getting screenshot
         const buffer = await page.screenshot({
             type: 'webp',
