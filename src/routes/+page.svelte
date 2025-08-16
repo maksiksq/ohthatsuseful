@@ -1,4 +1,6 @@
 <script lang="ts">
+    import TagSeg from "./TagSeg.svelte";
+
     const {data} = $props();
     import {enhance} from "$app/forms";
 
@@ -35,23 +37,7 @@
     <section class="h1-seg">
         <h1>oh wowie that's useful</h1>
     </section>
-    <section class="tag-seg">
-        Search and a tags weeeeeeeeeeeeha
-        <input name="query" id="query" class="search" type="text" autocomplete="off" placeholder="Search..."
-               bind:value={query}/>
-        <button class="sr-only">Search</button>
-        {#each Object.entries(data.tags) as [key, values] (key)}
-            <p>{key}</p>
-                <ul>
-                    {#each values as tag}
-                        <li>
-                            {tag}
-                        </li>
-                    {/each}
-                </ul>
-        {/each}
-
-    </section>
+    <TagSeg bind:query={query} tags={data.tags}/>
     <section class="content-seg">
         {#each data.nifties as nift (nift.id)}
             <div class="card">
@@ -74,13 +60,8 @@
             background-size: cover;
             font-family: 'Montserrat', sans-serif;
         }
-    }
 
-    main {
-        display: flex;
-        flex-direction: column;
-
-        & section {
+        main > section {
             width: 100%;
             box-sizing: border-box;
 
@@ -88,8 +69,14 @@
             flex-direction: column;
             align-items: center;
         }
+    }
+
+    main {
+        display: flex;
+        flex-direction: column;
 
         & .h1-seg {
+            width: 100%;
             margin-top: 13.2vh;
 
             & h1 {

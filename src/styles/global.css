@@ -10,6 +10,10 @@ a {
     all: unset;
 }
 
+ul {
+    list-style: none;
+}
+
 body, html {
     overflow-x: hidden;
     color: #151515;
