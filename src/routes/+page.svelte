@@ -22,22 +22,41 @@
         [
             "neat",
             "cool",
-            "shit",
+            "sh*t",
             "wowie",
             "wowza",
             "snap",
-            "crap",
+            "hell",
             "woah",
             "damn",
             "well",
             "greg",
+            "holy",
+            "shucks",
+            "rats",
+            "sheesh",
+            "yeet",
+            "bananas",
+            "toast",
+            "yikes",
+            "alas",
+            "yes",
+            "sweet",
+            "gee",
+            "gosh",
         ]
 
+    // Easter egg (cursed)
+    let rotationCount = $state(0);
+    let discovered = $state(new Set<string>());
+    let discoveredCount = $derived(discovered.size);
+    let addiction = $state(false);
     const rotateWowies = (manually = false) => {
         if (wowiesInterval) clearInterval(wowiesInterval);
-        const rotate = () => wowie = wowies[Math.floor(Math.random() * wowies.length)];
+        const rotate = () => wowie = wowies[Math.floor(Math.random() * wowies.length)]; rotationCount += 1; discovered = new Set(discovered).add(wowie);
         if (manually) rotate();
-        wowiesInterval = setInterval(() => rotate(), 10000)
+        wowiesInterval = setInterval(() => rotate(), 15000)
+        if (rotationCount > 10) addiction = true;
     }
 
     let wowiesInterval: ReturnType<typeof setInterval>
@@ -66,7 +85,10 @@
 
 <main>
     <section class="h1-seg">
-        <h1>oh <span class="wowie" role="button" tabindex="-1" onclick={() => rotateWowies(true)} onkeydown={(e: KeyboardEvent) => {if (e.key === 'Enter') rotateWowies(true)}}>{wowie}</span><br> that's useful</h1>
+        {#if addiction}
+            <p class="addiction">{discoveredCount.toString() === wowies.length.toString() ? "🎉🎉🎉" : `Congratulations, on your newly found gambling addiction! ${discoveredCount}/${wowies.length}`}</p>
+        {/if}
+        <h1>oh <span class="wowie" role="button" tabindex="-1" onclick={() => rotateWowies(true)} onkeydown={(e: KeyboardEvent) => {if (e.key === 'Enter') rotateWowies(true)}}>{wowie}</span>,<br> that's useful</h1>
     </section>
     <TagSeg bind:query={query} tags={data.tags}/>
     <section class="content-seg">
@@ -130,6 +152,7 @@
                 min-height: 2em;
 
                 max-width: 60vw;
+                user-select: none;
 
                 & .wowie {
                     color: #ffdc8e;
