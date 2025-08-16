@@ -22,7 +22,7 @@ export const updatePuppeteerData = async (link: string) => {
         await page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/115 Safari/537.36");
         await page.setViewport({width: 1536, height: 864});
 
-        await delay(10000);
+        await delay(2000);
 
         // Getting title
         const title = await page.title();

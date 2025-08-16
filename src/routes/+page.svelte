@@ -71,7 +71,9 @@
     let addiction = $state(false);
     const rotateWowies = (manually = false) => {
         if (wowiesInterval) clearInterval(wowiesInterval);
-        const rotate = () => wowie = wowies[Math.floor(Math.random() * wowies.length)]; rotationCount += 1; discovered = new Set(discovered).add(wowie);
+        const rotate = () => wowie = wowies[Math.floor(Math.random() * wowies.length)];
+        rotationCount += 1;
+        discovered = new Set(discovered).add(wowie);
         if (manually) rotate();
         wowiesInterval = setInterval(() => rotate(), 10000)
         if (rotationCount > 25) addiction = true;
@@ -108,30 +110,39 @@
         <button type="submit">Update Specific (REEE)</button>
     </form>
 </div>
-<aside class="nift-aside"></aside>
+<aside class="nift-aside">
+    <!--                                            <p>{nift.metadesc}</p>-->
+    <!--                                            <p>{nift.warning}</p>-->
+    <!--                                            <p>{nift.comment}</p>-->
+</aside>
 <main>
     <section class="h1-seg">
         {#if addiction}
             <div class="addiction">
-            <p>{congratulations ? "🎉🎉🎉" : `Congratulations, on your newly found gambling addiction! ${discoveredCount}/${wowies.length}`}</p>
-            <canvas id="confetti-canvas"></canvas>
+                <p>{congratulations ? "🎉🎉🎉" : `Congratulations, on your newly found gambling addiction! ${discoveredCount}/${wowies.length}`}</p>
+                <canvas id="confetti-canvas"></canvas>
             </div>
         {/if}
-        <h1>oh <span class="wowie" role="button" tabindex="-1" onclick={() => rotateWowies(true)} onkeydown={(e: KeyboardEvent) => {if (e.key === 'Enter') rotateWowies(true)}}>{wowie}</span>,<br> that's useful</h1>
+        <h1>oh <span class="wowie" role="button" tabindex="-1" onclick={() => rotateWowies(true)}
+                     onkeydown={(e: KeyboardEvent) => {if (e.key === 'Enter') rotateWowies(true)}}>{wowie}</span>,<br>
+            that's useful</h1>
     </section>
     <TagSeg bind:query={query} tags={data.tags}/>
     <section class="content-seg">
         {#each data.nifties as nift (nift.id)}
             <div class="card-wrapper">
                 <div class="card">
-                    <h2>{nift.display_name}</h2>
-                    <img class="favicon" src={nift.favicon} alt="favicon">
-                    I'm a card
-                    hi
-                    <a href={nift.link}>🔗 link</a>
-<!--                    <p>{nift.metadesc}</p>-->
-<!--                    <p>{nift.comment}</p>-->
-                    <img src={nift.screenshot} alt={nift.name}>
+                    <div class="h2-wrap">
+                        <h2 title={nift.display_name}>{nift.display_name}</h2>
+                    </div>
+                    <div class="card-info">
+                        <img class="card-info-favicon" src={nift.favicon} alt={`${nift.name} favicon`}>
+                        <p class="card-info-title">{nift.title}</p>
+                        <a class="card-info-link" href={nift.link} target="_blank" rel="noopener">🔗</a>
+                    </div>
+                    <a class="card-screenshot-link-wrap" href={nift.link} target="_blank" rel="noopener">
+                        <img class="card-screenshot" src={nift.screenshot} alt={nift.name}>
+                    </a>
                 </div>
             </div>
         {/each}
@@ -209,7 +220,8 @@
             display: flex;
             flex-wrap: wrap;
             flex-direction: row;
-            align-items: center;
+            align-items: flex-start;
+            row-gap: 1rem;
 
             box-sizing: border-box;
             padding: 1rem 2rem 0 2rem;
@@ -217,28 +229,80 @@
             & .card-wrapper {
                 flex: 1 1 25%;
                 max-width: 25%;
+                display: flex;
                 box-sizing: border-box;
+                font-weight: 400;
                 padding: 0.3rem;
 
                 & .card {
-                    background-color: white;
                     display: flex;
                     flex-direction: column;
+                    height: 100%;
+
+                    padding: 1rem 1rem;
 
                     word-break: break-word;
                     overflow-wrap: anywhere;
 
-                    .favicon {
-                        aspect-ratio: 1/1;
-                        width: 1rem;
-                        height: 1rem;
+                    background-color: white;
+                    border-radius: 3px;
+                    border: 1px solid #151515;
+
+                    box-shadow: 0 -5px 10px 0 rgba(0, 0, 0, 25%), 0 5px 0 1px rgba(0, 0, 0, 15%);
+
+                    & .h2-wrap {
+                        display: flex;
+                        align-items: center;
+                        line-height: 1.2em;
+                        height: 2.4em;
+                        margin-top: 1rem;
+
+                        & h2 {
+                            font-size: 1.5rem;
+                            line-height: 1.2em;
+                            font-weight: 400;
+
+                            display: -webkit-box;
+                            -webkit-line-clamp: 2;
+                            line-clamp: 2;
+                            -webkit-box-orient: vertical;
+                            overflow: hidden;
+                        }
                     }
 
-                    & h2 {
-                        font-size: 1.5rem;
-                        font-weight: bold;
+                    & .card-info {
+                        padding-left: 0.3rem;
+                        padding-top: 1.3rem;
+                        gap: 0.65rem;
+                        display: flex;
+                        align-items: center;
+
+                        & .card-info-link {
+                            margin-left: auto;
+                        }
+
+                        & .card-info-favicon {
+                            aspect-ratio: 1/1;
+                            width: 1rem;
+                            height: 1rem;
+                        }
+
+                        & .card-info-title {
+                            display: flex;
+                            align-items: center;
+                            height: 2em;
+                        }
                     }
 
+                    & .card-screenshot-link-wrap {
+                        border-top: 1px solid #151515;
+                        padding-top: 0.9rem;
+
+                        & .card-screenshot {
+                            border: 1px solid #151515;
+                            width: 100%;
+                        }
+                    }
                 }
             }
 
