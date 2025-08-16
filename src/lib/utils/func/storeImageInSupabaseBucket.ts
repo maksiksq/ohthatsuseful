@@ -16,11 +16,11 @@ export const storeImageInSupabaseBucket = async (blob: Blob, bucket: string, nam
         });
 
     if (error) {
-        console.log(error);
+        console.error(error);
         return {success: false};
     }
 
-    console.log(`Stored ${name}.${extension} successfully`);
+    console.info(`Stored ${name}.${extension} successfully`);
 
     return {success: true};
 }

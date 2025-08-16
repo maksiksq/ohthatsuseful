@@ -15,7 +15,7 @@ export const POST: RequestHandler = async ({request}) => {
     const key = authHeader.slice(7);
 
     if (key != SECRET_API_CONTROL_KEY) {
-        if (PUBLIC_DEV) console.log('attempt to access with a wrong key');
+        if (PUBLIC_DEV) console.error('attempt to access with a wrong key');
         throw sverror(401, 'wrong key, no tomatoes for you.');
     }
 
@@ -55,7 +55,7 @@ export const POST: RequestHandler = async ({request}) => {
         if (!res.success) console.error("Something went wrong when getting data");
     }
 
-    if (PUBLIC_DEV) console.log("Update successful!");
+    if (PUBLIC_DEV) console.info("Update successful!");
 
     return new Response(JSON.stringify({success: true}), {
         headers: {"Content-Type": "application/json"}

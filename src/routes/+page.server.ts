@@ -8,7 +8,7 @@ import {SECRET_API_CONTROL_KEY} from "$env/static/private";
 
 export const actions = {
     testApiUpdateAll: async (event) => {
-        console.log('testApiAll called');
+        console.info('testApiAll called');
         try {
             await event.fetch('/api/v1/update', {
                 method: 'POST',
@@ -24,7 +24,7 @@ export const actions = {
         }
     },
     testApiUpdateSpecific: async (event) => {
-        console.log('testApiSpecific called');
+        console.info('testApiSpecific called');
         try {
              await event.fetch('/api/v1/update', {
                 method: 'POST',
