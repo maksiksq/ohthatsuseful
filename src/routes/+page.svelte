@@ -3,6 +3,7 @@
 
     const {data} = $props();
     import {enhance} from "$app/forms";
+    import {onMount} from "svelte";
 
     let devOverlay = $state(false);
     const summonDevOverlay = (e: KeyboardEvent) => {
@@ -11,9 +12,33 @@
         }
     };
 
-
     let query = $state('');
     let selectedTags = $state('');
+
+    // wowiews
+    let wowie = $state('neat')
+
+    const wowies =
+        [
+            "neat",
+            "cool",
+            "shit",
+            "wowie",
+            "wowza",
+            "snap",
+            "crap",
+            "woah",
+            "damn",
+            "well",
+            "greg",
+        ]
+
+    onMount(() => {// rotate wowies
+        setInterval(() => {
+            wowie = wowies[Math.floor(Math.random() * wowies.length)];
+        }, 10000)
+    })
+
 </script>
 
 
@@ -35,19 +60,22 @@
 
 <main>
     <section class="h1-seg">
-        <h1>oh wowie that's useful</h1>
+        <h1>oh <span class="wowie">{wowie}</span><br> that's useful</h1>
     </section>
     <TagSeg bind:query={query} tags={data.tags}/>
     <section class="content-seg">
         {#each data.nifties as nift (nift.id)}
-            <div class="card">
-                <img src={nift.favicon} alt="favicon">
-                I'm a card
-                hi
-                <a href={nift.link}>🔗 link</a>
-                <p>{nift.metadesc}</p>
-                <p>{nift.comment}</p>
-                <img src="https://placehold.it/100x100.jpg" alt="placeholder">
+            <div class="card-wrapper">
+                <div class="card">
+                    <h2>{nift.display_name}</h2>
+                    <img class="favicon" src={nift.favicon} alt="favicon">
+                    I'm a card
+                    hi
+                    <a href={nift.link}>🔗 link</a>
+                    <p>{nift.metadesc}</p>
+                    <p>{nift.comment}</p>
+                    <img src="https://placehold.it/100x100.jpg" alt="placeholder">
+                </div>
             </div>
         {/each}
     </section>
@@ -57,7 +85,8 @@
     :global {
         body {
             background-image: url("/img/fancy.svg");
-            background-size: cover;
+            background-size: 100% auto;
+            background-repeat: no-repeat;
             font-family: 'Montserrat', sans-serif;
         }
 
@@ -81,17 +110,25 @@
             margin-top: 7.125rem;
 
             & h1 {
-                font-size: 6.25rem;
+                font-size: 8.25rem;
                 /*this originally was Onest but apparently figma just uses */
                 /*the wrong font for Onest and that is not Onest???*/
-                /*Could not find what the actual font in there was. Typical enshittified software.*/
+                /*Could not find what the actual font in there was. Enshittified software...*/
                 /*This one looks better tho so whatever*/
                 font-family: 'Rozanova', sans-serif;
                 font-weight: bold;
                 text-align: center;
                 line-height: 1em;
 
+                /*force 2 lines*/
+                min-height: 2em;
+
                 max-width: 60vw;
+
+                & .wowie {
+                    color: #ffdc8e;
+                    -webkit-text-stroke: 1px black;
+                }
             }
         }
 
@@ -106,11 +143,39 @@
             align-items: center;
 
             box-sizing: border-box;
-            padding: 1rem 2rem 0 2rem;
+            /*padding: 1rem 2rem 0 2rem;*/
 
-            & .card {
-                width: 25%;
+            & .card-wrapper {
+                flex: 1 1 25%;
+                max-width: 25%;
+                box-sizing: border-box;
+                /*padding: 0.3rem;*/
+
+                & .card {
+                    background-color: white;
+                    display: flex;
+                    flex-direction: column;
+
+                    word-break: break-word;
+                    overflow-wrap: anywhere;
+
+                    .favicon {
+                        aspect-ratio: 1/1;
+                        width: 1rem;
+                        height: 1rem;
+                    }
+
+                    & h2 {
+                        font-size: 1.5rem;
+                        font-weight: bold;
+                    }
+
+                    & p {
+                    }
+
+                }
             }
+
         }
     }
 </style>

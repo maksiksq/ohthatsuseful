@@ -54,15 +54,12 @@
 
             display: grid;
             grid-template-columns: auto 1fr;
+            gap: 1rem;
 
             border-left: 1px solid #151515;
 
             & .tag-cat {
                 font-weight: bold;
-            }
-
-            & ul:not(:first-child) {
-                margin-top: 0.3rem;
             }
 
             & ul {

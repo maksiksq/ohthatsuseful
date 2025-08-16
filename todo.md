@@ -3,3 +3,5 @@
 - [ ] : make sure the puppeteer serverless function doesn't take too long ; (Vercel has 300s limit at max) or move to something else (abuse Supabase's edge functions?)
 - [ ] : figure out whether to update fields on insert in db or not
 - [ ] : implement override
+- [ ] : change svg background color when hovering over an image
+- [ ] : play around with h1 size again later
