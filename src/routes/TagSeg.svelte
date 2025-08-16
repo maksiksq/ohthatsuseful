@@ -24,10 +24,11 @@
 <style>
     .tag-seg {
         width: 70%;
+        margin-top: 2rem;
         flex-direction: row;
 
         & .tag-seg-search {
-            width: 30%;
+            width: 25%;
             display: flex;
             justify-content: center;
 
@@ -48,18 +49,26 @@
         }
 
         & .tag-seg-tags {
-            width: 70%;
-            padding-left: 1rem;
+            width: 75%;
+            padding-left: 3rem;
 
             display: grid;
             grid-template-columns: auto 1fr;
+
+            border-left: 1px solid #151515;
 
             & .tag-cat {
                 font-weight: bold;
             }
 
+            & ul:not(:first-child) {
+                margin-top: 0.3rem;
+            }
+
             & ul {
                 display: flex;
+                flex-wrap: wrap;
+
                 padding-left: 1rem;
 
                 & li {
