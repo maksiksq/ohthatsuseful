@@ -4,4 +4,5 @@
 - [ ] : figure out whether to update fields on insert in db or not
 - [ ] : implement override
 - [ ] : change svg background color when hovering over an image
-- [ ] : play around with h1 size again later
+- [ ] : play around with h1 size again later and rethink the design with a fresh head pls
+- [ ] : rotate h1 on click

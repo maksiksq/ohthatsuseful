@@ -33,10 +33,16 @@
             "greg",
         ]
 
-    onMount(() => {// rotate wowies
-        setInterval(() => {
-            wowie = wowies[Math.floor(Math.random() * wowies.length)];
-        }, 10000)
+    const rotateWowies = (manually = false) => {
+        if (wowiesInterval) clearInterval(wowiesInterval);
+        const rotate = () => wowie = wowies[Math.floor(Math.random() * wowies.length)];
+        if (manually) rotate();
+        wowiesInterval = setInterval(() => rotate(), 10000)
+    }
+
+    let wowiesInterval: ReturnType<typeof setInterval>
+    onMount(() => {
+        rotateWowies();
     })
 
 </script>
@@ -60,7 +66,7 @@
 
 <main>
     <section class="h1-seg">
-        <h1>oh <span class="wowie">{wowie}</span><br> that's useful</h1>
+        <h1>oh <span class="wowie" role="button" tabindex="-1" onclick={() => rotateWowies(true)} onkeydown={(e: KeyboardEvent) => {if (e.key === 'Enter') rotateWowies(true)}}>{wowie}</span><br> that's useful</h1>
     </section>
     <TagSeg bind:query={query} tags={data.tags}/>
     <section class="content-seg">
@@ -128,6 +134,7 @@
                 & .wowie {
                     color: #ffdc8e;
                     -webkit-text-stroke: 1px black;
+                    cursor: pointer;
                 }
             }
         }
@@ -143,13 +150,13 @@
             align-items: center;
 
             box-sizing: border-box;
-            /*padding: 1rem 2rem 0 2rem;*/
+            padding: 1rem 2rem 0 2rem;
 
             & .card-wrapper {
                 flex: 1 1 25%;
                 max-width: 25%;
                 box-sizing: border-box;
-                /*padding: 0.3rem;*/
+                padding: 0.3rem;
 
                 & .card {
                     background-color: white;
@@ -168,9 +175,6 @@
                     & h2 {
                         font-size: 1.5rem;
                         font-weight: bold;
-                    }
-
-                    & p {
                     }
 
                 }
