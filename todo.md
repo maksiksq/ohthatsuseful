@@ -11,5 +11,6 @@
 - [ ] : make pseudo tab clickable
 - [ ] : make evil-unevil pfp (the halo thing)
 - [ ] : rebrand?????
+- [ ] : prettify my account readme
 - [ ] : maybe add animation to easter egg but later
 - [ ] : cool afterfx animations would go so well here if i want to ; pop anim for focus ; h1 anim ; mayb some more
