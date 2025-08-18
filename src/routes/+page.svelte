@@ -128,7 +128,7 @@
         }
 
         const elemBottom = elem.getBoundingClientRect().bottom + window.scrollY - window.innerHeight;
-        const scrollToY = elemBottom + window.innerHeight/2 + elem.offsetHeight;
+        const scrollToY = elemBottom + window.innerHeight/2 - elem.offsetHeight/2;
         scrollTo({ top: scrollToY, behavior: 'smooth' });
 
         if (!bodyElem) return;
