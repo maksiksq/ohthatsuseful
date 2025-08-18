@@ -180,15 +180,15 @@
                             <h2 title={nift.display_name}>{nift.display_name}</h2>
                         </div>
                         <div class="card-info">
-                            <a class="card-info-favicon-wrap" href={nift.link} target="_blank" rel="noopener">
+                            <p class="card-info-favicon-wrap">
                                 <img class="card-info-favicon" src={nift.favicon} alt={`${nift.name} favicon`}>
-                            </a>
-                            <a href={nift.link} target="_blank" rel="noopener" class="card-info-title">{nift.title}</a>
+                            </p>
+                            <p class="card-info-title">{nift.title}</p>
                             <a class="card-info-link" href={nift.link} target="_blank" rel="noopener">🔗</a>
                         </div>
-                        <a class="card-screenshot-link-wrap" href={nift.link} target="_blank" rel="noopener">
+                        <p class="card-screenshot-link-wrap">
                             <img class="card-screenshot" src={nift.screenshot} alt={nift.name}>
-                        </a>
+                        </p>
                     </div>
                 </div>
             {/each}
@@ -373,6 +373,10 @@
 
                         box-shadow: 0 -5px 10px 0 rgba(0, 0, 0, 25%), 0 5px 0 1px rgba(0, 0, 0, 15%);
 
+                        * {
+                            pointer-events: none;
+                        }
+
                         &:hover {
                             /* notice that it's not a border because layout shift */
                             outline: 1px solid #151515;
@@ -408,6 +412,7 @@
 
                             & .card-info-link {
                                 margin-left: auto;
+                                pointer-events: initial;
                             }
 
                             & .card-info-favicon-wrap {
