@@ -118,7 +118,15 @@
     const handleFocus = (e: Event, nift: typeof data.nifties[number]) => {
         focus = true;
         focusedNift = nift;
-        const elem = e.target as HTMLElement;
+        let elem = e.target as HTMLElement | null;
+        if (!elem) return;
+
+        // if it's the link (clickable) let's just pretend it was the wrapper
+        if (elem.classList.contains('card-info-link')) {
+            elem = elem.closest('.card-wrapper') as HTMLElement | null;
+            if (!elem) return;
+        }
+
         const elemBottom = elem.getBoundingClientRect().bottom + window.scrollY - window.innerHeight;
         const scrollToY = elemBottom + window.innerHeight/2 + elem.offsetHeight;
         scrollTo({ top: scrollToY, behavior: 'smooth' });
