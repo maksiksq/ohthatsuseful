@@ -3,6 +3,8 @@
     import confetti from "canvas-confetti";
     import {enhance} from "$app/forms";
     import {onMount} from "svelte";
+    import { fade } from 'svelte/transition';
+    import {cubicOut, expoIn, sineIn, sineInOut} from "svelte/easing";
 
     const {data} = $props();
 
@@ -107,10 +109,27 @@
         }
     })
 
+    //
+
+    let focus = $state(false);
+    let focusedNift = $state<typeof data.nifties[number]>();
+    let focusedNiftTags = $derived<typeof data.tags>(focusedNift?.tags);
+    const handleFocus = (nift: typeof data.nifties[number]) => {
+        focus = true;
+        focusedNift = nift;
+    }
+
+    let focusElem: HTMLElement | null = $state(null);
+    const handleUnfocus = (e: Event) => {
+        const target = e.target as HTMLElement;
+        if (focusElem?.contains(target)) {
+            focus = false;
+        }
+    }
 </script>
 
 
-<svelte:window onkeydown={summonDevOverlay}/>
+<svelte:window onclick={focus ? (e) => {handleUnfocus(e)} : () => {}} onkeydown={summonDevOverlay}/>
 <svelte:head>
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com"/>
@@ -125,11 +144,7 @@
         <button type="submit">Update Specific (REEE)</button>
     </form>
 </div>
-<aside class="nift-aside">
-    <!--                                            <p>{nift.metadesc}</p>-->
-    <!--                                            <p>{nift.warning}</p>-->
-    <!--                                            <p>{nift.comment}</p>-->
-</aside>
+<!-- -->
 <main>
     <section class="h1-seg">
         {#if addiction}
@@ -144,29 +159,87 @@
     </section>
     <TagSeg bind:query={query} tags={data.tags}/>
     <section class="content-seg">
-        {#each data.nifties as nift (nift.id)}
-            <div class="card-wrapper">
-                <div class="card">
-                    <div class="h2-wrap">
-                        <h2 title={nift.display_name}>{nift.display_name}</h2>
-                    </div>
-                    <div class="card-info">
-                        <a class="card-info-favicon-wrap" href={nift.link} target="_blank" rel="noopener">
-                            <img class="card-info-favicon" src={nift.favicon} alt={`${nift.name} favicon`}>
+        <div class="content-cards">
+            {#each data.nifties as nift (nift.id)}
+                <div class="card-wrapper">
+                    <div role="button" tabindex="0" class={`card ${(focusedNift?.title === nift.title) && focus ? 'focused' : ''}`}
+                         onclick={() => {handleFocus(nift)}} onkeydown={() => {handleFocus(nift)}}>
+                        <div class="h2-wrap">
+                            <h2 title={nift.display_name}>{nift.display_name}</h2>
+                        </div>
+                        <div class="card-info">
+                            <a class="card-info-favicon-wrap" href={nift.link} target="_blank" rel="noopener">
+                                <img class="card-info-favicon" src={nift.favicon} alt={`${nift.name} favicon`}>
+                            </a>
+                            <a href={nift.link} target="_blank" rel="noopener" class="card-info-title">{nift.title}</a>
+                            <a class="card-info-link" href={nift.link} target="_blank" rel="noopener">🔗</a>
+                        </div>
+                        <a class="card-screenshot-link-wrap" href={nift.link} target="_blank" rel="noopener">
+                            <img class="card-screenshot" src={nift.screenshot} alt={nift.name}>
                         </a>
-                        <a href={nift.link} target="_blank" rel="noopener" class="card-info-title">{nift.title}</a>
-                        <a class="card-info-link" href={nift.link} target="_blank" rel="noopener">🔗</a>
                     </div>
-                    <a class="card-screenshot-link-wrap" href={nift.link} target="_blank" rel="noopener">
-                        <img class="card-screenshot" src={nift.screenshot} alt={nift.name}>
-                    </a>
                 </div>
-            </div>
-        {/each}
+            {/each}
+        </div>
     </section>
 </main>
+{#if focus && focusedNift}
+    <div bind:this={focusElem} class="focus">
+        <div transition:fade={{duration: 120, easing: expoIn}} class="lightbox" ></div>
+        <div class="desc">
+            <h2>{focusedNift.title}</h2>
+            <div class="desc-tags">
+                {#each Object.entries(focusedNiftTags) as [key, values] (key)}
+                    <p class="tag-cat">{key}</p>
+                    <ul>
+                        {#each values as tag (tag)}
+                            <li>
+                                <button class="tag">#{tag}</button>
+                            </li>
+                        {/each}
+                    </ul>
+                {/each}
+            </div>
+            <p>{focusedNift.metadesc}</p>
+            <div class="desc-separator"></div>
+            <p>{focusedNift.comment}</p>
+            {#if focusedNift.warning}
+                <div class="desc-warning">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                        <!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                        <path fill="#ffffff"
+                              d="M320 64C334.7 64 348.2 72.1 355.2 85L571.2 485C577.9 497.4 577.6 512.4 570.4 524.5C563.2 536.6 550.1 544 536 544L104 544C89.9 544 76.9 536.6 69.6 524.5C62.3 512.4 62.1 497.4 68.8 485L284.8 85C291.8 72.1 305.3 64 320 64zM320 232C306.7 232 296 242.7 296 256L296 368C296 381.3 306.7 392 320 392C333.3 392 344 381.3 344 368L344 256C344 242.7 333.3 232 320 232zM346.7 448C347.3 438.1 342.4 428.7 333.9 423.5C325.4 418.4 314.7 418.4 306.2 423.5C297.7 428.7 292.8 438.1 293.4 448C292.8 457.9 297.7 467.3 306.2 472.5C314.7 477.6 325.4 477.6 333.9 472.5C342.4 467.3 347.3 457.9 346.7 448z"/>
+                    </svg>
+                    <p>{focusedNift.warning}</p>
+                </div>
+            {/if}
+            <p class="desc-small-gray">Added at: {focusedNift.created_at}</p>
+        </div>
+    </div>
+{/if}
 
 <style>
+    .lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(16, 16, 16, 0.6);
+        z-index: 1000;
+    }
+
+    .focus {
+
+    }
+
+    .focused {
+        position: relative;
+        z-index: 1001;
+
+        border: 2px solid #151515 !important;
+    }
+
     .addiction {
         position: absolute;
         top: 7vh;
@@ -233,96 +306,107 @@
 
         & .content-seg {
             width: 100%;
-            margin-top: 3vh;
+            margin-top: calc(3vh + 1rem);
             display: flex;
-            flex-wrap: wrap;
             flex-direction: row;
             align-items: flex-start;
-            row-gap: 1rem;
 
-            box-sizing: border-box;
-            padding: 1rem 2rem 0 2rem;
-
-            & .card-wrapper {
-                flex: 1 1 25%;
-                max-width: 25%;
+            & .content-cards {
+                width: 100%;
                 display: flex;
+                flex-wrap: wrap;
+                flex-direction: row;
+                align-items: flex-start;
+                row-gap: 1rem;
+
                 box-sizing: border-box;
-                font-weight: 400;
-                padding: 0.3rem;
+                padding: 0 2rem 0 2rem;
 
-                & .card {
+                & .card-wrapper {
+                    flex: 1 1 25%;
+                    max-width: 25%;
                     display: flex;
-                    flex-direction: column;
-                    height: 100%;
+                    box-sizing: border-box;
+                    font-weight: 400;
+                    padding: 0.3rem;
 
-                    padding: 1rem 1rem;
+                    cursor: pointer;
 
-                    word-break: break-word;
-                    overflow-wrap: anywhere;
-
-                    background-color: white;
-                    border-radius: 3px;
-                    border: 1px solid #151515;
-
-                    box-shadow: 0 -5px 10px 0 rgba(0, 0, 0, 25%), 0 5px 0 1px rgba(0, 0, 0, 15%);
-
-                    & .h2-wrap {
+                    & .card {
                         display: flex;
-                        align-items: center;
-                        line-height: 1.2em;
-                        height: 2.4em;
-                        margin-top: 1rem;
+                        flex-direction: column;
+                        height: 100%;
 
-                        & h2 {
-                            font-size: 1.5rem;
+                        padding: 1rem 1rem;
+
+                        word-break: break-word;
+                        overflow-wrap: anywhere;
+
+                        background-color: white;
+                        border-radius: 3px;
+                        border: 1px solid #151515;
+
+                        box-shadow: 0 -5px 10px 0 rgba(0, 0, 0, 25%), 0 5px 0 1px rgba(0, 0, 0, 15%);
+
+                        &:hover {
+                            border: 2px solid #151515;
+                        }
+
+                        & .h2-wrap {
+                            display: flex;
+                            align-items: center;
                             line-height: 1.2em;
-                            font-weight: 400;
+                            height: 2.4em;
+                            margin-top: 1rem;
 
-                            display: -webkit-box;
-                            -webkit-line-clamp: 2;
-                            line-clamp: 2;
-                            -webkit-box-orient: vertical;
-                            overflow: hidden;
-                        }
-                    }
+                            & h2 {
+                                font-size: 1.5rem;
+                                line-height: 1.2em;
+                                font-weight: 400;
 
-                    & .card-info {
-                        padding-left: 0.3rem;
-                        padding-top: 1.3rem;
-                        padding-bottom: 0.3rem;
-                        gap: 0.65rem;
-                        display: flex;
-                        align-items: center;
-
-                        & .card-info-link {
-                            margin-left: auto;
-                        }
-
-                        & .card-info-favicon-wrap {
-                            & .card-info-favicon {
-                                aspect-ratio: 1/1;
-                                width: 1rem;
-                                height: 1rem;
+                                display: -webkit-box;
+                                -webkit-line-clamp: 2;
+                                line-clamp: 2;
+                                -webkit-box-orient: vertical;
+                                overflow: hidden;
                             }
                         }
 
-
-
-                        & .card-info-title {
+                        & .card-info {
+                            padding-left: 0.3rem;
+                            padding-top: 1.3rem;
+                            padding-bottom: 0.3rem;
+                            gap: 0.65rem;
                             display: flex;
                             align-items: center;
-                            height: 2em;
+
+                            & .card-info-link {
+                                margin-left: auto;
+                            }
+
+                            & .card-info-favicon-wrap {
+                                & .card-info-favicon {
+                                    aspect-ratio: 1/1;
+                                    width: 1rem;
+                                    height: 1rem;
+                                }
+                            }
+
+                            & .card-info-title {
+                                display: flex;
+                                align-items: center;
+                                height: 2em;
+                            }
                         }
-                    }
 
-                    & .card-screenshot-link-wrap {
-                        border-top: 1px solid #151515;
-                        padding-top: 0.9rem;
+                        & .card-screenshot-link-wrap {
+                            border-top: 1px solid #151515;
+                            padding-top: 0.9rem;
 
-                        & .card-screenshot {
-                            border: 1px solid #151515;
-                            width: 100%;
+                            & .card-screenshot {
+                                border: 1px solid #151515;
+                                width: 100%;
+                            }
                         }
                     }
                 }

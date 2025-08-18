@@ -9,4 +9,6 @@
 - [x] : rotate h1 on click
 - [ ] : maybe replace link emoji with custom icon
 - [ ] : make pseudo tab clickable
+- [ ] : make evil-unevil pfp (the halo thing)
+- [ ] : rebrand?????
 - [ ] : maybe add animation to easter egg but later
