@@ -53,15 +53,30 @@
             "zoinks",
             "yippee",
             "boy",
-            "la la",
+            "la-la",
             "booyah",
             "crisp",
             "wicked",
+            "sleek",
+            "hai",
+            "gremlin",
+            "poppies",
+            "hey",
+            "grass",
+            "slug",
             "heavens",
             "dangit",
             "yowza",
             "derp",
             "heckin",
+            "zesty",
+            "shiny",
+            "dandy",
+            "juices",
+            "bling",
+            "scoundrel",
+            "blast",
+            "bonkers",
         ]
 
     // Easter egg (cursed)
@@ -136,8 +151,10 @@
                         <h2 title={nift.display_name}>{nift.display_name}</h2>
                     </div>
                     <div class="card-info">
-                        <img class="card-info-favicon" src={nift.favicon} alt={`${nift.name} favicon`}>
-                        <p class="card-info-title">{nift.title}</p>
+                        <a class="card-info-favicon-wrap" href={nift.link} target="_blank" rel="noopener">
+                            <img class="card-info-favicon" src={nift.favicon} alt={`${nift.name} favicon`}>
+                        </a>
+                        <a href={nift.link} target="_blank" rel="noopener" class="card-info-title">{nift.title}</a>
                         <a class="card-info-link" href={nift.link} target="_blank" rel="noopener">🔗</a>
                     </div>
                     <a class="card-screenshot-link-wrap" href={nift.link} target="_blank" rel="noopener">
@@ -273,6 +290,7 @@
                     & .card-info {
                         padding-left: 0.3rem;
                         padding-top: 1.3rem;
+                        padding-bottom: 0.3rem;
                         gap: 0.65rem;
                         display: flex;
                         align-items: center;
@@ -281,11 +299,15 @@
                             margin-left: auto;
                         }
 
-                        & .card-info-favicon {
-                            aspect-ratio: 1/1;
-                            width: 1rem;
-                            height: 1rem;
+                        & .card-info-favicon-wrap {
+                            & .card-info-favicon {
+                                aspect-ratio: 1/1;
+                                width: 1rem;
+                                height: 1rem;
+                            }
                         }
+
+
 
                         & .card-info-title {
                             display: flex;
