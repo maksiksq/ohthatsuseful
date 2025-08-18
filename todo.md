@@ -12,3 +12,4 @@
 - [ ] : make evil-unevil pfp (the halo thing)
 - [ ] : rebrand?????
 - [ ] : maybe add animation to easter egg but later
+- [ ] : cool afterfx animations would go so well here if i want to

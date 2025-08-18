@@ -4,7 +4,7 @@
     import {enhance} from "$app/forms";
     import {onMount} from "svelte";
     import { fade } from 'svelte/transition';
-    import {cubicOut, expoIn, sineIn, sineInOut} from "svelte/easing";
+    import {expoIn} from "svelte/easing";
 
     const {data} = $props();
 
@@ -114,9 +114,17 @@
     let focus = $state(false);
     let focusedNift = $state<typeof data.nifties[number]>();
     let focusedNiftTags = $derived<typeof data.tags>(focusedNift?.tags);
-    const handleFocus = (nift: typeof data.nifties[number]) => {
+    let bodyElem = $state<HTMLElement | null>(null);
+    const handleFocus = (e: Event, nift: typeof data.nifties[number]) => {
         focus = true;
         focusedNift = nift;
+        const elem = e.target as HTMLElement;
+        const elemBottom = elem.getBoundingClientRect().bottom + window.scrollY - window.innerHeight;
+        const scrollToY = elemBottom + window.innerHeight/2 + elem.offsetHeight;
+        scrollTo({ top: scrollToY, behavior: 'smooth' });
+
+        if (!bodyElem) return;
+        document.documentElement.classList.add('scroll-lock');
     }
 
     let focusElem: HTMLElement | null = $state(null);
@@ -124,12 +132,16 @@
         const target = e.target as HTMLElement;
         if (focusElem?.contains(target)) {
             focus = false;
+
+            if (!bodyElem) return;
+            document.documentElement.classList.remove('scroll-lock');
         }
     }
 </script>
 
 
 <svelte:window onclick={focus ? (e) => {handleUnfocus(e)} : () => {}} onkeydown={summonDevOverlay}/>
+<svelte:body bind:this={bodyElem}/>
 <svelte:head>
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com"/>
@@ -163,7 +175,7 @@
             {#each data.nifties as nift (nift.id)}
                 <div class="card-wrapper">
                     <div role="button" tabindex="0" class={`card ${(focusedNift?.title === nift.title) && focus ? 'focused' : ''}`}
-                         onclick={() => {handleFocus(nift)}} onkeydown={() => {handleFocus(nift)}}>
+                         onclick={(e) => {handleFocus(e, nift)}} onkeydown={(e) => {handleFocus(e, nift)}}>
                         <div class="h2-wrap">
                             <h2 title={nift.display_name}>{nift.display_name}</h2>
                         </div>
@@ -229,15 +241,26 @@
         z-index: 1000;
     }
 
-    .focus {
-
+    .desc {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1001;
+        width: 100%;
+        max-width: 70vw;
+        padding: 2rem;
+        background-color: white;
+        border-radius: 3px;
+        box-shadow: 0 -5px 10px 0 rgba(0, 0, 0, 25%), 0 5px 0 1px rgba(0, 0, 0, 15%);
     }
 
     .focused {
         position: relative;
-        z-index: 1001;
+        z-index: 1002;
 
-        border: 2px solid #151515 !important;
+        /* notice that it's not a border because layout shift */
+        outline: 1px solid #151515 !important;
     }
 
     .addiction {
@@ -337,6 +360,8 @@
                         flex-direction: column;
                         height: 100%;
 
+                        box-sizing: border-box;
+
                         padding: 1rem 1rem;
 
                         word-break: break-word;
@@ -349,7 +374,8 @@
                         box-shadow: 0 -5px 10px 0 rgba(0, 0, 0, 25%), 0 5px 0 1px rgba(0, 0, 0, 15%);
 
                         &:hover {
-                            border: 2px solid #151515;
+                            /* notice that it's not a border because layout shift */
+                            outline: 1px solid #151515;
                         }
 
                         & .h2-wrap {

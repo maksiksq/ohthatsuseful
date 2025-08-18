@@ -34,6 +34,10 @@ body, html {
     border: 0;
 }
 
+html.scroll-lock {
+    overflow-y: hidden;
+}
+
 .d-none {
     display: none;
 }
