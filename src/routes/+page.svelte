@@ -95,6 +95,7 @@
         if (manually) rotate();
         wowiesInterval = setInterval(() => rotate(), 10000)
         if (rotationCount > 25) addiction = true;
+        console.log(addiction);
     }
 
     let wowiesInterval: ReturnType<typeof setInterval>
@@ -284,7 +285,7 @@
         left: 50%;
         text-align: center;
         transform: translateX(-50%);
-        z-index: -1;
+        pointer-events: none;
     }
 
     :global {
