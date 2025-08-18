@@ -3,8 +3,8 @@
     import confetti from "canvas-confetti";
     import {enhance} from "$app/forms";
     import {onMount} from "svelte";
-    import { fade } from 'svelte/transition';
-    import {expoIn} from "svelte/easing";
+    import { fade, blur } from 'svelte/transition';
+    import {expoIn, sineIn, sineOut} from "svelte/easing";
 
     const {data} = $props();
 
@@ -90,6 +90,7 @@
         if (wowiesInterval) clearInterval(wowiesInterval);
         const rotate = () => wowie = wowies[Math.floor(Math.random() * wowies.length)];
         rotationCount += 1;
+        console.log(rotationCount);
         discovered = new Set(discovered).add(wowie);
         if (manually) rotate();
         wowiesInterval = setInterval(() => rotate(), 10000)
@@ -205,16 +206,16 @@
 </main>
 {#if focus && focusedNift}
     <div bind:this={focusElem} class="focus">
-        <div transition:fade={{duration: 120, easing: expoIn}} class="lightbox" ></div>
-        <div class="desc">
+        <div transition:blur={{duration: 200, easing: expoIn}} class="lightbox" ></div>
+        <div transition:blur={{duration: 400}} class="desc">
             <h2>{focusedNift.title}</h2>
             <div class="desc-tags">
                 {#each Object.entries(focusedNiftTags) as [key, values] (key)}
-                    <p class="tag-cat">{key}</p>
+                    <p class="desc-tag-cat">{key}</p>
                     <ul>
                         {#each values as tag (tag)}
                             <li>
-                                <button class="tag">#{tag}</button>
+                                <p class="desc-tag">#{tag}</p>
                             </li>
                         {/each}
                     </ul>
@@ -258,9 +259,15 @@
         width: 100%;
         max-width: 70vw;
         padding: 2rem;
-        background-color: white;
-        border-radius: 3px;
-        box-shadow: 0 -5px 10px 0 rgba(0, 0, 0, 25%), 0 5px 0 1px rgba(0, 0, 0, 15%);
+        color: white;
+
+        .desc-tags {
+            & ul {
+                display: flex;
+                flex-direction: row;
+                gap: 0.5rem;
+            }
+        }
     }
 
     .focused {
