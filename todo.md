@@ -47,5 +47,6 @@
 - [ ] : https://www.hcaptcha.com/: Free captcha.
 - [ ] : https://monkeytype.com/: Is it going to help you type faster? Uhh, maybe. Is it fun? Yes!
 - [ ] : https://haveibeenpwned.com/: Check if your password is in a known databreach. If it is you should change it real quick.
-- [ ] : https://www.desmos.com/: Graphical calculator. You probably know about it, and I know how much better it is than drawing that shit on paper!
+- [ ] : https://www.desmos.com/: Graphical calculator. You probably know about it, and I know how much better it is than drawing that stuff on paper!
+- [ ] : https://www.boolean-algebra.com/: An essential step towards getting a Computer Engineering degree if you value your soul.
 - [ ] : Lucide.dev: Free icons for everything you might think of! And the width is editable oh my god 😭. Also consider https://fontawesome.com/free, https://www.flaticon.com/ if you want a different look. 
