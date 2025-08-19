@@ -12,9 +12,12 @@
 - [ ] : make evil-unevil pfp (the halo thing)
 - [ ] : rebrand?????
 - [ ] : prettify my account readme
-- [ ] : mayb play around with the blur
+- [x] : mayb play around with the blur
 - [ ] : maybe add animation to easter egg but later
 - [ ] : cool afterfx animations would go so well here if i want to ; pop anim for focus ; h1 anim ; mayb some more
+
+- [ ] : scrap: maybe make the focus 0-25-75-100 instead of 50-100 ; nvm, user expectations on this would slightly feel off
+- 
 
 - [ ] : umami: if thy steal your data, thy steal politely.
 - [ ] : https://thenicestplace.net/: HE JUST GIVES YOU A HUG!

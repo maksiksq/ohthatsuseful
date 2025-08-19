@@ -133,7 +133,7 @@
 
         // scrolling with the element in the middle
         const elemBottom = elem.getBoundingClientRect().bottom + window.scrollY - window.innerHeight;
-        const scrollToY = elemBottom + window.innerHeight / 2 - elem.offsetHeight / 2;
+        const scrollToY = elemBottom + window.innerHeight / 2.4 - elem.offsetHeight / 2;
         scrollTo({top: scrollToY, behavior: 'smooth'});
 
         // checking if it's leave or right and applying styles appropriately
@@ -231,6 +231,7 @@
         <div bind:this={descElem} transition:blur={{duration: 400}}
              class={`desc ${isFocusLeft ? 'desc-left' : 'desc-right'}`}>
             <h2>{focusedNift.title}</h2>
+            <p class="desc-metadesc">{focusedNift.metadesc === "No description provided by the site." ? focusedNift.metadesc : `"${focusedNift.metadesc}"`}</p>
             <div class="desc-tags">
                 {#each Object.entries(focusedNiftTags) as [key, values] (key)}
                     <p class="desc-tag-cat">{key}</p>
@@ -243,11 +244,10 @@
                     </ul>
                 {/each}
             </div>
-            <p class="desc-metadesc">{focusedNift.metadesc}</p>
             <div class="desc-separator">
-                <img src="/img/coolseparator.svg" alt="separator">
+                <img src="/img/coolerseparator.svg" alt="separator">
             </div>
-            <p>{focusedNift.comment}</p>
+            <p class="desc-comment">{focusedNift.comment}</p>
             {#if focusedNift.warning}
                 <div class="desc-warning">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
@@ -260,6 +260,9 @@
             {/if}
             <p class="desc-small-gray">Added at: {focusedNift.created_at}</p>
         </div>
+        <button class="visit">
+            Visit
+        </button>
     </div>
 {/if}
 
@@ -290,25 +293,33 @@
         position: fixed;
         top: 50%;
         z-index: 1001;
-        width: 40%;
+        width: 45%;
         max-width: 70vw;
         box-sizing: border-box;
         color: white;
 
+        & h2 {
+            font-size: 1.7rem;
+        }
+
         & .desc-metadesc {
             padding-top: 1rem;
             color: #ffffff;
+            font-style: italic;
+
+            font-size: 1.2rem;
+            line-height: 1.5em;
         }
 
-        .desc-tags {
+        & .desc-tags {
             display: grid;
             grid-template-columns: auto 1fr;
             gap: 0.4rem;
-            padding: 0.6rem 0 0 0;
+            padding: 1.2rem 0 0 0;
 
             & .desc-tag-cat {
                 color: #dddddd;
-                font-size: 0.8rem;
+                font-size: 1rem;
             }
 
             & ul {
@@ -316,18 +327,25 @@
                 display: flex;
                 flex-direction: row;
                 flex-wrap: wrap;
-                gap: 0.4rem;
-                font-size: 0.8rem;
+                gap: 0.3rem;
+                font-size: 1rem;
             }
         }
 
-        .desc-separator > img {
+        & .desc-separator > img {
+            margin-top: 1rem;
             width: 100%;
         }
 
-        .desc-warning > svg {
+        & .desc-warning > svg {
             width: 1.5rem;
             height: auto;
+        }
+
+        & .desc-comment {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            line-height: 1.5em;
         }
     }
 
