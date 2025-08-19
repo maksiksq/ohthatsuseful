@@ -37,7 +37,7 @@ body, html {
 
 html.scroll-lock {
     overflow-y: hidden;
-    padding-right: 0.65vw;
+    padding-right: 0.25vw;
     background-color: #e3e3e3;
 }
 
@@ -60,7 +60,7 @@ html.scroll-lock {
 
 /* SCROLLBAR */
 ::-webkit-scrollbar {
-    width: 0.65vw;
+    width: 0.3vw;
 }
 
 ::-webkit-scrollbar-track {
@@ -68,7 +68,7 @@ html.scroll-lock {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #888;
+    background: #cacaca;
 }
 
 ::-webkit-scrollbar-thumb:hover {

@@ -3,8 +3,8 @@
     import confetti from "canvas-confetti";
     import {enhance} from "$app/forms";
     import {onMount} from "svelte";
-    import { fade, blur } from 'svelte/transition';
-    import {expoIn, sineIn, sineOut} from "svelte/easing";
+    import {blur} from 'svelte/transition';
+    import {expoIn} from "svelte/easing";
 
     const {data} = $props();
 
@@ -144,7 +144,8 @@
             focus = false;
 
             if (!bodyElem) return;
-            document.documentElement.classList.remove('scroll-lock');
+            // timeout so the animation goes away to prevent a visible layout shift
+            setTimeout(() => {document.documentElement.classList.remove('scroll-lock');}, 400);
         }
     }
 </script>
@@ -223,7 +224,9 @@
                 {/each}
             </div>
             <p>{focusedNift.metadesc}</p>
-            <div class="desc-separator"></div>
+            <div class="desc-separator">
+                <img src="/img/idealessseparator.svg" alt="separator">
+            </div>
             <p>{focusedNift.comment}</p>
             {#if focusedNift.warning}
                 <div class="desc-warning">
@@ -235,7 +238,7 @@
                     <p>{focusedNift.warning}</p>
                 </div>
             {/if}
-            <p class="desc-small-gray">Added at: {focusedNift.created_at}</p>
+            <p class="desc-small-gray">Added at: {new Date(focusedNift.created_at)}</p>
         </div>
     </div>
 {/if}
@@ -254,12 +257,13 @@
     .desc {
         position: fixed;
         top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        left: 0;
+        transform: translate(-0%, -50%);
         z-index: 1001;
-        width: 100%;
+        width: 50%;
         max-width: 70vw;
-        padding: 2rem;
+        box-sizing: border-box;
+        padding: 5rem;
         color: white;
 
         .desc-tags {
@@ -268,6 +272,10 @@
                 flex-direction: row;
                 gap: 0.5rem;
             }
+        }
+
+        .desc-separator > img {
+            width: 100%;
         }
     }
 
