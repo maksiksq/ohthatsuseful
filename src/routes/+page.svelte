@@ -266,7 +266,7 @@
             <div class="desc-custom">{@html focusedNift.custom}</div>
             <p class="desc-small-gray">Added on: {timestamptzToHumanDate(focusedNift.created_at)}</p>
         </div>
-        <a transition:blur={{duration: 200, easing: expoIn}} href={focusedNift.link} class={`visit visit-${focusButtonSeg}`}>
+        <a transition:blur={{duration: 200, easing: expoIn}} href={focusedNift.link} target="_blank" rel="noopener" class={`visit visit-${focusButtonSeg}`}>
             Visit
         </a>
     </div>

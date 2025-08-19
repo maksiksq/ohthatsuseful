@@ -1,23 +1,27 @@
 - [ ] : finish the thing
 - [ ] : maybe add a copyright field for things where that's necessary
 - [ ] : make sure the puppeteer serverless function doesn't take too long ; (Vercel has 300s limit at max) or move to something else (abuse Supabase's edge functions?)
-- [ ] : maybe move to playwright to avoid captcha's and stuff because Puppeteer community seems dead-ish??? A lot of work tho innit.
+- [ ] : maybe move to playwright to avoid captcha's and stuff because Puppeteer community seems dead-ish??? A lot of work tho innit. 
+      ; kinda solved by running headless: false once and that's more than good enough for most sites.
 - [ ] : figure out whether to update fields on insert in db or not
 - [ ] : implement override (maybe make it a complex file type instead of a comma string too?)
 - [ ] : change svg background color when hovering over an image
+      ; will it still look good tho?
 - [ ] : play around with h1 size again later and rethink the design with a fresh head pls
 - [x] : rotate h1 on click
 - [ ] : maybe replace link emoji with custom icon
-- [ ] : make pseudo tab clickable
+- [x] : make pseudo tab clickable ; went a bit of a different route lol
 - [ ] : make evil-unevil pfp (the halo thing)
 - [ ] : rebrand?????
 - [ ] : prettify my account readme
 - [x] : mayb play around with the blur
 - [ ] : maybe add animation to easter egg but later
-- [ ] : cool afterfx animations would go so well here if i want to ; pop anim for focus ; h1 anim ; mayb some more
+- [ ] : cool afterfx animations would go so well here if i want to 
+      ; pop anim for focus
+      ; h1 anim 
+      ; mayb some more, provided they don't hurt ux
 
 - [ ] : scrap: maybe make the focus 0-25-75-100 instead of 50-100 ; nvm, user expectations on this would slightly feel off
-- 
 
 - [ ] : umami: if thy steal your data, thy steal politely.
 - [ ] : https://thenicestplace.net/: HE JUST GIVES YOU A HUG!
