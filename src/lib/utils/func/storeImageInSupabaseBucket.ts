@@ -1,4 +1,5 @@
 import {getSupabaseAdminClient} from "$lib/utils/getSupabaseAdminClient";
+import {sanitizeFileName} from "$lib/utils/sanitizeFileName";
 
 export const storeImageInSupabaseBucket = async (blob: Blob, bucket: string, name: string, extension: string) => {
     const supabase = getSupabaseAdminClient();
@@ -10,12 +11,14 @@ export const storeImageInSupabaseBucket = async (blob: Blob, bucket: string, nam
     const {error} = await supabase
         .storage
         .from(bucket)
-        .upload(`${name}.${extension}`, blob, {
+        .upload(`${sanitizeFileName(name)}.${extension}`, blob, {
             contentType: `image/${extension}`,
             upsert: true,
         });
 
     if (error) {
+        console.log('oh hi');
+        console.log(sanitizeFileName(name));
         console.error(error);
         return {success: false};
     }

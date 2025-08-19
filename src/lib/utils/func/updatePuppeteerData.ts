@@ -3,6 +3,7 @@ import {storeImageInSupabaseBucket} from "$lib/utils/func/storeImageInSupabaseBu
 import {getSupabaseAdminClient} from "$lib/utils/getSupabaseAdminClient";
 import {PUBLIC_SUPABASE_URL} from "$env/static/public";
 import {PUBLIC_DEV} from "$lib";
+import {sanitizeFileName} from "$lib/utils/sanitizeFileName";
 
 const delay = (time: number) => {
     return new Promise(function(resolve) {
@@ -15,7 +16,9 @@ export const updatePuppeteerData = async (link: string) => {
         //
         // Getting all the data
         //
-        const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch({
+            headless: false,
+        });
         const page = await browser.newPage();
 
         await page.goto(link, {waitUntil: "networkidle0"});
@@ -104,7 +107,7 @@ export const updatePuppeteerData = async (link: string) => {
         const {error: upderror} = await supabase
             .from('nifties')
             .update({
-                screenshot: `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/screenshots/${title}.webp`,
+                screenshot: `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/screenshots/${sanitizeFileName(title)}.webp`,
                 title: title,
                 favicon: favExtension ? `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/favicons/fav-${title}.${favExtension}` : `/img/favicon-skill-issue.svg`,
                 metadesc: metadesc ?? 'No description provided by the site.',
