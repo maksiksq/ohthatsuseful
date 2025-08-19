@@ -90,12 +90,10 @@
         if (wowiesInterval) clearInterval(wowiesInterval);
         const rotate = () => wowie = wowies[Math.floor(Math.random() * wowies.length)];
         rotationCount += 1;
-        console.log(rotationCount);
         discovered = new Set(discovered).add(wowie);
         if (manually) rotate();
         wowiesInterval = setInterval(() => rotate(), 10000)
         if (rotationCount > 25) addiction = true;
-        console.log(addiction);
     }
 
     let wowiesInterval: ReturnType<typeof setInterval>
@@ -117,6 +115,8 @@
     let focusedNift = $state<typeof data.nifties[number]>();
     let focusedNiftTags = $derived<typeof data.tags>(focusedNift?.tags);
     let bodyElem = $state<HTMLElement | null>(null);
+
+    let isFocusLeft = $state(true);
     const handleFocus = (e: Event, nift: typeof data.nifties[number]) => {
         focus = true;
         focusedNift = nift;
@@ -129,23 +129,34 @@
             if (!elem) return;
         }
 
+        // scrolling with the element in the middle
         const elemBottom = elem.getBoundingClientRect().bottom + window.scrollY - window.innerHeight;
-        const scrollToY = elemBottom + window.innerHeight/2 - elem.offsetHeight/2;
-        scrollTo({ top: scrollToY, behavior: 'smooth' });
+        const scrollToY = elemBottom + window.innerHeight / 2 - elem.offsetHeight / 2;
+        scrollTo({top: scrollToY, behavior: 'smooth'});
+
+        // checking if it's leave or right and applying styles appropriately
+        const elemRight = elem.getBoundingClientRect().right;
+        isFocusLeft = elemRight > window.innerWidth / 2;
+
+        console.log(elemRight);
+        console.log(window.innerWidth / 2);
 
         if (!bodyElem) return;
         document.documentElement.classList.add('scroll-lock');
     }
 
-    let focusElem: HTMLElement | null = $state(null);
+
+    let descElem: HTMLElement | null = $state(null);
     const handleUnfocus = (e: Event) => {
         const target = e.target as HTMLElement;
-        if (focusElem?.contains(target)) {
+        if (!descElem?.contains(target) && !target.classList.contains("card")) {
             focus = false;
 
             if (!bodyElem) return;
             // timeout so the animation goes away to prevent a visible layout shift
-            setTimeout(() => {document.documentElement.classList.remove('scroll-lock');}, 400);
+            setTimeout(() => {
+                document.documentElement.classList.remove('scroll-lock');
+            }, 400);
         }
     }
 </script>
@@ -185,7 +196,8 @@
         <div class="content-cards">
             {#each data.nifties as nift (nift.id)}
                 <div class="card-wrapper">
-                    <div role="button" tabindex="0" class={`card ${(focusedNift?.title === nift.title) && focus ? 'focused' : ''}`}
+                    <div role="button" tabindex="0"
+                         class={`card ${(focusedNift?.title === nift.title) && focus ? 'focused' : ''}`}
                          onclick={(e) => {handleFocus(e, nift)}} onkeydown={(e) => {handleFocus(e, nift)}}>
                         <div class="h2-wrap">
                             <h2 title={nift.display_name}>{nift.display_name}</h2>
@@ -207,9 +219,10 @@
     </section>
 </main>
 {#if focus && focusedNift}
-    <div bind:this={focusElem} class="focus">
-        <div transition:blur={{duration: 200, easing: expoIn}} class="lightbox" ></div>
-        <div transition:blur={{duration: 400}} class="desc">
+    <div class="focus">
+        <div transition:blur={{duration: 200, easing: expoIn}} class="lightbox"></div>
+        <div bind:this={descElem} transition:blur={{duration: 400}}
+             class={`desc ${isFocusLeft ? 'desc-left' : 'desc-right'}`}>
             <h2>{focusedNift.title}</h2>
             <div class="desc-tags">
                 {#each Object.entries(focusedNiftTags) as [key, values] (key)}
@@ -225,7 +238,7 @@
             </div>
             <p>{focusedNift.metadesc}</p>
             <div class="desc-separator">
-                <img src="/img/idealessseparator.svg" alt="separator">
+                <img src="/img/coolseparator.svg" alt="separator">
             </div>
             <p>{focusedNift.comment}</p>
             {#if focusedNift.warning}
@@ -238,7 +251,7 @@
                     <p>{focusedNift.warning}</p>
                 </div>
             {/if}
-            <p class="desc-small-gray">Added at: {new Date(focusedNift.created_at)}</p>
+            <p class="desc-small-gray">Added at: {focusedNift.created_at}</p>
         </div>
     </div>
 {/if}
@@ -254,22 +267,39 @@
         z-index: 1000;
     }
 
+    .desc-left {
+        left: 3rem;
+    }
+
+    .desc-right {
+        right: 3rem;
+    }
+
     .desc {
         position: fixed;
         top: 50%;
-        left: 0;
-        transform: translate(-0%, -50%);
+        transform: translate(3rem, -50%);
         z-index: 1001;
         width: 50%;
         max-width: 70vw;
         box-sizing: border-box;
-        padding: 5rem;
+        padding: 0 11rem 0 0;
         color: white;
 
         .desc-tags {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 1rem;
+            padding: 0.6rem 0;
+
+            & .desc-tag-cat {
+                font-weight: bold;
+            }
+
             & ul {
                 display: flex;
                 flex-direction: row;
+                flex-wrap: wrap;
                 gap: 0.5rem;
             }
         }

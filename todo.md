@@ -15,3 +15,5 @@
 - [ ] : mayb play around with the blur
 - [ ] : maybe add animation to easter egg but later
 - [ ] : cool afterfx animations would go so well here if i want to ; pop anim for focus ; h1 anim ; mayb some more
+
+- [ ] : umami: if thy steal your data, thy steal politely.
