@@ -119,12 +119,14 @@
     let bodyElem = $state<HTMLElement | null>(null);
 
     let isFocusLeft = $state(true);
+    let focusButtonSeg = $state(1);
     const handleFocus = (e: Event, nift: typeof data.nifties[number]) => {
         focus = true;
         focusedNift = nift;
         let elem = e.target as HTMLElement | null;
         focusedNiftElem = elem;
         if (!elem) return;
+        const rect = elem.getBoundingClientRect();
 
         // if it's the link (clickable) let's just pretend it was the wrapper
         if (elem.classList.contains('card-info-link')) {
@@ -133,16 +135,16 @@
         }
 
         // scrolling with the element in the middle
-        const elemBottom = elem.getBoundingClientRect().bottom + window.scrollY - window.innerHeight;
+        const elemBottom = rect.bottom + window.scrollY - window.innerHeight;
         const scrollToY = elemBottom + window.innerHeight / 2.4 - elem.offsetHeight / 2;
         scrollTo({top: scrollToY, behavior: 'smooth'});
 
         // checking if it's leave or right and applying styles appropriately
-        const elemRight = elem.getBoundingClientRect().right;
+        const elemRight = rect.right;
+        const elemCenter = rect.left + rect.width / 2;
         isFocusLeft = elemRight > window.innerWidth / 2;
 
-        console.log(elemRight);
-        console.log(window.innerWidth / 2);
+        focusButtonSeg = Math.ceil(elemCenter/(window.innerWidth/4));
 
         if (!bodyElem) return;
         document.documentElement.classList.add('scroll-lock');
@@ -152,7 +154,7 @@
     let descElem: HTMLElement | null = $state(null);
     const handleUnfocus = (e: Event) => {
         const target = e.target as HTMLElement;
-        if (!descElem?.contains(target) && !target.classList.contains("card")) {
+        if (!descElem?.contains(target) && !target.classList.contains("card") && !target.classList.contains("visit")) {
             focus = false;
 
             // fading out in 200 ms to prevent looking like a sudden unselection
@@ -214,7 +216,9 @@
                             <p class="card-info-favicon-wrap">
                                 <img class="card-info-favicon" src={nift.favicon} alt={`${nift.name} favicon`}>
                             </p>
-                            <p class="card-info-title">{nift.title}</p>
+                            <div class="card-info-title-wrap">
+                                <p class="card-info-title">{nift.title}</p>
+                            </div>
                             <a class="card-info-link" href={nift.link} target="_blank" rel="noopener">🔗</a>
                         </div>
                         <p class="card-screenshot-link-wrap">
@@ -259,11 +263,12 @@
                 </div>
             {/if}
             <p class="desc-comment">{focusedNift.comment}</p>
+            <div class="desc-custom">{@html focusedNift.custom}</div>
             <p class="desc-small-gray">Added on: {timestamptzToHumanDate(focusedNift.created_at)}</p>
         </div>
-        <button class="visit">
+        <a transition:blur={{duration: 200, easing: expoIn}} href={focusedNift.link} class={`visit visit-${focusButtonSeg}`}>
             Visit
-        </button>
+        </a>
     </div>
 {/if}
 
@@ -336,6 +341,8 @@
         & .desc-separator > img {
             margin-top: 1rem;
             width: 100%;
+            pointer-events: none;
+            user-select: none;
         }
 
         & .desc-warning {
@@ -357,6 +364,7 @@
 
             & p {
                 padding-left: 0.4rem;
+                user-select: none;
             }
         }
 
@@ -370,6 +378,58 @@
             margin-top: 1rem;
             font-size: 0.8rem;
             color: #cccccc;
+        }
+    }
+
+    /* even if this was kind of annoying to make the math on this is pretty beautiful */
+    .visit-1 {
+        left: 37.5%;
+        transform: translate(-37.5%, -50%);
+        margin-left: -1rem;
+    }
+
+    .visit-2 {
+        left: 12.5%;
+        transform: translate(-12.5%, -50%);
+        margin-left: -3rem;
+    }
+
+    .visit-3 {
+        left: 87.5%;
+        transform: translate(-87.5%, -50%);
+        margin-left: 3rem;
+    }
+
+    .visit-4 {
+        left: 62.5%;
+        transform: translate(-62.5%, -50%);
+        margin-left: 1rem;
+    }
+
+    .visit {
+        position: fixed;
+        top: 50%;
+        margin-top: 2rem;
+        padding: 0.1rem 3rem;
+
+        display: flex;
+        align-items: center;
+
+        background-color: white;
+        border-radius: 3px;
+        border: 1px solid #151515;
+        box-shadow: 0 -5px 10px 0 rgba(0, 0, 0, 25%), 0 5px 0 1px rgba(0, 0, 0, 15%);
+        z-index: 1001;
+        color: #151515;
+
+        font-weight: bold;
+        font-size: 2.7rem;
+        transition: box-shadow, top 0.2s ease-in-out;
+
+        &:hover {
+            outline: 1px solid #151515;
+            top: 51%;
+            box-shadow: 0 -5px 10px 0 rgba(0, 0, 0, 25%), 0 3px 0 1px rgba(0, 0, 0, 15%);
         }
     }
 
@@ -517,6 +577,8 @@
                                 line-clamp: 2;
                                 -webkit-box-orient: vertical;
                                 overflow: hidden;
+
+                                user-select: none;
                             }
                         }
 
@@ -531,20 +593,55 @@
                             & .card-info-link {
                                 margin-left: auto;
                                 pointer-events: initial;
+                                user-select: none;
                             }
 
                             & .card-info-favicon-wrap {
+                                display: flex;
+                                align-items: center;
                                 & .card-info-favicon {
                                     aspect-ratio: 1/1;
                                     width: 1rem;
                                     height: 1rem;
+                                    user-select: none;
                                 }
                             }
 
-                            & .card-info-title {
+                            & .card-info-title-wrap {
                                 display: flex;
                                 align-items: center;
+                                line-height: 1em;
                                 height: 2em;
+
+                                & .card-info-title {
+                                    display: -webkit-box;
+                                    -webkit-line-clamp: 2;
+                                    line-clamp: 2;
+                                    -webkit-box-orient: vertical;
+                                    overflow: hidden;
+
+                                    user-select: none;
+                                }
+                            }
+
+                            & .h2-wrap {
+                                display: flex;
+                                align-items: center;
+                                line-height: 1.2em;
+                                height: 2.4em;
+                                margin-top: 1rem;
+
+                                & h2 {
+                                    font-size: 1.5rem;
+                                    line-height: 1.2em;
+                                    font-weight: 400;
+
+                                    display: -webkit-box;
+                                    -webkit-line-clamp: 2;
+                                    line-clamp: 2;
+                                    -webkit-box-orient: vertical;
+                                    overflow: hidden;
+                                }
                             }
                         }
 
@@ -555,6 +652,7 @@
                             & .card-screenshot {
                                 border: 1px solid #151515;
                                 width: 100%;
+                                user-select: none;
                             }
                         }
                     }
