@@ -6,7 +6,7 @@ import {PUBLIC_DEV} from "$lib";
 import {sanitizeFileName} from "$lib/utils/sanitizeFileName";
 
 const delay = (time: number) => {
-    return new Promise(function(resolve) {
+    return new Promise(function (resolve) {
         setTimeout(resolve, time)
     });
 }
@@ -17,7 +17,7 @@ export const updatePuppeteerData = async (link: string) => {
         // Getting all the data
         //
         const browser = await puppeteer.launch({
-            headless: false,
+            // headless: false,
         });
         const page = await browser.newPage();
 
@@ -41,6 +41,15 @@ export const updatePuppeteerData = async (link: string) => {
         }
 
         // Getting screenshot
+
+        // first we remove the scrollbar because ugly
+        await page.addStyleTag({
+            content: `
+                        ::-webkit-scrollbar { display: none !important; }
+                        body { scrollbar-width: none; -ms-overflow-style: none; }
+                     `
+        });
+
         const buffer = await page.screenshot({
             type: 'webp',
             fullPage: false,
@@ -86,10 +95,7 @@ export const updatePuppeteerData = async (link: string) => {
             await storeImageInSupabaseBucket(favBlob, 'favicons', `fav-${title}`, favExtension);
         }
 
-
-
-        // TODO: figure out if i need it (when making ui?)
-        // Store the meta description
+        // Storing the meta description
         let metadesc = await page.evaluate(() => {
             const descELem: HTMLLinkElement | null = document.querySelector('meta[name="description"]') || document.querySelector('meta[name="og:description"]') || document.querySelector('meta[name="twitter:description"]');
             if (!descELem) {
