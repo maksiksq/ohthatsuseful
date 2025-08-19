@@ -23,6 +23,10 @@ body, html {
     scroll-behavior: smooth;
 }
 
+html {
+    transition: background-color 0.5s;
+}
+
 .sr-only {
     position: absolute;
     width: 1px;
@@ -36,9 +40,9 @@ body, html {
 }
 
 html.scroll-lock {
-    overflow-y: hidden;
-    padding-right: 0.25vw;
-    background-color: #e3e3e3;
+    overflow-y: clip;
+    scrollbar-gutter: stable;
+    background-color: #4f4f4f;
 }
 
 .d-none {

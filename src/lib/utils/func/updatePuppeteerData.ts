@@ -107,7 +107,7 @@ export const updatePuppeteerData = async (link: string) => {
                 screenshot: `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/screenshots/${title}.webp`,
                 title: title,
                 favicon: favExtension ? `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/favicons/fav-${title}.${favExtension}` : `/img/favicon-skill-issue.svg`,
-                metadesc: metadesc ?? 'No meta description provided by the site',
+                metadesc: metadesc ?? 'No description provided by the site.',
             })
             .eq('link', link);
 

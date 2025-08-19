@@ -113,6 +113,7 @@
 
     let focus = $state(false);
     let focusedNift = $state<typeof data.nifties[number]>();
+    let focusedNiftElem = $state<HTMLElement | null>(null);
     let focusedNiftTags = $derived<typeof data.tags>(focusedNift?.tags);
     let bodyElem = $state<HTMLElement | null>(null);
 
@@ -121,6 +122,7 @@
         focus = true;
         focusedNift = nift;
         let elem = e.target as HTMLElement | null;
+        focusedNiftElem = elem;
         if (!elem) return;
 
         // if it's the link (clickable) let's just pretend it was the wrapper
@@ -152,9 +154,14 @@
         if (!descElem?.contains(target) && !target.classList.contains("card")) {
             focus = false;
 
-            if (!bodyElem) return;
+            // fading out in 200 ms to prevent looking like a sudden unselection
+            setTimeout(() => {
+                focusedNift = null;
+            }, 200)
+
             // timeout so the animation goes away to prevent a visible layout shift
             setTimeout(() => {
+                if (!bodyElem) return;
                 document.documentElement.classList.remove('scroll-lock');
             }, 400);
         }
@@ -197,7 +204,7 @@
             {#each data.nifties as nift (nift.id)}
                 <div class="card-wrapper">
                     <div role="button" tabindex="0"
-                         class={`card ${(focusedNift?.title === nift.title) && focus ? 'focused' : ''}`}
+                         class={`card ${(focusedNift?.title === nift.title) ? 'focused' : ''}`}
                          onclick={(e) => {handleFocus(e, nift)}} onkeydown={(e) => {handleFocus(e, nift)}}>
                         <div class="h2-wrap">
                             <h2 title={nift.display_name}>{nift.display_name}</h2>
@@ -236,7 +243,7 @@
                     </ul>
                 {/each}
             </div>
-            <p>{focusedNift.metadesc}</p>
+            <p class="desc-metadesc">{focusedNift.metadesc}</p>
             <div class="desc-separator">
                 <img src="/img/coolseparator.svg" alt="separator">
             </div>
@@ -263,49 +270,64 @@
         left: 0;
         width: 100vw;
         height: 100vh;
-        background-color: rgba(16, 16, 16, 0.6);
+        background-color: rgba(16, 16, 16, 0.7);
         z-index: 1000;
     }
 
     .desc-left {
         left: 3rem;
+        padding: 0 4rem 0 0;
+        transform: translate(3rem, -50%);
     }
 
     .desc-right {
-        right: 3rem;
+        left: 53%;
+        transform: translateY(-50%);
+        padding: 0 4rem 0 0;
     }
 
     .desc {
         position: fixed;
         top: 50%;
-        transform: translate(3rem, -50%);
         z-index: 1001;
-        width: 50%;
+        width: 40%;
         max-width: 70vw;
         box-sizing: border-box;
-        padding: 0 11rem 0 0;
         color: white;
+
+        & .desc-metadesc {
+            padding-top: 1rem;
+            color: #ffffff;
+        }
 
         .desc-tags {
             display: grid;
             grid-template-columns: auto 1fr;
-            gap: 1rem;
-            padding: 0.6rem 0;
+            gap: 0.4rem;
+            padding: 0.6rem 0 0 0;
 
             & .desc-tag-cat {
-                font-weight: bold;
+                color: #dddddd;
+                font-size: 0.8rem;
             }
 
             & ul {
+                color: #cccccc;
                 display: flex;
                 flex-direction: row;
                 flex-wrap: wrap;
-                gap: 0.5rem;
+                gap: 0.4rem;
+                font-size: 0.8rem;
             }
         }
 
         .desc-separator > img {
             width: 100%;
+        }
+
+        .desc-warning > svg {
+            width: 1.5rem;
+            height: auto;
         }
     }
 
