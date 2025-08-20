@@ -17,7 +17,7 @@ export const updatePuppeteerData = async (link: string) => {
         // Getting all the data
         //
         const browser = await puppeteer.launch({
-            // headless: false,
+            headless: false,
         });
         const page = await browser.newPage();
 
@@ -115,7 +115,7 @@ export const updatePuppeteerData = async (link: string) => {
             .update({
                 screenshot: `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/screenshots/${sanitizeFileName(title)}.webp`,
                 title: title,
-                favicon: favExtension ? `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/favicons/fav-${title}.${favExtension}` : `/img/favicon-skill-issue.svg`,
+                favicon: favExtension ? `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/favicons/fav-${sanitizeFileName(title)}.${favExtension}` : `/img/favicon-skill-issue.svg`,
                 metadesc: metadesc ?? 'No description provided by the site.',
             })
             .eq('link', link);

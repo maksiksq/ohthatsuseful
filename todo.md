@@ -53,6 +53,8 @@
 - [ ] : https://haveibeenpwned.com/: Check if your password is in a known databreach. If it is you should change it real quick.
 - [ ] : https://www.desmos.com/: Graphical calculator. You probably know about it, and I know how much better it is than drawing that stuff on paper!
 - [ ] : https://www.boolean-algebra.com/: An essential step towards getting a Computer Engineering degree if you value your soul.
-- [ ] : Lucide.dev: Free icons for everything you might think of! And the width is editable oh my god 😭. Also consider https://fontawesome.com/free, https://www.flaticon.com/ if you want a different look. 
+- [ ] : https://lucide.dev/: Free icons for everything you might think of! And the width is editable oh my god 😭. Also consider https://fontawesome.com/free, https://www.flaticon.com/ if you want a different look. *insert lots of icons for showcase*
+- [ ] : https://fontawesome.com/free: Free icons for everything you might think of! And the width is editable oh my god 😭. Also consider https://lucide.dev, https://www.flaticon.com/ if you want a different look. *insert lots of icons for showcase*
+- [ ] : https://www.flaticon.com/: Free icons for everything you might think of! And the width is editable oh my god 😭. Also consider https://fontawesome.com/free, https://lucide.dev if you want a different look. *insert lots of icons for showcase*
 - [ ] : https://www.music-map.com/ : Find artists similar to the ones you listen to on a map. This works stupidly well for finding obscure artists and the deepest corners of the internet. Take that algorithm, I'm gonna speed you up.
 - [ ] : https://www.cia.gov/the-world-factbook/ : Ever wanted to know how much of Switzerland's area is water? World lizard day? How much of Antarctica is ice and rock? The CIA got you covered! Damn is that a weird sentence.

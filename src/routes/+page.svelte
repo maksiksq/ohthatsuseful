@@ -253,7 +253,7 @@
                 <img src="/img/coolerseparator.svg" alt="separator">
             </div>
             {#if focusedNift.warning}
-                <div class="desc-warning">
+                <div class="desc-disclaimer desc-warning">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
                         <!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
                         <path fill="#151515"
@@ -262,6 +262,13 @@
                     <p>{focusedNift.warning}</p>
                 </div>
             {/if}
+            {#if focusedNift.copyright}
+                <div class="desc-disclaimer desc-warning">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copyright-icon lucide-copyright"><circle cx="12" cy="12" r="10"/><path d="M14.83 14.83a4 4 0 1 1 0-5.66"/></svg>
+                <p>{focusedNift.copyright}</p>
+                </div>
+            {/if}
+
             <p class="desc-comment">{focusedNift.comment}</p>
             <div class="desc-custom">{@html focusedNift.custom}</div>
             <p class="desc-small-gray">Added on: {timestamptzToHumanDate(focusedNift.created_at)}</p>
@@ -345,7 +352,7 @@
             user-select: none;
         }
 
-        & .desc-warning {
+        & .desc-disclaimer {
             display: flex;
             align-items: center;
             background-color: rgb(255, 236, 108);
@@ -359,13 +366,16 @@
             & svg {
                 width: 1.5rem;
                 height: auto;
-                fill: black;
             }
 
             & p {
                 padding-left: 0.4rem;
                 user-select: none;
             }
+        }
+
+        & .desc-warning {
+            background-color: rgb(244, 247, 255);
         }
 
         & .desc-comment {
