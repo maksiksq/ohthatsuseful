@@ -154,7 +154,7 @@
     let descElem: HTMLElement | null = $state(null);
     const handleUnfocus = (e: Event) => {
         const target = e.target as HTMLElement;
-        if (!descElem?.contains(target) && !target.classList.contains("card") && !target.classList.contains("visit")) {
+        if ((!descElem?.contains(target) || target.classList.contains("desc")) && !target.classList.contains("card") && !target.classList.contains("visit")) {
             focus = false;
 
             // fading out in 200 ms to prevent looking like a sudden unselection
@@ -263,7 +263,7 @@
                 </div>
             {/if}
             {#if focusedNift.copyright}
-                <div class="desc-disclaimer desc-warning">
+                <div class="desc-disclaimer desc-copyright">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copyright-icon lucide-copyright"><circle cx="12" cy="12" r="10"/><path d="M14.83 14.83a4 4 0 1 1 0-5.66"/></svg>
                 <p>{focusedNift.copyright}</p>
                 </div>
@@ -375,7 +375,11 @@
         }
 
         & .desc-warning {
-            background-color: rgb(244, 247, 255);
+            background-color: rgb(255, 236, 108);
+        }
+
+        & .desc-copyright {
+            background-color: rgb(233, 236, 241);
         }
 
         & .desc-comment {
