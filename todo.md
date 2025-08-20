@@ -10,11 +10,13 @@
 - [ ] : play around with h1 size again later and rethink the design with a fresh head pls
 - [x] : rotate h1 on click
 - [ ] : maybe replace link emoji with custom icon
+- [ ] : do virtualization or something about loading
 - [x] : make pseudo tab clickable ; went a bit of a different route lol
 - [ ] : make evil-unevil pfp (the halo thing)
 - [ ] : rebrand?????
 - [ ] : prettify my account readme
 - [x] : mayb play around with the blur
+- [ ] : mayb fix scrollbar
 - [ ] : maybe add animation to easter egg but later
 - [ ] : cool afterfx animations would go so well here if i want to 
       ; pop anim for focus

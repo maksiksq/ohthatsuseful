@@ -235,8 +235,13 @@
         <div transition:blur={{duration: 200, easing: expoIn}} class="lightbox"></div>
         <div bind:this={descElem} transition:blur={{duration: 400}}
              class={`desc ${isFocusLeft ? 'desc-left' : 'desc-right'}`}>
-            <h2>{focusedNift.title}</h2>
-            <p class="desc-metadesc">{focusedNift.metadesc === "No description provided by the site." ? focusedNift.metadesc : `"${focusedNift.metadesc}"`}</p>
+            <h2>{focusedNift.display_name}</h2>
+            <p class="desc-comment">{focusedNift.comment}</p>
+            <div class="desc-custom">{@html focusedNift.custom}</div>
+
+            <div class="desc-separator">
+                <img src="/img/coolerseparator.svg"  alt="separator">
+            </div>
             <div class="desc-tags">
                 {#each Object.entries(focusedNiftTags) as [key, values] (key)}
                     <p class="desc-tag-cat">{key}</p>
@@ -249,9 +254,7 @@
                     </ul>
                 {/each}
             </div>
-            <div class="desc-separator">
-                <img src="/img/coolerseparator.svg" alt="separator">
-            </div>
+            <p class="desc-metadesc">{focusedNift.metadesc === "No description provided by the site." ? focusedNift.metadesc : `"${focusedNift.metadesc}"`}</p>
             {#if focusedNift.warning}
                 <div class="desc-disclaimer desc-warning">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
@@ -269,8 +272,6 @@
                 </div>
             {/if}
 
-            <p class="desc-comment">{focusedNift.comment}</p>
-            <div class="desc-custom">{@html focusedNift.custom}</div>
             <p class="desc-small-gray">Added on: {timestamptzToHumanDate(focusedNift.created_at)}</p>
         </div>
         <a transition:blur={{duration: 200, easing: expoIn}} href={focusedNift.link} target="_blank" rel="noopener" class={`visit visit-${focusButtonSeg}`}>
@@ -278,6 +279,10 @@
         </a>
     </div>
 {/if}
+
+<!-- just caching the image here to prevent layout flicker when clicking on a card -->
+<img src="/img/coolerseparator.svg" class="d-none" alt="">
+
 
 <style>
     .lightbox {
@@ -320,8 +325,9 @@
             color: #ffffff;
             font-style: italic;
 
-            font-size: 1.2rem;
+            font-size: 1rem;
             line-height: 1.5em;
+            margin-top: 1rem;
         }
 
         & .desc-tags {
@@ -379,12 +385,12 @@
         }
 
         & .desc-copyright {
-            background-color: rgb(233, 236, 241);
+            background-color: rgb(250, 250, 246);
         }
 
         & .desc-comment {
             margin-top: 1rem;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             line-height: 1.5em;
         }
 

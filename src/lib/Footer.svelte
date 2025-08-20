@@ -22,7 +22,7 @@
 
 <style>
     footer {
-        margin-top: 10vh;
+        margin-top: 42dvh;
         display: flex;
         align-items: center;
 
