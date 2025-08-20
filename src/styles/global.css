@@ -49,6 +49,11 @@ html.scroll-lock {
     display: none;
 }
 
+/* VARIABLES */
+:root {
+    --header-highlight-color: #ffdc8e;
+}
+
 /* SELECTION */
 ::selection {
     color: white;

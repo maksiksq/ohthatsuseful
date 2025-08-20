@@ -6,6 +6,7 @@
     import {blur} from 'svelte/transition';
     import {expoIn} from "svelte/easing";
     import {timestamptzToHumanDate} from "$lib/utils/timestamptzToHumanDate";
+    import Footer from "$lib/Footer.svelte";
 
     const {data} = $props();
 
@@ -279,6 +280,7 @@
         </a>
     </div>
 {/if}
+<Footer fromContact={false}/>
 
 <!-- just caching the image here to prevent layout flicker when clicking on a card -->
 <img src="/img/coolerseparator.svg" class="d-none" alt="">
@@ -515,7 +517,7 @@
                 user-select: none;
 
                 & .wowie {
-                    color: #ffdc8e;
+                    color: var(--header-highlight-color);
                     font-family: 'Rozanova', sans-serif;
                     -webkit-text-stroke: 1px black;
                     cursor: pointer;
