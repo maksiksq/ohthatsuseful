@@ -3,7 +3,7 @@
 - [ ] : make sure the puppeteer serverless function doesn't take too long ; (Vercel has 300s limit at max) or move to something else (abuse Supabase's edge functions?)
 - [ ] : maybe move to playwright to avoid captcha's and stuff because Puppeteer community seems dead-ish??? A lot of work tho innit. 
       ; kinda solved by running headless: false once and that's more than good enough for most sites.
-- [ ] : figure out whether to update fields on insert in db or not
+- [ ] : update fields on insert in db
 - [ ] : implement override (maybe make it a complex file type instead of a comma string too?)
 - [ ] : change svg background color when hovering over an image
       ; will it still look good tho?
