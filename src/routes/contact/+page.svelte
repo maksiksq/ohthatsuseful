@@ -68,7 +68,7 @@
         box-sizing: border-box;
         padding: 5rem 4rem;
 
-        background-image: url("/img/contact.svg");
+        background-image: url("/img/contact.webp");
         background-size: cover;
 
         height: 100dvh;
@@ -118,6 +118,7 @@
                 -webkit-text-stroke: 1px black;
 
                 padding-right: 3rem;
+                user-select: none;
             }
         }
     }

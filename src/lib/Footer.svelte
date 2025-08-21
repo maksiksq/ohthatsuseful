@@ -27,7 +27,10 @@
 
 <footer>
     <div class="crank-seg">
-        <p class="crank-found">Discovered</p>
+        {#if fromContact}
+            <p>(lmao)</p>
+        {/if}
+        <p class="crank-found">Contacted</p>
         <p class="crank-anything">Something?</p>
     </div>
     <div class="luv-seg">
