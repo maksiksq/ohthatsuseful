@@ -97,8 +97,6 @@
 
                 margin-left: 0.6rem;
                 padding-bottom: 0.4rem;
-
-
             }
         }
 
