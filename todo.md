@@ -1,5 +1,5 @@
 - [ ] : finish the thing
-- [ ] : maybe add a copyright field for things where that's necessary
+- [x] : maybe add a copyright field for things where that's necessary
 - [ ] : make sure the puppeteer serverless function doesn't take too long ; (Vercel has 300s limit at max) or move to something else (abuse Supabase's edge functions?)
 - [ ] : maybe move to playwright to avoid captcha's and stuff because Puppeteer community seems dead-ish??? A lot of work tho innit. 
       ; kinda solved by running headless: false once and that's more than good enough for most sites.
