@@ -25,7 +25,7 @@
       ; mayb some more, provided they don't hurt ux
 - [ ] : scrap: maybe make the focus 0-25-75-100 instead of 50-100 ; nvm, user expectations on this would slightly feel off
 
-- [ ] : umami: if thy steal your data, thy steal politely.
+- [ ] : umami: If thy steal your data, thy steal politely. The most effortless, no-cookies, free, open-source analytics platform. You just plug it in. No need for an annoying pop-up (looking at you google analytics) and it just does its job instead of feeding the clankers or something.
 - [ ] : https://thenicestplace.net/: HE JUST GIVES YOU A HUG!
 - [ ] : https://unsplash.com/: Free beautiful stock images. Best for background images, cinematic images and etc. Similar to [Pexels](https://www.pexels.com/)
 - [ ] : https://www.pexels.com/: Free beautiful stock images. Has lots of high-quality stock images. Including cats. Similar to [Unplash](https://unsplash.com/).
