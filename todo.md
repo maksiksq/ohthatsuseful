@@ -10,19 +10,20 @@
 - [x] : play around with h1 size again later and rethink the design with a fresh head pls
 - [x] : rotate h1 on click
 - [ ] : maybe replace link emoji with custom icon
-- [ ] : do virtualization or something about loading ; virtualization would be snappier than loading it from the db so i'll do that, a bit later tho
+- [x] : do virtualization or something about loading ; virtualization would be snappier than loading it from the db so i'll do that, a bit later tho
 - [x] : make pseudo tab clickable ; went a bit of a different route lol
 - [ ] : make evil-unevil pfp (the halo thing)
 - [ ] : rebrand?????
 - [x] : add contact link to footer
 - [ ] : prettify my account readme
 - [x] : mayb play around with the blur
-- [ ] : mayb fix scrollbar
+- [ ] : mayb fix scrollbar flashing on focus out
 - [ ] : maybe add animation to easter egg but later
 - [ ] : cool afterfx animations would go so well here if i want to 
       ; pop anim for focus
       ; h1 anim 
       ; mayb some more, provided they don't hurt ux
+- 
 - [ ] : scrap: maybe make the focus 0-25-75-100 instead of 50-100 ; nvm, user expectations on this would slightly feel off
 
 - [ ] : umami: If thy steal your data, thy steal politely. The most effortless, no-cookies, free, open-source analytics platform. You just plug it in. No need for an annoying pop-up (looking at you google analytics) and it just does its job instead of feeding the clankers or something.
