@@ -1,27 +1,32 @@
 <script lang="ts">
     const {nifties, focusedNift, handleFocus} = $props();
 
-    const itemsPerRow = $state(4);
+    const cardsPerRow = $state(4);
 
-    const remInPx = $derived(parseFloat(getComputedStyle(document.documentElement).fontSize));
+    const remToPx = (rem: number) => parseFloat(getComputedStyle(document.documentElement).fontSize) * rem;;
 
+    let containerElem = $state<HTMLElement | null>(null);
+    // TODO: use a probe card instead
     // note: Svelte doesn't really allow to bind:this conditionally for some reason
     // so I'm just using the rect of the last element (default for :this bindings), they're the same anyway
     // only installing an observer on one so should be aight
     let cardWrapElem = $state<HTMLElement | null>(null);
     let cardWrapRect = $state<DOMRect | null>(null);
     const rowHeight = $derived.by(() => {
+        console.log("hello")
         if (!cardWrapRect) return;
         if (!cardWrapRect.height) return;
 
-        return cardWrapRect.height + remInPx;
+        return cardWrapRect.height + remToPx(1);
     });
     $effect(() => {
+        console.log(cardWrapElem)
         if (!cardWrapElem) return;
+
         const observer = new ResizeObserver(() => {
             if (!cardWrapElem) return;
             cardWrapRect = cardWrapElem.getBoundingClientRect();
-            console.log(cardWrapRect);
+            console.log("cardWrapRect", cardWrapRect);
         })
 
         observer.observe(cardWrapElem);
@@ -31,13 +36,80 @@
         }
     })
 
-    $inspect(rowHeight);
+    let viewportHeight = $state(0);
+    let scrollTop = $state(0);
+    const updateViewport = () => {
+        viewportHeight = window.innerHeight;
+        if (!containerElem) return;
+        scrollTop = window.scrollY - containerElem.offsetTop;
+        // console.log("scrolltop", scrollTop)
+    }
+
+    const rowsPerScreen = $derived.by(() => {
+        if (!rowHeight) return;
+        return Math.ceil(viewportHeight / rowHeight);
+    });
+
+    let startRow = $derived.by(() => {
+        if (!rowHeight) return;
+        console.log("rowHeight", rowHeight)
+        if (scrollTop < 0) return 0;
+        console.log("scrollTop", scrollTop)
+        return Math.floor(scrollTop / rowHeight);
+    });
+
+    let endRow = $derived.by(() => {
+        console.log("rowHeight", rowHeight)
+        console.log("startRow", startRow)
+        console.log("rowsPerScreen", rowsPerScreen)
+        if (rowHeight == null || startRow == null || rowsPerScreen == null) return;
+        console.log("startRow + rowsPerScreen", startRow + rowsPerScreen)
+        return startRow + rowsPerScreen;
+    });
+
+    const visibleCards = $derived.by(() => {
+        console.log('hia')
+        console.log(rowHeight)
+        console.log("startRow", startRow)
+        console.log("endRow", endRow)
+        if (rowHeight == null || startRow == null || endRow == null) return;
+        console.log('hiaa')
+
+        return nifties.slice(startRow * cardsPerRow, endRow * cardsPerRow);
+    })
+
+
+
+    $inspect(visibleCards);
 </script>
 
+<svelte:window onscroll={updateViewport} onresize={updateViewport} />
 
-<div class="content-cards">
-    {#each nifties as nift, i (nift.id)}
-        <div bind:this={cardWrapElem} class="card-wrapper">
+<div bind:this={containerElem} class="content-cards">
+    <!--dummy elem so we know the height-->
+    <div bind:this={cardWrapElem} class="card-wrapper dummy" aria-hidden="true">
+        <div class="card">
+            <div class="h2-wrap">
+                <h2 title="Dummy">Dummy</h2>
+            </div>
+            <div class="card-info">
+                <p class="card-info-favicon-wrap">
+                    <img class="card-info-favicon" src="" alt="">
+                </p>
+                <div class="card-info-title-wrap">
+                    <p class="card-info-title">Dummy</p>
+                </div>
+                <a class="card-info-link" href="/" target="_blank" rel="noopener">🔗</a>
+            </div>
+            <p class="card-screenshot-link-wrap">
+                <img class="card-screenshot" src="" alt="">
+            </p>
+        </div>
+    </div>
+
+    {#each new Array(18) as i}
+    {#each visibleCards as nift, i (nift.id)}
+        <div class="card-wrapper">
             <div role="button" tabindex="0"
                  class={`card ${(focusedNift?.title === nift.title) ? 'focused' : ''}`}
                  onclick={(e) => {handleFocus(e, nift)}} onkeydown={(e) => {handleFocus(e, nift)}}>
@@ -46,7 +118,7 @@
                 </div>
                 <div class="card-info">
                     <p class="card-info-favicon-wrap">
-                        <img class="card-info-favicon" src={nift.favicon} alt={`${nift.name} favicon`}>
+                        <img class="card-info-favicon" loading="lazy" src={nift.favicon} alt={`${nift.name} favicon`}>
                     </p>
                     <div class="card-info-title-wrap">
                         <p class="card-info-title">{nift.title}</p>
@@ -54,14 +126,22 @@
                     <a class="card-info-link" href={nift.link} target="_blank" rel="noopener">🔗</a>
                 </div>
                 <p class="card-screenshot-link-wrap">
-                    <img class="card-screenshot" src={nift.screenshot} alt={nift.name}>
+                    <img class="card-screenshot" loading="lazy" src={nift.screenshot} alt={nift.name}>
                 </p>
             </div>
         </div>
     {/each}
+    {/each}
 </div>
 
 <style>
+    .dummy {
+        position: absolute;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+    }
+
     .focused {
         position: relative;
         z-index: 1002;
