@@ -28,7 +28,7 @@
 <footer>
     <div class="crank-seg">
         {#if fromContact}
-            <p>(lmao)</p>
+            <p class="lmao">(lmao)</p>
         {/if}
         <p class="crank-found">Contacted</p>
         <p class="crank-anything">Something?</p>
@@ -76,6 +76,8 @@
             /*and that makes the page have 2 scrollbars*/
             padding-bottom: 2.6rem;
 
+            position: relative;
+
             & p {
                 font-size: 4.25vw;
                 font-family: 'Rozanova', sans-serif;
@@ -85,6 +87,15 @@
                 max-height: 1lh;
 
                 user-select: none;
+            }
+
+            & .lmao {
+                position: absolute;
+                font-size: 0.5rem;
+                margin-left: 3rem;
+                font-weight: normal;
+                color: #6e6e6e;
+                bottom: 1.1rem;
             }
 
             & .crank-found {

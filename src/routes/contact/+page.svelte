@@ -119,6 +119,7 @@
 
                 padding-right: 3rem;
                 user-select: none;
+                pointer-events: none;
             }
         }
     }

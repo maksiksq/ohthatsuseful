@@ -66,9 +66,9 @@
             position: absolute;
             pointer-events: none;
             transition: none;
-            background: #666666;
-            color: white;
-            padding: 1px 0.7rem;
+            background: var(--header-highlight-color);
+            color: #151515;
+            padding: 0 0.4rem;
             border-radius: 1px;
             font-family: monospace;
             border: 1px solid black;
