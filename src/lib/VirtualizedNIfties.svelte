@@ -1,32 +1,27 @@
 <script lang="ts">
+    import {onMount} from "svelte";
+
     const {nifties, focusedNift, handleFocus} = $props();
 
     const cardsPerRow = $state(4);
 
-    const remToPx = (rem: number) => parseFloat(getComputedStyle(document.documentElement).fontSize) * rem;;
+    const remToPx = (rem: number) => parseFloat(getComputedStyle(document.documentElement).fontSize) * rem;
 
     let containerElem = $state<HTMLElement | null>(null);
-    // TODO: use a probe card instead
-    // note: Svelte doesn't really allow to bind:this conditionally for some reason
-    // so I'm just using the rect of the last element (default for :this bindings), they're the same anyway
-    // only installing an observer on one so should be aight
     let cardWrapElem = $state<HTMLElement | null>(null);
     let cardWrapRect = $state<DOMRect | null>(null);
     const rowHeight = $derived.by(() => {
-        console.log("hello")
-        if (!cardWrapRect) return;
-        if (!cardWrapRect.height) return;
+        if (!cardWrapRect) return 380;
+        if (!cardWrapRect.height) return 380;
 
         return cardWrapRect.height + remToPx(1);
     });
     $effect(() => {
-        console.log(cardWrapElem)
         if (!cardWrapElem) return;
 
         const observer = new ResizeObserver(() => {
             if (!cardWrapElem) return;
             cardWrapRect = cardWrapElem.getBoundingClientRect();
-            console.log("cardWrapRect", cardWrapRect);
         })
 
         observer.observe(cardWrapElem);
@@ -42,8 +37,11 @@
         viewportHeight = window.innerHeight;
         if (!containerElem) return;
         scrollTop = window.scrollY - containerElem.offsetTop;
-        // console.log("scrolltop", scrollTop)
     }
+
+    onMount(() => {
+        updateViewport();
+    })
 
     const rowsPerScreen = $derived.by(() => {
         if (!rowHeight) return;
@@ -52,35 +50,20 @@
 
     let startRow = $derived.by(() => {
         if (!rowHeight) return;
-        console.log("rowHeight", rowHeight)
         if (scrollTop < 0) return 0;
-        console.log("scrollTop", scrollTop)
-        return Math.floor(scrollTop / rowHeight);
+        return Math.max(0, Math.floor(scrollTop / rowHeight) - 1);
     });
 
     let endRow = $derived.by(() => {
-        console.log("rowHeight", rowHeight)
-        console.log("startRow", startRow)
-        console.log("rowsPerScreen", rowsPerScreen)
         if (rowHeight == null || startRow == null || rowsPerScreen == null) return;
-        console.log("startRow + rowsPerScreen", startRow + rowsPerScreen)
-        return startRow + rowsPerScreen;
+        return startRow + rowsPerScreen + 2;
     });
 
     const visibleCards = $derived.by(() => {
-        console.log('hia')
-        console.log(rowHeight)
-        console.log("startRow", startRow)
-        console.log("endRow", endRow)
         if (rowHeight == null || startRow == null || endRow == null) return;
-        console.log('hiaa')
 
         return nifties.slice(startRow * cardsPerRow, endRow * cardsPerRow);
     })
-
-
-
-    $inspect(visibleCards);
 </script>
 
 <svelte:window onscroll={updateViewport} onresize={updateViewport} />
@@ -94,7 +77,7 @@
             </div>
             <div class="card-info">
                 <p class="card-info-favicon-wrap">
-                    <img class="card-info-favicon" src="" alt="">
+                    <img class="card-info-favicon" src={nifties[0].favicon} alt="">
                 </p>
                 <div class="card-info-title-wrap">
                     <p class="card-info-title">Dummy</p>
@@ -102,12 +85,15 @@
                 <a class="card-info-link" href="/" target="_blank" rel="noopener">🔗</a>
             </div>
             <p class="card-screenshot-link-wrap">
-                <img class="card-screenshot" src="" alt="">
+                <img class="card-screenshot" src={nifties[0].screenshot} alt="">
             </p>
         </div>
     </div>
 
-    {#each new Array(18) as i}
+    <!--top spacer-->
+    <div style="flex-basis:100%; height:{startRow * rowHeight}px;"></div>
+
+    <!--make sure it's not in a parent from which is can calculate its position or offsetTop dies-->
     {#each visibleCards as nift, i (nift.id)}
         <div class="card-wrapper">
             <div role="button" tabindex="0"
@@ -131,11 +117,14 @@
             </div>
         </div>
     {/each}
-    {/each}
+
+    <!--botton spacer-->
+    <div style="flex-basis:100%; height:{Math.max(0, Math.ceil(nifties.length / cardsPerRow) * rowHeight - endRow * rowHeight)}px;"></div>
 </div>
 
 <style>
     .dummy {
+        visibility: hidden;
         position: absolute;
         top: 0;
         left: 0;
