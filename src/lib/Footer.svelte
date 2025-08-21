@@ -60,26 +60,22 @@
                         </a>
                     </li>
                 {/each}
-                {#if !fromContact}
-                    <li class="social social-contact">
-                        <a href="/contact" target="_blank" rel="noopener" class="social-contact-link">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                 stroke-linejoin="round" class="lucide lucide-notebook-tabs-icon lucide-notebook-tabs">
-                                <path d="M2 6h4"/>
-                                <path d="M2 10h4"/>
-                                <path d="M2 14h4"/>
-                                <path d="M2 18h4"/>
-                                <rect fill="transparent" width="16" height="20" x="4" y="2" rx="2"/>
-                                <path d="M15 2v20"/>
-                                <path d="M15 7h5"/>
-                                <path d="M15 12h5"/>
-                                <path d="M15 17h5"/>
+                <li class="social social-contact">
+                    <a href={fromContact ? '/' : '/contact'} class="social-contact-link">
+                        {#if fromContact}
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                                <!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                <path d="M144 336C144 288.7 109.8 249.4 64.8 241.5C72 177.6 126.2 128 192 128L448 128C513.8 128 568 177.6 575.2 241.5C530.2 249.5 496 288.7 496 336L496 368L144 368L144 336zM0 448L0 336C0 309.5 21.5 288 48 288C74.5 288 96 309.5 96 336L96 416L544 416L544 336C544 309.5 565.5 288 592 288C618.5 288 640 309.5 640 336L640 448C640 483.3 611.3 512 576 512L64 512C28.7 512 0 483.3 0 448z"/>
                             </svg>
-                            Contact
-                        </a>
-                    </li>
-                {/if}
+                        {:else}
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                                <!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                <path d="M480 576L192 576C139 576 96 533 96 480L96 160C96 107 139 64 192 64L496 64C522.5 64 544 85.5 544 112L544 400C544 420.9 530.6 438.7 512 445.3L512 512C529.7 512 544 526.3 544 544C544 561.7 529.7 576 512 576L480 576zM192 448C174.3 448 160 462.3 160 480C160 497.7 174.3 512 192 512L448 512L448 448L192 448zM224 216C224 229.3 234.7 240 248 240L424 240C437.3 240 448 229.3 448 216C448 202.7 437.3 192 424 192L248 192C234.7 192 224 202.7 224 216zM248 288C234.7 288 224 298.7 224 312C224 325.3 234.7 336 248 336L424 336C437.3 336 448 325.3 448 312C448 298.7 437.3 288 424 288L248 288z"/>
+                            </svg>
+                        {/if}
+                        {fromContact ? 'Home' : 'Contact'}
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -88,7 +84,7 @@
 
 <style>
     footer {
-        margin-top: 42dvh;
+        margin-top: 22dvh;
         display: flex;
         align-items: center;
         width: 100%;
@@ -207,7 +203,7 @@
             }
 
             & .social {
-                display: grid;
+                display: flex;
                 flex-direction: row;
                 align-items: center;
                 cursor: pointer;

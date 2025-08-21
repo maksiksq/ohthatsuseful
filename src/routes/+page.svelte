@@ -189,7 +189,7 @@
     </form>
 </div>
 <!-- -->
-<main>
+<main class="home-main">
     <section class="h1-seg">
         {#if addiction}
             <div class="addiction">
@@ -447,7 +447,7 @@
             font-family: 'Montserrat', sans-serif;
         }
 
-        main > section {
+        .home-main > section {
             width: 100%;
             box-sizing: border-box;
 
