@@ -141,7 +141,6 @@
             justify-content: flex-end;
             align-self: flex-end;
             align-items: center;
-            padding-right: 6vw;
             padding-bottom: 3rem;
             width: 30%;
             font-size: 1.2rem;
@@ -158,6 +157,7 @@
             & .socials {
                 position: relative;
                 top: -5rem;
+                padding-right: 6vw;
             }
 
             & .social {
