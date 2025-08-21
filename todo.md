@@ -14,7 +14,7 @@
 - [x] : make pseudo tab clickable ; went a bit of a different route lol
 - [ ] : make evil-unevil pfp (the halo thing)
 - [ ] : rebrand?????
-- [ ] : add contact link to footer
+- [x] : add contact link to footer
 - [ ] : prettify my account readme
 - [x] : mayb play around with the blur
 - [ ] : mayb fix scrollbar
