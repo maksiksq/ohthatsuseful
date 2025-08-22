@@ -60,14 +60,15 @@
     });
 
     const visibleCards = $derived.by(() => {
-        if (rowHeight == null || startRow == null || endRow == null) return;
+        if (rowHeight == null || startRow == null || endRow == null || nifties.length === 0) return;
 
         return nifties.slice(startRow * cardsPerRow, endRow * cardsPerRow);
     })
 </script>
 
-<svelte:window onscroll={updateViewport} onresize={updateViewport} />
+<svelte:window onscroll={updateViewport} onresize={updateViewport}/>
 
+{#if nifties.length > 0 && visibleCards}
 <div bind:this={containerElem} class="content-cards">
     <!--dummy elem so we know the height-->
     <div bind:this={cardWrapElem} class="card-wrapper dummy" aria-hidden="true">
@@ -94,33 +95,35 @@
     <div style="flex-basis:100%; height:{startRow * rowHeight}px;"></div>
 
     <!--make sure it's not in a parent from which is can calculate its position or offsetTop dies-->
-    {#each visibleCards as nift (nift.id)}
-        <div class="card-wrapper">
-            <div role="button" tabindex="0"
-                 class={`card ${(focusedNift?.title === nift.title) ? 'focused' : ''}`}
-                 onclick={(e) => {handleFocus(e, nift)}} onkeydown={(e) => {handleFocus(e, nift)}}>
-                <div class="h2-wrap">
-                    <h2 title={nift.display_name}>{nift.display_name}</h2>
-                </div>
-                <div class="card-info">
-                    <p class="card-info-favicon-wrap">
-                        <img class="card-info-favicon" loading="lazy" src={nift.favicon} alt={`${nift.name} favicon`}>
-                    </p>
-                    <div class="card-info-title-wrap">
-                        <p class="card-info-title">{nift.title}</p>
+        {#each visibleCards as nift (nift.id)}
+            <div class="card-wrapper">
+                <div role="button" tabindex="0"
+                     class={`card ${(focusedNift?.title === nift.title) ? 'focused' : ''}`}
+                     onclick={(e) => {handleFocus(e, nift)}} onkeydown={(e) => {handleFocus(e, nift)}}>
+                    <div class="h2-wrap">
+                        <h2 title={nift.display_name}>{nift.display_name}</h2>
                     </div>
-                    <a class="card-info-link" href={nift.link} target="_blank" rel="noopener">🔗</a>
+                    <div class="card-info">
+                        <p class="card-info-favicon-wrap">
+                            <img class="card-info-favicon" loading="lazy" src={nift.favicon} alt={`${nift.name} favicon`}>
+                        </p>
+                        <div class="card-info-title-wrap">
+                            <p class="card-info-title">{nift.title}</p>
+                        </div>
+                        <a class="card-info-link" href={nift.link} target="_blank" rel="noopener">🔗</a>
+                    </div>
+                    <p class="card-screenshot-link-wrap">
+                        <img class="card-screenshot" loading="lazy" src={nift.screenshot_smol} width="600" height="337"
+                             alt={nift.name}>
+                    </p>
                 </div>
-                <p class="card-screenshot-link-wrap">
-                    <img class="card-screenshot" loading="lazy" src={nift.screenshot_smol} width="600" height="337" alt={nift.name}>
-                </p>
             </div>
-        </div>
-    {/each}
+        {/each}
 
     <!--botton spacer-->
     <div style="flex-basis:100%; height:{Math.max(0, Math.ceil(nifties.length / cardsPerRow) * rowHeight - endRow * rowHeight)}px;"></div>
 </div>
+    {/if}
 
 <style>
     .dummy {

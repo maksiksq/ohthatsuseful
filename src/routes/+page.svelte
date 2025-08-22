@@ -7,7 +7,7 @@
     import {expoIn} from "svelte/easing";
     import {timestamptzToHumanDate} from "$lib/utils/timestamptzToHumanDate";
     import Footer from "$lib/Footer.svelte";
-    import VirtualizedNifties from "$lib/VirtualizedNIfties.svelte";
+    import VirtualizedNifties from "$lib/VirtualizedNifties.svelte";
     import Fuse from "fuse.js";
 
     const {data} = $props();
@@ -20,26 +20,40 @@
     };
 
     // search
-    let query = $state('glass');
+    let query = $state('');
     let selectedTags = $state<Array<String>>([]);
 
-    let searchedNifites = $derived.by(() => {
-        const fuse = new Fuse(data.nifties, {
-            keys: [
-                {name: 'link', weight: 0.05},
-                {name: 'comment', weight: 0.15},
-                {name: 'metadesc', weight: 0.1},
-                {name: 'display_name', weight: 0.2},
-                {name: 'title', weight: 0.4},
-                {name: 'tags', weight: 0.1},
-            ],
-            threshold: 0.45,
-            minMatchCharLength: 2
-        })
+    const fuse = new Fuse(data.nifties, {
+        keys: [
+            { name: 'link', weight: 0.05 },
+            { name: 'comment', weight: 0.15 },
+            { name: 'metadesc', weight: 0.1 },
+            { name: 'display_name', weight: 0.2 },
+            { name: 'title', weight: 0.4 },
+            { name: 'tags', weight: 0.1 },
+        ],
+        threshold: 0.45
+    });
 
-        return fuse.search(query).map(r => r.item);
+    let searchedNifties = $state(data.nifties);
 
-    })
+    let timeout: ReturnType<typeof setTimeout>;
+    $effect(() => {
+        // reactivity
+        const q = query;
+        const s = selectedTags;
+
+        clearTimeout(timeout);
+        console.log("yuh")
+
+        timeout = setTimeout(() => {
+            if (!query) {
+                searchedNifties = data.nifties;
+            } else {
+                searchedNifties = fuse.search(query).map(r => r.item);
+            }
+        }, 150);
+    });
 
 
     // wowiews
@@ -224,7 +238,7 @@
     </section>
     <TagSeg tags={data.tags} bind:query={query} bind:selectedTags={selectedTags}/>
     <section class="content-seg">
-        <VirtualizedNifties nifties={searchedNifites} {focusedNift} {handleFocus}/>
+        <VirtualizedNifties nifties={searchedNifties} {focusedNift} {handleFocus}/>
     </section>
 </main>
 {#if focus && focusedNift}
