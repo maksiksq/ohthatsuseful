@@ -1,7 +1,5 @@
 <script lang="ts">
-    let { query = $bindable(), tags } = $props();
-
-    let selectedTags = $state<Array<String>>([]);
+    let { tags, query = $bindable(), selectedTags = $bindable() } = $props();
 
     const handleTagClick = (tag: string) => {
         if (!selectedTags.includes(tag)) {
@@ -9,7 +7,7 @@
             return;
         }
 
-        selectedTags = selectedTags.filter(t => t !== tag);
+        selectedTags = selectedTags.filter((t: String) => t !== tag);
     }
 </script>
 <section class="tag-seg">
@@ -43,18 +41,19 @@
         flex-direction: row;
 
         & .tag-seg-search {
-            width: 25%;
+            width: 40%;
             display: flex;
             justify-content: center;
 
             & .search {
                 all: unset;
-                width: 40%;
+                width: 70%;
                 background-color: white;
                 border: 1px solid #151515;
-                border-radius: 2px;
+                border-radius: 32px;
                 color: #6F6F6F;
-                padding: 0.2rem 2rem 0.2rem 0.7rem;
+                padding: 0.6rem 2rem 0.6rem 0.7rem;
+                margin-right: 3rem;
                 font-size: 1rem;
             }
 
@@ -64,7 +63,7 @@
         }
 
         & .tag-seg-tags {
-            width: 75%;
+            width: 60%;
             padding-left: 3rem;
 
             display: grid;

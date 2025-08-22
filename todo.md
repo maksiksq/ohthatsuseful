@@ -1,12 +1,14 @@
 - [ ] : finish the thing
 - [ ] : don't forget to remove the debug buttons
+- [ ] : add fuse.js search with tags client side
+- [ ] : mayb an alternatives field
 - [x] : maybe add a copyright field for things where that's necessary
 - [ ] : make sure the puppeteer serverless function doesn't take too long ; (Vercel has 300s limit at max) or move to something else (abuse Supabase's edge functions?)
 - [ ] : maybe move to playwright to avoid captcha's and stuff because Puppeteer community seems dead-ish??? A lot of work tho innit. 
       ; kinda solved by running headless: false once and that's more than good enough for most sites.
 - [ ] : update fields on insert in db
 - [ ] : implement override (maybe make it a complex file type instead of a comma string too?)
-- [ ] : change svg background color when hovering over an imaged
+- [ ] : change svg background color when hovering over an image
       ; will it still look good tho?
 - [x] : play around with h1 size again later and rethink the design with a fresh head pls
 - [x] : rotate h1 on click

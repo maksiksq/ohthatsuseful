@@ -8,6 +8,7 @@
     import {timestamptzToHumanDate} from "$lib/utils/timestamptzToHumanDate";
     import Footer from "$lib/Footer.svelte";
     import VirtualizedNifties from "$lib/VirtualizedNIfties.svelte";
+    import Fuse from "fuse.js";
 
     const {data} = $props();
 
@@ -18,7 +19,28 @@
         }
     };
 
-    let query = $state('');
+    // search
+    let query = $state('glass');
+    let selectedTags = $state<Array<String>>([]);
+
+    let searchedNifites = $derived.by(() => {
+        const fuse = new Fuse(data.nifties, {
+            keys: [
+                {name: 'link', weight: 0.05},
+                {name: 'comment', weight: 0.15},
+                {name: 'metadesc', weight: 0.1},
+                {name: 'display_name', weight: 0.2},
+                {name: 'title', weight: 0.4},
+                {name: 'tags', weight: 0.1},
+            ],
+            threshold: 0.45,
+            minMatchCharLength: 2
+        })
+
+        return fuse.search(query).map(r => r.item);
+
+    })
+
 
     // wowiews
     let wowie = $state('neat')
@@ -200,9 +222,9 @@
                      onkeydown={(e: KeyboardEvent) => {if (e.key === 'Enter') rotateWowies(true)}}>{wowie}</span>,<br>
             that's useful</h1>
     </section>
-    <TagSeg bind:query={query} tags={data.tags}/>
+    <TagSeg tags={data.tags} bind:query={query} bind:selectedTags={selectedTags}/>
     <section class="content-seg">
-        <VirtualizedNifties nifties={data.nifties} {focusedNift} {handleFocus}/>
+        <VirtualizedNifties nifties={searchedNifites} {focusedNift} {handleFocus}/>
     </section>
 </main>
 {#if focus && focusedNift}
