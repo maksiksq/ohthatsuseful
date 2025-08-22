@@ -35,7 +35,7 @@
 
         const t = currentScroll / maxScroll;
 
-        const raw = -(currentScroll + window.innerHeight) / 28;
+        const raw = -(currentScroll + window.innerHeight) / 200;
 
         footerBgX = raw * (1 - t);
     }
