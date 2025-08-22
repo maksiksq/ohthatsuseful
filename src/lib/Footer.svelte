@@ -226,15 +226,14 @@
             & .socials {
                 margin-right: 6vw;
 
-                border-right: 1px solid #151515;
-                border-left: 1px solid #151515;
+
                 padding: 2rem 2rem 0 2rem;
 
                 border-bottom: 2px solid #151515;
-                border-top: 1px solid #151515;
+
 
                 /* From https://css.glass */
-                background: rgba(255, 255, 255, 0.2);
+                background: rgba(255, 172, 48, 0.01);
                 box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
                 backdrop-filter: blur(5px);
                 -webkit-backdrop-filter: blur(5px);
