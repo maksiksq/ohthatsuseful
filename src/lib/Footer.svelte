@@ -39,8 +39,6 @@
 
         footerBgX = raw * (1 - t);
     }
-
-    $inspect(footerBgX)
 </script>
 
 <svelte:window onscroll={updateFooterBg} />

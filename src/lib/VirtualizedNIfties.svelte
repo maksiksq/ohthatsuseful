@@ -49,13 +49,13 @@
     });
 
     let startRow = $derived.by(() => {
-        if (!rowHeight) return;
+        if (!rowHeight) return 0;
         if (scrollTop < 0) return 0;
         return Math.max(0, Math.floor(scrollTop / rowHeight) - 1);
     });
 
     let endRow = $derived.by(() => {
-        if (rowHeight == null || startRow == null || rowsPerScreen == null) return;
+        if (rowHeight == null || startRow == null || rowsPerScreen == null) return 2;
         return startRow + rowsPerScreen + 2;
     });
 
