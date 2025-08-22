@@ -289,7 +289,7 @@
 
                     & li:nth-last-child(2) {
                         padding-bottom: 0;
-                        margin-bottom: 3.6rem;
+                        margin-bottom: 2.5rem;
                     }
 
                     & .social-contact {
