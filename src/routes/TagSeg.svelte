@@ -1,5 +1,16 @@
-<script>
+<script lang="ts">
     let { query = $bindable(), tags } = $props();
+
+    let selectedTags = $state<Array<String>>([]);
+
+    const handleTagClick = (tag: string) => {
+        if (!selectedTags.includes(tag)) {
+            selectedTags.push(tag);
+            return;
+        }
+
+        selectedTags = selectedTags.filter(t => t !== tag);
+    }
 </script>
 <section class="tag-seg">
     <section class="tag-seg-search">
@@ -13,7 +24,7 @@
             <ul>
                 {#each values as tag (tag)}
                     <li>
-                        <button class="tag">#{tag}</button>
+                        <button class={`tag ${selectedTags.includes(tag) ? 'selected' : ''}`} onclick={() => {handleTagClick(tag)}}>#{tag}</button>
                     </li>
                 {/each}
             </ul>
@@ -22,6 +33,10 @@
 </section>
 
 <style>
+    .selected {
+        color: black !important;
+    }
+
     .tag-seg {
         width: 70%;
         margin-top: 2rem;

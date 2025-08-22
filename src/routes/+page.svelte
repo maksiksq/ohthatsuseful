@@ -19,7 +19,6 @@
     };
 
     let query = $state('');
-    let selectedTags = $state('');
 
     // wowiews
     let wowie = $state('neat')
