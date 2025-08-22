@@ -289,12 +289,13 @@
                     }
 
                     & li:nth-last-child(2) {
-                        padding-bottom: 3rem;
+                        padding-bottom: 0;
+                        margin-bottom: 3.6rem;
                     }
 
                     & .social-contact {
                         margin-bottom: 1rem;
-                        border-bottom: 1px solid #151515;
+                        border-bottom: 1px solid #404040;
                     }
                 }
             }
