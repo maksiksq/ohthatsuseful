@@ -85,7 +85,7 @@
                 <a class="card-info-link" href="/" target="_blank" rel="noopener">🔗</a>
             </div>
             <p class="card-screenshot-link-wrap">
-                <img class="card-screenshot" src={nifties[0].screenshot} alt="">
+                <img class="card-screenshot" src={nifties[0].screenshot_smol} width="600" height="337" alt="">
             </p>
         </div>
     </div>
@@ -94,7 +94,7 @@
     <div style="flex-basis:100%; height:{startRow * rowHeight}px;"></div>
 
     <!--make sure it's not in a parent from which is can calculate its position or offsetTop dies-->
-    {#each visibleCards as nift, i (nift.id)}
+    {#each visibleCards as nift (nift.id)}
         <div class="card-wrapper">
             <div role="button" tabindex="0"
                  class={`card ${(focusedNift?.title === nift.title) ? 'focused' : ''}`}
@@ -112,7 +112,7 @@
                     <a class="card-info-link" href={nift.link} target="_blank" rel="noopener">🔗</a>
                 </div>
                 <p class="card-screenshot-link-wrap">
-                    <img class="card-screenshot" loading="lazy" src={nift.screenshot} alt={nift.name}>
+                    <img class="card-screenshot" loading="lazy" src={nift.screenshot_smol} width="600" height="337" alt={nift.name}>
                 </p>
             </div>
         </div>
@@ -280,6 +280,7 @@
                     & .card-screenshot {
                         border: 1px solid #151515;
                         width: 100%;
+                        height: auto;
                         user-select: none;
                     }
                 }

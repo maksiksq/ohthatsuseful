@@ -7,7 +7,7 @@
     import {expoIn} from "svelte/easing";
     import {timestamptzToHumanDate} from "$lib/utils/timestamptzToHumanDate";
     import Footer from "$lib/Footer.svelte";
-    import VirtualizedNIfties from "$lib/VirtualizedNIfties.svelte";
+    import VirtualizedNifties from "$lib/VirtualizedNIfties.svelte";
 
     const {data} = $props();
 
@@ -203,7 +203,7 @@
     </section>
     <TagSeg bind:query={query} tags={data.tags}/>
     <section class="content-seg">
-        <VirtualizedNIfties nifties={data.nifties} {focusedNift} {handleFocus}/>
+        <VirtualizedNifties nifties={data.nifties} {focusedNift} {handleFocus}/>
     </section>
 </main>
 {#if focus && focusedNift}
