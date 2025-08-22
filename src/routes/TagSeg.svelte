@@ -9,6 +9,8 @@
 
         selectedTags = selectedTags.filter((t: String) => t !== tag);
     }
+
+
 </script>
 <section class="tag-seg">
     <section class="tag-seg-search">

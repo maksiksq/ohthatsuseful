@@ -37,7 +37,7 @@
 
     let searchedNifties = $state(data.nifties);
 
-    const hasTags = (item, selectedTags: string[]) => {
+    const hasTags = (item: typeof data.nifties[number], selectedTags: string[]) => {
         console.log(item.tags);
         console.log(selectedTags);
         return selectedTags.length === 0 || selectedTags.some(tag =>
