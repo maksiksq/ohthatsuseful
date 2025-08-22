@@ -209,6 +209,7 @@
             // timeout so the animation goes away to prevent a visible layout shift
             setTimeout(() => {
                 if (!bodyElem) return;
+                if (focus) return;
                 document.documentElement.classList.remove('scroll-lock');
             }, 400);
         }
