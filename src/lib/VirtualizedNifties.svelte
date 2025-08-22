@@ -69,32 +69,32 @@
 <svelte:window onscroll={updateViewport} onresize={updateViewport}/>
 
 {#if nifties.length > 0 && visibleCards}
-<div bind:this={containerElem} class="content-cards">
-    <!--dummy elem so we know the height-->
-    <div bind:this={cardWrapElem} class="card-wrapper dummy" aria-hidden="true">
-        <div class="card">
-            <div class="h2-wrap">
-                <h2 title="Dummy">Dummy</h2>
-            </div>
-            <div class="card-info">
-                <p class="card-info-favicon-wrap">
-                    <img class="card-info-favicon" src={nifties[0].favicon} alt="">
-                </p>
-                <div class="card-info-title-wrap">
-                    <p class="card-info-title">Dummy</p>
+    <div bind:this={containerElem} class="content-cards">
+        <!--dummy elem so we know the height-->
+        <div bind:this={cardWrapElem} class="card-wrapper dummy" aria-hidden="true">
+            <div class="card">
+                <div class="h2-wrap">
+                    <h2 title="Dummy">Dummy</h2>
                 </div>
-                <a class="card-info-link" href="/" target="_blank" rel="noopener">🔗</a>
+                <div class="card-info">
+                    <p class="card-info-favicon-wrap">
+                        <img class="card-info-favicon" src={nifties[0].favicon} alt="">
+                    </p>
+                    <div class="card-info-title-wrap">
+                        <p class="card-info-title">Dummy</p>
+                    </div>
+                    <a class="card-info-link" href="/" target="_blank" rel="noopener">🔗</a>
+                </div>
+                <p class="card-screenshot-link-wrap">
+                    <img class="card-screenshot" src={nifties[0].screenshot_smol} width="600" height="337" alt="">
+                </p>
             </div>
-            <p class="card-screenshot-link-wrap">
-                <img class="card-screenshot" src={nifties[0].screenshot_smol} width="600" height="337" alt="">
-            </p>
         </div>
-    </div>
 
-    <!--top spacer-->
-    <div style="flex-basis:100%; height:{startRow * rowHeight}px;"></div>
+        <!--top spacer-->
+        <div style="flex-basis:100%; height:{startRow * rowHeight}px;"></div>
 
-    <!--make sure it's not in a parent from which is can calculate its position or offsetTop dies-->
+        <!--make sure it's not in a parent from which is can calculate its position or offsetTop dies-->
         {#each visibleCards as nift (nift.id)}
             <div class="card-wrapper">
                 <div role="button" tabindex="0"
@@ -105,7 +105,8 @@
                     </div>
                     <div class="card-info">
                         <p class="card-info-favicon-wrap">
-                            <img class="card-info-favicon" loading="lazy" src={nift.favicon} alt={`${nift.name} favicon`}>
+                            <img class="card-info-favicon" loading="lazy" src={nift.favicon}
+                                 alt={`${nift.name} favicon`}>
                         </p>
                         <div class="card-info-title-wrap">
                             <p class="card-info-title">{nift.title}</p>
@@ -120,10 +121,12 @@
             </div>
         {/each}
 
-    <!--botton spacer-->
-    <div style="flex-basis:100%; height:{Math.max(0, Math.ceil(nifties.length / cardsPerRow) * rowHeight - endRow * rowHeight)}px;"></div>
-</div>
-    {/if}
+        <!--bottom spacer-->
+        <div style="flex-basis:100%; height:{Math.max(0, Math.ceil(nifties.length / cardsPerRow) * rowHeight - endRow * rowHeight)}px;"></div>
+    </div>
+{:else}
+    no results 4 u;
+{/if}
 
 <style>
     .dummy {

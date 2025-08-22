@@ -21,7 +21,7 @@
 
     // search
     let query = $state('');
-    let selectedTags = $state<Array<String>>([]);
+    let selectedTags = $state<Array<string>>([]);
 
     const fuse = new Fuse(data.nifties, {
         keys: [
@@ -37,6 +37,14 @@
 
     let searchedNifties = $state(data.nifties);
 
+    const hasTags = (item, selectedTags: string[]) => {
+        console.log(item.tags);
+        console.log(selectedTags);
+        return selectedTags.length === 0 || selectedTags.some(tag =>
+            Object.values(item.tags).some(arr => arr.includes(tag))
+        );
+    };
+
     let timeout: ReturnType<typeof setTimeout>;
     $effect(() => {
         // reactivity
@@ -44,13 +52,14 @@
         const s = selectedTags;
 
         clearTimeout(timeout);
-        console.log("yuh")
 
         timeout = setTimeout(() => {
-            if (!query) {
+            if (!q && s.length === 0) {
                 searchedNifties = data.nifties;
             } else {
-                searchedNifties = fuse.search(query).map(r => r.item);
+                searchedNifties = fuse.search(q)
+                    .map(r => r.item)
+                    .filter(item => hasTags(item, s));
             }
         }, 150);
     });
