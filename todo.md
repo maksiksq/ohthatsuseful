@@ -5,7 +5,7 @@
       ; kinda solved by running headless: false once and that's more than good enough for most sites.
 - [ ] : update fields on insert in db
 - [ ] : implement override (maybe make it a complex file type instead of a comma string too?)
-- [ ] : change svg background color when hovering over an image
+- [ ] : change svg background color when hovering over an imaged
       ; will it still look good tho?
 - [x] : play around with h1 size again later and rethink the design with a fresh head pls
 - [x] : rotate h1 on click
@@ -23,7 +23,9 @@
       ; pop anim for focus
       ; h1 anim 
       ; mayb some more, provided they don't hurt ux
-- 
+
+- [ ] : PROD: FLIP THE API TO HEADLESS
+
 - [ ] : scrap: maybe make the focus 0-25-75-100 instead of 50-100 ; nvm, user expectations on this would slightly feel off
 
 - [ ] : umami: If thy steal your data, thy steal politely. The most effortless, no-cookies, free, open-source analytics platform. You just plug it in. No need for an annoying pop-up (looking at you google analytics) and it just does its job instead of feeding the clankers or something.

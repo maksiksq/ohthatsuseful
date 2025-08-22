@@ -4,6 +4,7 @@ import {getSupabaseAdminClient} from "$lib/utils/getSupabaseAdminClient";
 import {PUBLIC_SUPABASE_URL} from "$env/static/public";
 import {PUBLIC_DEV} from "$lib";
 import {sanitizeFileName} from "$lib/utils/sanitizeFileName";
+import pica from "pica";
 
 const delay = (time: number) => {
     return new Promise(function (resolve) {
@@ -42,7 +43,7 @@ export const updatePuppeteerData = async (link: string) => {
 
         // Getting screenshot
 
-        // first we remove the scrollbar because ugly
+        // First we're removing the scrollbar because ugly
         await page.addStyleTag({
             content: `
                         ::-webkit-scrollbar { display: none !important; }
@@ -57,10 +58,25 @@ export const updatePuppeteerData = async (link: string) => {
 
         const blob = new Blob([buffer], {type: "image/webp"});
 
+        // we don't need to send the client the whole big screenshot but I want to store
+        // it for historical purposes or if something goes wrong
+        // neverthless, I'm resizing it to be smol
+        // pica time weee
+        const picai = pica();
+
+        const blobSmol = new Blob([], {type: "image/webp"});
+
         // Storing the screenshot in a bucket
-        const res = await storeImageInSupabaseBucket(blob, 'screenshots', title, 'webp');
-        if (!res.success) {
-            console.error('Failed to store screenshot miserably', res);
+        const resSmol = await storeImageInSupabaseBucket(blob, 'screenshots', title, 'webp');
+        if (!resSmol.success) {
+            console.error('Failed to store screenshot miserably', resSmol);
+            return {success: false};
+        }
+
+        // Storing the screenshot in a bucket
+        const resOg = await storeImageInSupabaseBucket(blob, 'screenshots', title, 'webp');
+        if (!resOg.success) {
+            console.error('Failed to store screenshot miserably', resOg);
             return {success: false};
         }
 
