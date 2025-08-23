@@ -34,6 +34,10 @@ export const actions = {
         const formData = await request.formData();
         const link = formData.get('link');
 
+        if (typeof link !== 'string' || link.trim() === '') {
+            throw sverror(400, "There is no link! Who is going to save Hyrule?");
+        }
+
         try {
             const res = await eventFetch('/api/v1/update', {
                 method: 'POST',
