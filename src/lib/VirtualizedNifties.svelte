@@ -1,5 +1,6 @@
 <script lang="ts">
     import {onMount} from "svelte";
+    import {fade, fly, blur} from "svelte/transition"
 
     const {nifties, focusedNift, handleFocus} = $props();
 
@@ -96,7 +97,7 @@
 
         <!--make sure it's not in a parent from which is can calculate its position or offsetTop dies-->
         {#each visibleCards as nift (nift.id)}
-            <div class="card-wrapper">
+            <div transition:blur={{duration: 100}} class="card-wrapper">
                 <div role="button" tabindex="0"
                      class={`card ${(focusedNift?.title === nift.title) ? 'focused' : ''}`}
                      onclick={(e) => {handleFocus(e, nift)}} onkeydown={(e) => {handleFocus(e, nift)}}>
