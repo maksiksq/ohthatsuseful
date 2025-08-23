@@ -4,9 +4,10 @@
 <main>
     <p class="dungeon">Welcome back to the dungeon my leige.</p>
     <p class="dungeon-2">We <a href="https://en.wikipedia.org/wiki/Guard_goose" title="this is an actual thing I kid you not">guard geese</a> shall scare off any intruders.</p>
-    <form method="POST" action="/auth/login">
-        <input type="text" name="username" placeholder="username">
+    <form method="POST" action="?/login">
+        <input type="text" name="email" placeholder="email">
         <input type="password" name="password" placeholder="password">
+        <button>Login</button>
     </form>
 <!--    <p>{form.threat}</p>-->
 </main>
@@ -56,12 +57,24 @@
 
             & input {
                 all: unset;
+                color: white;
                 background-color: #151515;
                 border: white 1px solid;
                 padding: 0.5rem 6rem 0.5rem 0.3rem;
             }
 
             & input::placeholder {
+                color: white;
+            }
+
+            & button {
+                all: unset;
+                align-self: flex-end;
+                cursor: pointer;
+                width: 12%;
+                background-color: #151515;
+                border: white 1px solid;
+                padding: 0.2rem 1rem 0.2rem 0.3rem;
                 color: white;
             }
         }
