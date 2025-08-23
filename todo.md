@@ -28,6 +28,7 @@
       ; h1 anim 
       ; mayb some more, provided they don't hurt ux
 
+- [ ] : POPULATED: make sure search almost always returns at least something for better ux when ur done with populating the nifties + play around with anim timings
 - [ ] : PROD: FLIP THE API TO HEADLESS
 
 - [ ] : scrap: maybe make the focus 0-25-75-100 instead of 50-100 ; nvm, user expectations on this would slightly feel off
