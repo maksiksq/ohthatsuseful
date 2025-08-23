@@ -35,6 +35,7 @@
     <div class="input-seg">
         <p>Very official secret lair.</p>
         <p>You heard of a shrimp but have you heard of a shrip?</p>
+        <h3>Add a card: </h3>
         <form method="POST" action="?/add" use:enhance>
             <label> Link:
                 <input type="text" name="link" bind:value={link} placeholder="Link...">
@@ -74,16 +75,29 @@
 
         & .input-seg {
             width: 50%;
+
+            box-sizing: border-box;
+            padding: 5rem 2rem;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            & form {
+                display: flex;
+                flex-direction: column;
+            }
         }
 
         & .card-seg {
             width: 50%;
+            height: 100vh;
+            display: flex;
             justify-content: center;
             align-items: center;
 
             & .card-wrapper {
-                flex: 1 1 25%;
-                max-width: 25%;
+                max-width: 25vw;
                 display: flex;
                 box-sizing: border-box;
                 font-weight: 400;
