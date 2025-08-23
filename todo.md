@@ -24,6 +24,7 @@
 - [x] : mayb play around with the blur
 - [ ] : mayb fix scrollbar flashing on focus out
 - [ ] : maybe add animation to easter egg but later
+- [ ] : can't forget to implement stashing
 - [ ] : cool afterfx animations would go so well here if i want to 
       ; pop anim for focus
       ; h1 anim 

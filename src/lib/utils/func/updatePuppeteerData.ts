@@ -12,7 +12,7 @@ const delay = (time: number) => {
     });
 }
 
-export const updatePuppeteerData = async (link: string) => {
+export const updatePuppeteerData = async (link: string, nodb: boolean = false) => {
     try {
         //
         // Getting all the data
@@ -133,23 +133,32 @@ export const updatePuppeteerData = async (link: string) => {
             return descELem.getAttribute('content');
         });
 
+        const data = {
+            screenshot: `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/screenshots/${sanitizeFileName(title)}.webp`,
+            screenshot_smol: `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/screenshots/smol-${sanitizeFileName(title)}.webp`,
+            title: title,
+            favicon: favExtension ? `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/favicons/fav-${sanitizeFileName(title)}.${favExtension}` : `/img/favicon-skill-issue.svg`,
+            metadesc: metadesc ?? 'No description provided by the site.',
+        }
 
         //
-        // Updating all te data
+        // If it's a draft for the dashboard preview, we just send everything in without updating the db
+        //
+
+        if (nodb) {
+            await browser.close();
+            return {success: true, data: {...data}};
+        }
+
+        //
+        // Updating all the data
         //
         const supabase = getSupabaseAdminClient();
 
         const {error: upderror} = await supabase
             .from('nifties')
-            .update({
-                screenshot: `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/screenshots/${sanitizeFileName(title)}.webp`,
-                screenshot_smol: `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/screenshots/smol-${sanitizeFileName(title)}.webp`,
-                title: title,
-                favicon: favExtension ? `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/favicons/fav-${sanitizeFileName(title)}.${favExtension}` : `/img/favicon-skill-issue.svg`,
-                metadesc: metadesc ?? 'No description provided by the site.',
-            })
+            .update({...data})
             .eq('link', link);
-
 
         if (upderror) {
             console.error('Failed to update site data miserably', upderror);

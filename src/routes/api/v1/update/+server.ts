@@ -21,6 +21,7 @@ export const POST: RequestHandler = async ({request}) => {
 
     const rqdata = await request.json();
     const link = rqdata.link;
+    const nodb = rqdata.nodb || false;
 
     const supabase = getSupabaseDataClient();
 
@@ -52,8 +53,28 @@ export const POST: RequestHandler = async ({request}) => {
         }
     } else {
         // updating one thing
-        const res = await updatePuppeteerData(link);
-        if (!res.success) console.error("Something went wrong when getting data");
+        const res = await updatePuppeteerData(link, nodb);
+        if (!res.success) {
+            console.error("Something went wrong when getting data");
+            return new Response(JSON.stringify({success: false}), {
+                headers: {"Content-Type": "application/json"},
+                status: 500
+            });
+        }
+
+        if (nodb) {
+            if (PUBLIC_DEV) console.info("Draft successful!");
+            return new Response(JSON.stringify({success: true, data: res.data}), {
+                headers: {"Content-Type": "application/json"},
+                status: 200
+            });
+        }
+
+        if (PUBLIC_DEV) console.info("Update successful!");
+        return new Response(JSON.stringify({success: true}), {
+            headers: {"Content-Type": "application/json"},
+            status: 200
+        });
     }
 
     if (PUBLIC_DEV) console.info("Update successful!");
