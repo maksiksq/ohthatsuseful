@@ -1,3 +1,3 @@
 <script></script>
 
-<p>no</p>
+<p>You were goosed to death</p>

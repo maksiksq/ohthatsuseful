@@ -9,6 +9,7 @@
     import Footer from "$lib/Footer.svelte";
     import VirtualizedNifties from "$lib/VirtualizedNifties.svelte";
     import Fuse from "fuse.js";
+    import {goto} from "$app/navigation";
 
     const {data} = $props();
 
@@ -42,8 +43,6 @@
             Object.values(item.tags).some(arr => arr.includes(tag))
         );
     };
-
-    $inspect(selectedTags);
 
     let timeout: ReturnType<typeof setTimeout>;
     $effect(() => {
@@ -216,10 +215,36 @@
             }, 400);
         }
     }
+
+    // Handle travel to the admin page
+    const cheatCode = ['G', 'O', 'O', 'S', 'E'];
+    let codeIx = 0;
+    const maxDelay = 3000;
+    let past = Date.now();
+
+    const handleCheatCode = (e: KeyboardEvent) => {
+        const now = Date.now();
+
+        if (now - past > maxDelay) {
+            codeIx = 0;
+        }
+
+        past = now;
+
+        if (e.key === cheatCode[codeIx] || e.key === cheatCode[codeIx].toLowerCase()) {
+            codeIx++;
+            if (codeIx === cheatCode.length) {
+                goto('/admin');
+                codeIx = 0;
+            }
+        } else {
+            codeIx = 0;
+        }
+    }
 </script>
 
 
-<svelte:window onclick={focus ? (e) => {handleUnfocus(e)} : () => {}} onkeydown={summonDevOverlay}/>
+<svelte:window onclick={focus ? (e) => {handleUnfocus(e)} : () => {}} onkeydown={(e) => {summonDevOverlay(e); handleCheatCode(e);}}/>
 <svelte:body bind:this={bodyElem}/>
 <svelte:head>
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
