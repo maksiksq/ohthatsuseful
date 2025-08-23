@@ -38,12 +38,12 @@
     let searchedNifties = $state(data.nifties);
 
     const hasTags = (item: typeof data.nifties[number], selectedTags: string[]) => {
-        console.log(item.tags);
-        console.log(selectedTags);
         return selectedTags.length === 0 || selectedTags.some(tag =>
             Object.values(item.tags).some(arr => arr.includes(tag))
         );
     };
+
+    $inspect(selectedTags);
 
     let timeout: ReturnType<typeof setTimeout>;
     $effect(() => {
@@ -56,6 +56,8 @@
         timeout = setTimeout(() => {
             if (!q && s.length === 0) {
                 searchedNifties = data.nifties;
+            } else if (!q) {
+                searchedNifties = data.nifties.filter(item => hasTags(item, s));
             } else {
                 searchedNifties = fuse.search(q)
                     .map(r => r.item)
