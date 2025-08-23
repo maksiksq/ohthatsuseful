@@ -3,7 +3,7 @@
 
     const handleTagClick = (tag: string) => {
         if (!selectedTags.includes(tag)) {
-            selectedTags.push(tag);
+            selectedTags = [...selectedTags, tag];
             return;
         }
 
