@@ -70,6 +70,10 @@ html.scroll-lock {
 /* SCROLLBAR */
 ::-webkit-scrollbar {
     width: 0.3vw;
+
+    @media (max-width: 569px) {
+        width: 1vw;
+    }
 }
 
 ::-webkit-scrollbar-track {
@@ -78,6 +82,10 @@ html.scroll-lock {
 
 ::-webkit-scrollbar-thumb {
     background: #cacaca;
+
+    @media (max-width: 569px) {
+        background: #9c9c9c;
+    }
 }
 
 ::-webkit-scrollbar-thumb:hover {

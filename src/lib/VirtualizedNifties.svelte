@@ -3,9 +3,7 @@
     import {flip} from "svelte/animate"
     import Card from "$lib/Card.svelte";
 
-    const {nifties, focusedNift, handleFocus} = $props();
-
-    const cardsPerRow = $state(4);
+    const {nifties, focusedNift, handleFocus, cardsPerRow} = $props();
 
     const remToPx = (rem: number) => parseFloat(getComputedStyle(document.documentElement).fontSize) * rem;
 

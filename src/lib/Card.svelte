@@ -31,6 +31,11 @@
 
         /* notice that it's not a border because layout shift */
         outline: 1px solid #151515 !important;
+
+        @media (max-width: 569px) {
+            position: initial;
+            z-index: 1;
+        }
     }
 
     .card {

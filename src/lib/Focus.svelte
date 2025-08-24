@@ -3,13 +3,16 @@
     import {blur} from "svelte/transition";
     import {timestamptzToHumanDate} from "$lib/utils/timestamptzToHumanDate";
 
-    let {focusedNift, handleUnfocus, descElem=$bindable(), isFocusLeft, focusedNiftTags, focusButtonSeg} = $props();
+    let {focusedNift, handleUnfocus, descElem = $bindable(), isFocusLeft, focusedNiftTags, focusButtonSeg} = $props();
 </script>
 
 <div class="focus">
     <div transition:blur={{duration: 200, easing: expoIn}} class="lightbox"></div>
     <button onclick={handleUnfocus} aria-label="close-modal" class="x-button">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M183.1 137.4C170.6 124.9 150.3 124.9 137.8 137.4C125.3 149.9 125.3 170.2 137.8 182.7L275.2 320L137.9 457.4C125.4 469.9 125.4 490.2 137.9 502.7C150.4 515.2 170.7 515.2 183.2 502.7L320.5 365.3L457.9 502.6C470.4 515.1 490.7 515.1 503.2 502.6C515.7 490.1 515.7 469.8 503.2 457.3L365.8 320L503.1 182.6C515.6 170.1 515.6 149.8 503.1 137.3C490.6 124.8 470.3 124.8 457.8 137.3L320.5 274.7L183.1 137.4z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+            <!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+            <path d="M183.1 137.4C170.6 124.9 150.3 124.9 137.8 137.4C125.3 149.9 125.3 170.2 137.8 182.7L275.2 320L137.9 457.4C125.4 469.9 125.4 490.2 137.9 502.7C150.4 515.2 170.7 515.2 183.2 502.7L320.5 365.3L457.9 502.6C470.4 515.1 490.7 515.1 503.2 502.6C515.7 490.1 515.7 469.8 503.2 457.3L365.8 320L503.1 182.6C515.6 170.1 515.6 149.8 503.1 137.3C490.6 124.8 470.3 124.8 457.8 137.3L320.5 274.7L183.1 137.4z"/>
+        </svg>
     </button>
     <div bind:this={descElem} transition:blur={{duration: 400}}
          class={`desc ${isFocusLeft ? 'desc-left' : 'desc-right'}`}>
@@ -18,7 +21,7 @@
         <div class="desc-custom">{@html focusedNift.custom}</div>
 
         <div class="desc-separator">
-            <img src="/img/coolerseparator.svg"  alt="separator">
+            <img src="/img/coolerseparator.svg" alt="separator">
         </div>
         <div class="desc-tags">
             {#each Object.entries(focusedNiftTags) as [key, values] (key)}
@@ -45,14 +48,20 @@
         {/if}
         {#if focusedNift.copyright}
             <div class="desc-disclaimer desc-copyright">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copyright-icon lucide-copyright"><circle cx="12" cy="12" r="10"/><path d="M14.83 14.83a4 4 0 1 1 0-5.66"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                     stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                     class="lucide lucide-copyright-icon lucide-copyright">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M14.83 14.83a4 4 0 1 1 0-5.66"/>
+                </svg>
                 <p>{focusedNift.copyright}</p>
             </div>
         {/if}
 
         <p class="desc-small-gray">Added on: {timestamptzToHumanDate(focusedNift.created_at)}</p>
     </div>
-    <a transition:blur={{duration: 200, easing: expoIn}} href={focusedNift.link} target="_blank" rel="noopener" class={`visit visit-${focusButtonSeg}`}>
+    <a transition:blur={{duration: 200, easing: expoIn}} href={focusedNift.link} target="_blank" rel="noopener"
+       class={`visit visit-${focusButtonSeg}`}>
         Visit
     </a>
 </div>
@@ -85,12 +94,24 @@
         left: 3rem;
         padding: 0 4rem 0 0;
         transform: translate(3rem, -50%);
+
+        @media (max-width: 569px) {
+            padding: 0 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+        }
     }
 
     .desc-right {
         left: 53%;
         transform: translateY(-50%);
         padding: 0 4rem 0 0;
+
+        @media (max-width: 569px) {
+            padding: 0 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+        }
     }
 
     .desc {
@@ -102,8 +123,25 @@
         box-sizing: border-box;
         color: white;
 
+        display: flex;
+        flex-direction: column;
+
+        @media (max-width: 569px) {
+            top: 0;
+            width: 100vw;
+            padding: 2rem 1.5rem 10rem 1.5rem;
+            max-width: 100vw;
+            height: 100%;
+            max-height: 100dvh;
+            overflow-y: auto;
+        }
+
         & h2 {
             font-size: 1.7rem;
+
+            @media (max-width: 569px) {
+                order: 1;
+            }
         }
 
         & .desc-metadesc {
@@ -114,6 +152,11 @@
             font-size: 1rem;
             line-height: 1.5em;
             margin-top: 1rem;
+
+            @media (max-width: 569px) {
+                margin-top: 0;
+                order: 4;
+            }
         }
 
         & .desc-tags {
@@ -121,6 +164,10 @@
             grid-template-columns: auto 1fr;
             gap: 0.4rem;
             padding: 1.2rem 0 0 0;
+
+            @media (max-width: 569px) {
+                order: 6;
+            }
 
             & .desc-tag-cat {
                 color: #dddddd;
@@ -137,11 +184,17 @@
             }
         }
 
-        & .desc-separator > img {
-            margin-top: 1rem;
-            width: 100%;
-            pointer-events: none;
-            user-select: none;
+        & .desc-separator {
+            @media (max-width: 569px) {
+                order: 3;
+            }
+
+            & img {
+                margin-top: 1rem;
+                width: 100%;
+                pointer-events: none;
+                user-select: none;
+            }
         }
 
         & .desc-disclaimer {
@@ -155,14 +208,28 @@
             margin: 1rem 0 1rem 0;
             color: #151515;
 
+            @media (max-width: 569px) {
+                margin: 1.5rem 0 1rem 0;
+                padding: 0.7rem 1.2rem;
+                order: 5;
+            }
+
             & svg {
                 width: 1.5rem;
                 height: auto;
+
+                @media (max-width: 569px) {
+                    width: 3rem;
+                }
             }
 
             & p {
                 padding-left: 0.4rem;
                 user-select: none;
+
+                @media (max-width: 569px) {
+                    padding-left: 1rem;
+                }
             }
         }
 
@@ -178,12 +245,21 @@
             margin-top: 1rem;
             font-size: 1.1rem;
             line-height: 1.5em;
+
+            @media (max-width: 569px) {
+                order: 2;
+            }
         }
 
         & .desc-small-gray {
             margin-top: 1rem;
             font-size: 0.8rem;
             color: #cccccc;
+
+            @media (max-width: 569px) {
+                margin-top: 2rem;
+                order: 7;
+            }
         }
     }
 
@@ -192,24 +268,48 @@
         left: 37.5%;
         transform: translate(-37.5%, -50%);
         margin-left: -1rem;
+
+        @media (max-width: 569px) {
+            margin-left: 0;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
     }
 
     .visit-2 {
         left: 12.5%;
         transform: translate(-12.5%, -50%);
         margin-left: -3rem;
+
+        @media (max-width: 569px) {
+            margin-left: 0;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
     }
 
     .visit-3 {
         left: 87.5%;
         transform: translate(-87.5%, -50%);
         margin-left: 3rem;
+
+        @media (max-width: 569px) {
+            margin-left: 0;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
     }
 
     .visit-4 {
         left: 62.5%;
         transform: translate(-62.5%, -50%);
         margin-left: 1rem;
+
+        @media (max-width: 569px) {
+            margin-left: 0;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
     }
 
     .visit {
@@ -231,6 +331,16 @@
         font-weight: bold;
         font-size: 2.7rem;
         transition: box-shadow, top 0.2s ease-in-out;
+
+        @media (max-width: 569px) {
+            left: 50%;
+            top: 80%;
+            transform: translateX(-50%);
+
+            &:hover {
+                top: 81%;
+            }
+        }
 
         &:hover {
             outline: 1px solid #151515;

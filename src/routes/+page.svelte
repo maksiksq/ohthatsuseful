@@ -24,12 +24,12 @@
 
     const fuse = new Fuse(data.nifties, {
         keys: [
-            { name: 'link', weight: 0.05 },
-            { name: 'comment', weight: 0.15 },
-            { name: 'metadesc', weight: 0.1 },
-            { name: 'display_name', weight: 0.2 },
-            { name: 'title', weight: 0.4 },
-            { name: 'tags', weight: 0.1 },
+            {name: 'link', weight: 0.05},
+            {name: 'comment', weight: 0.15},
+            {name: 'metadesc', weight: 0.1},
+            {name: 'display_name', weight: 0.2},
+            {name: 'title', weight: 0.4},
+            {name: 'tags', weight: 0.1},
         ],
         threshold: 0.45
     });
@@ -148,6 +148,22 @@
         }
     })
 
+    // responsiveness
+    let u569px = $state(false);
+    let u769px = $state(false);
+
+    const checkScreen = () => {
+        u569px = window.matchMedia('(max-width: 569px)').matches;
+        u769px = window.matchMedia('(max-width: 769px)').matches;
+    }
+
+    onMount(() => {
+        checkScreen();
+    })
+
+    const cardsPerRow = $derived(u569px ? 1 : (u769px ? 3 : 4));
+    $inspect(cardsPerRow)
+
     //
 
     let focus = $state(false);
@@ -180,7 +196,7 @@
         const elemCenter = rect.left + rect.width / 2;
         isFocusLeft = elemRight > window.innerWidth / 2;
 
-        focusButtonSeg = Math.ceil(elemCenter/(window.innerWidth/4));
+        focusButtonSeg = Math.ceil(elemCenter / (window.innerWidth / 4));
 
         if (!bodyElem) return;
         document.documentElement.classList.add('scroll-lock');
@@ -235,7 +251,11 @@
 </script>
 
 
-<svelte:window onclick={focus ? (e) => {handleUnfocus(e)} : () => {}} onkeydown={(e) => {summonDevOverlay(e); handleCheatCode(e);}}/>
+<svelte:window onclick={focus ? (e) => {handleUnfocus(e)} : () => {}}
+               onkeydown={(e) => {summonDevOverlay(e); handleCheatCode(e);}}
+               onresize={checkScreen}
+
+/>
 <svelte:body bind:this={bodyElem}/>
 <svelte:head>
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -261,16 +281,16 @@
             </div>
         {/if}
         <h1><span>oh</span> <span class="wowie" role="button" tabindex="-1" onclick={() => rotateWowies(true)}
-                     onkeydown={(e: KeyboardEvent) => {if (e.key === 'Enter') rotateWowies(true)}}>{wowie}</span><span>,</span><br>
+                                  onkeydown={(e: KeyboardEvent) => {if (e.key === 'Enter') rotateWowies(true)}}>{wowie}</span><span>,</span><br>
             <span>that's</span> <span>useful</span></h1>
     </section>
     <TagSeg tags={data.tags} bind:query={query} bind:selectedTags={selectedTags}/>
     <section class="content-seg">
-        <VirtualizedNifties nifties={searchedNifties} {focusedNift} {handleFocus}/>
+        <VirtualizedNifties {cardsPerRow} nifties={searchedNifties} {focusedNift} {handleFocus}/>
     </section>
 </main>
 {#if focus && focusedNift}
-    <Focus bind:descElem {focusedNift} {handleUnfocus} {isFocusLeft} {focusedNiftTags} {focusButtonSeg}  />
+    <Focus bind:descElem {focusedNift} {handleUnfocus} {isFocusLeft} {focusedNiftTags} {focusButtonSeg}/>
 {/if}
 <Footer fromContact={false}/>
 
