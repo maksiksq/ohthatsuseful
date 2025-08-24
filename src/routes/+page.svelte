@@ -306,6 +306,15 @@
         text-align: center;
         transform: translateX(-50%);
         pointer-events: none;
+
+
+        & p {
+            @media (max-width: 769px) {
+                color: white;
+                background-color: rgba(33, 33, 33, 0.6);
+                padding: 0.2rem 0;
+            }
+        }
     }
 
     :global {
