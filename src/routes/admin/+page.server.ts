@@ -3,6 +3,7 @@ import {createServerClient} from "@supabase/ssr";
 import {SECRET_API_CONTROL_KEY} from "$env/static/private";
 import {PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL} from "$env/static/public";
 import {updatePuppeteerData} from "$lib/utils/func/updatePuppeteerData";
+import {loadNifties} from "$lib/shared/loadNifties";
 
 export const actions = {
     preview: async ({ cookies, request, fetch: eventFetch }) => {
@@ -16,6 +17,7 @@ export const actions = {
             },
             cookies: {
                 getAll: () => cookies.getAll(),
+                // @ts-ignore it exists, trust me
                 setAll: () => cookies.setAll(),
                 delete: (name: any, options: any) => cookies.delete(name, options)
             }
@@ -65,6 +67,7 @@ export const actions = {
             },
             cookies: {
                 getAll: () => cookies.getAll(),
+                // @ts-ignore it exists, trust me
                 setAll: () => cookies.setAll(),
                 delete: (name: any, options: any) => cookies.delete(name, options)
             }
@@ -127,6 +130,7 @@ export const actions = {
             },
             cookies: {
                 getAll: () => cookies.getAll(),
+                // @ts-ignore it exists, trust me
                 setAll: () => cookies.setAll(),
                 delete: (name: any, options: any) => cookies.delete(name, options)
             }
@@ -164,3 +168,7 @@ export const actions = {
         return {success: true, threat: `Stashed ${link} successfully.`};
     }
 } satisfies Actions;
+
+export const load = async () => {
+    return loadNifties(true);
+}

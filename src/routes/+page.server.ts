@@ -2,6 +2,7 @@ import {getSupabaseDataClient} from "$lib/utils/getSupabaseDataClient";
 import {error as sverror} from "@sveltejs/kit";
 import {PUBLIC_DEV} from "$lib";
 import {SECRET_API_CONTROL_KEY} from "$env/static/private";
+import {loadNifties} from "$lib/shared/loadNifties";
 
 // cfg enable later
 // export const prerender = true;
@@ -42,31 +43,5 @@ export const actions = {
 };
 
 export const load = async () => {
-    const supabase = getSupabaseDataClient();
-
-    let {data: nifties, error: selerror} = await supabase
-        .from('nifties')
-        .select('*');
-
-    if (selerror || !nifties) {
-        if (PUBLIC_DEV) console.error(selerror);
-        throw sverror(500, "Could not get the nifty stuff!")
-    }
-
-    type TagCategories = {
-        what: string[];
-        which: string[];
-        why: string[];
-    };
-    const keys = ['what', 'which', 'why'] as const;
-    type TagKey = typeof keys[number];
-
-    const tags = keys.reduce((acc, key: TagKey) => {
-        acc[key] = [...new Set(nifties?.flatMap(n => n.tags[key] || []))];
-        return acc;
-    }, {} as TagCategories);
-
-    nifties = nifties.filter((nift) => !nift.stashed);
-
-    return {nifties, tags};
+    return loadNifties();
 }

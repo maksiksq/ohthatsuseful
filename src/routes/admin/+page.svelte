@@ -4,7 +4,7 @@
     import {goto} from "$app/navigation";
     import Focus from "$lib/Focus.svelte";
 
-    let {form} = $props();
+    let {form, data} = $props();
 
     let link = $state('');
     $effect(() => {
@@ -153,7 +153,7 @@
                 <input type="text" name="copyright" bind:value={copyright} placeholder="Copyright...">
             </label>
             <label> Custom HTML:
-                <textarea type="text" name="customHtml" bind:value={custom} placeholder="Custom..."></textarea>
+                <textarea name="customHtml" bind:value={custom} placeholder="Custom..."></textarea>
             </label>
             <label> What tags:
                 <input type="text" name="whatTags" bind:value={what_tags} placeholder="What tags...">
@@ -180,6 +180,20 @@
         {/if}
     </div>
 </main>
+<div class="stash-seg">
+    <h2>Stash</h2>
+    {#each data?.nifties as nift}
+        <form method="POST" action="?/stash" use:enhance>
+            <p>{nift.display_name}</p>
+            <input type="hidden" name="link" value={nift.link}>
+            {#if !nift.stashed}
+                <button>Stash</button>
+            {:else}
+                <button>Unstash</button>
+            {/if}
+        </form>
+    {/each}
+</div>
 <div class="goose-fly">
     <img src="/img/peace-goose.webp" alt="goose">
 </div>
@@ -198,6 +212,26 @@
         & img {
             width: 16rem;
             height: auto;
+        }
+    }
+
+    .stash-seg {
+        box-sizing: border-box;
+        padding: 1rem;
+        background-color: #d6fff1;
+
+        & form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+
+            & button {
+                background-color: #151515;
+                color: white;
+                width: 4.5rem;
+                padding: 0.2rem 0.3rem;
+            }
         }
     }
 
