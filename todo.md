@@ -45,7 +45,7 @@
 - [ ] : https://unsplash.com/: Free beautiful stock images. Best for background images, cinematic images and etc. Similar to [Pexels](https://www.pexels.com/)
 - [ ] : https://www.pexels.com/: Free beautiful stock images. Has lots of high-quality stock images. Including cats. Similar to [Unplash](https://unsplash.com/).
 - [ ] : https://oklch.com/: OKLCH color converter and picker. You don't know what OKLCH is? TL;DR: most color spaces we typically use suck because they don't align with the way our eyes work and that makes composing harmonical colors for whatever you do hard than it should be, OKLCH solves that problem.
-- [ ] : https://yomitan.wiki/: Pop-up dictionary browser extension. You shift click the word and see its meaninMosg. tly used for learning Japanese and is incredibly useful.
+- [ ] : https://yomitan.wiki/: Pop-up dictionary browser extension. You shift click the word and see its meanin Mosg. tly used for learning Japanese and is incredibly useful.
 - [ ] : https://github.com/donkuri/Kaishi: The best Anki (flash card software) deck for starting learning Japanese. I'm totally not biased whatsoever no no wdym (just kidding, it's really great).
 - [ ] : https://unsplash.com/: The title says it all. Free critter pics.
 - [ ] : https://fuckingfast.net/: Fast, minimal file hosting. Free for temporary file hosting and non-profits (read the [pricing](https://fuckingfast.net/pricing) page). 

@@ -111,18 +111,30 @@
         width: 100%;
         position: relative;
 
+        @media (max-width: 769px) {
+            display: flex;
+            flex-direction: column;
+        }
+
         & .crank-seg {
             display: flex;
             flex-direction: column;
             width: 30%;
 
             padding-top: 3rem;
+            padding-bottom: 2.6rem;
             border-right: 3px solid #151515;
             /*bottom margin/padding is important here because it mathes it with the full line height for some reason*/
             /*and that makes the page have 2 scrollbars*/
-            padding-bottom: 2.6rem;
 
             position: relative;
+
+            @media (max-width: 769px) {
+                width: 100%;
+                padding: 0 0;
+                border-right: none;
+                border-left: 3px solid #151515;
+            }
 
             & p {
                 font-size: 4.25vw;
@@ -133,6 +145,10 @@
                 max-height: 1lh;
 
                 user-select: none;
+
+                @media (max-width: 769px) {
+                    font-size: 3.6rem;
+                }
             }
 
             & .lmao {
@@ -172,6 +188,13 @@
 
             margin-top: -3rem;
 
+            @media (max-width: 769px) {
+                width: 100%;
+                box-sizing: border-box;
+                padding: 0 2rem;
+                margin-top: 1rem;
+            }
+
             & p, .sauce {
                 &:hover {
                     color: #151515;
@@ -204,6 +227,10 @@
 
                 /*noinspection CssInvalidFunction*/
                 transition: right 0.6s linear(0, 0.012 0.9%, 0.05 2%, 0.411 9.2%, 0.517 11.8%, 0.611 14.6%, 0.694 17.7%, 0.765 21.1%, 0.824 24.8%, 0.872 28.9%, 0.91 33.4%, 0.939 38.4%, 0.977 50.9%, 0.994 68.4%, 1);
+
+                @media (max-width: 769px) {
+                    width: 120vw;
+                }
             }
         }
 
@@ -215,6 +242,12 @@
             width: 30%;
             font-size: 1.2rem;
 
+            @media (max-width: 769px) {
+                width: 100%;
+                margin-top: 5rem;
+                justify-content: center;
+            }
+
             & .contact {
                 margin-top: 1rem;
                 margin-right: 4rem;
@@ -224,18 +257,23 @@
 
             & .socials {
                 margin-right: 6vw;
-
-
                 padding: 2rem 2rem 0 2rem;
 
                 border-bottom: 2px solid #151515;
-
 
                 /* From https://css.glass */
                 background: rgba(255, 172, 48, 0.01);
                 box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
                 backdrop-filter: blur(5px);
                 -webkit-backdrop-filter: blur(5px);
+
+                @media (max-width: 769px) {
+                    margin-right: 0;
+                    margin-bottom: 2rem;
+                    padding: 2rem 2rem 0.8rem 2rem;
+
+                    border-bottom: 8px solid rgba(149, 149, 149, 0.71);
+                }
             }
 
             & .social {
