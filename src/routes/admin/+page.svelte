@@ -144,7 +144,7 @@
                 <input type="text" name="displayName" bind:value={display_name} placeholder="Display name...">
             </label>
             <label> Comment:
-                <input type="text" name="comment" bind:value={comment} placeholder="Comment...">
+                <textarea name="comment" bind:value={comment} placeholder="Comment..."></textarea>
             </label>
             <label> Warning:
                 <input type="text" name="warning" bind:value={warning} placeholder="Warning...">
@@ -153,7 +153,7 @@
                 <input type="text" name="copyright" bind:value={copyright} placeholder="Copyright...">
             </label>
             <label> Custom HTML:
-                <input type="text" name="customHtml" bind:value={custom} placeholder="Custom...">
+                <textarea type="text" name="customHtml" bind:value={custom} placeholder="Custom..."></textarea>
             </label>
             <label> What tags:
                 <input type="text" name="whatTags" bind:value={what_tags} placeholder="What tags...">
