@@ -1,6 +1,7 @@
 import {getSupabaseDataClient} from "$lib/utils/getSupabaseDataClient";
 import {PUBLIC_DEV} from "$lib";
 import {error as sverror} from "@sveltejs/kit";
+import {shuffle} from "$lib/utils/shuffle";
 
 export const loadNifties = async (includeStashed = false) => {
     const supabase = getSupabaseDataClient();
@@ -30,6 +31,8 @@ export const loadNifties = async (includeStashed = false) => {
     if (!includeStashed) {
         nifties = nifties.filter((nift) => !nift.stashed);
     }
+
+    nifties = shuffle(nifties);
 
     return {nifties, tags};
 }
