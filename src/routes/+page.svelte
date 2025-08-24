@@ -294,6 +294,11 @@
             background-size: 100% auto;
             background-repeat: no-repeat;
             font-family: 'Montserrat', sans-serif;
+
+            @media (max-width: 769px) {
+                background-size: 300% auto;
+                background-position: 100% 0;
+            }
         }
 
         .home-main > section {
