@@ -4,6 +4,11 @@
     import {timestamptzToHumanDate} from "$lib/utils/timestamptzToHumanDate";
 
     let {focusedNift, handleUnfocus, descElem = $bindable(), isFocusLeft, focusedNiftTags, focusButtonSeg} = $props();
+    const orderedFocusedNiftTags = $derived({
+        what: focusedNiftTags.what,
+        which: focusedNiftTags.which,
+        why: focusedNiftTags.why
+    })
 </script>
 
 <div class="focus">
@@ -24,7 +29,7 @@
             <img src="/img/coolerseparator.svg" alt="separator">
         </div>
         <div class="desc-tags">
-            {#each Object.entries(focusedNiftTags) as [key, values] (key)}
+            {#each Object.entries(orderedFocusedNiftTags) as [key, values] (key)}
                 <p class="desc-tag-cat">{key}</p>
                 <ul>
                     {#each values as tag (tag)}
