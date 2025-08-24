@@ -3,9 +3,6 @@
     import confetti from "canvas-confetti";
     import {enhance} from "$app/forms";
     import {onMount} from "svelte";
-    import {blur} from 'svelte/transition';
-    import {expoIn} from "svelte/easing";
-    import {timestamptzToHumanDate} from "$lib/utils/timestamptzToHumanDate";
     import Footer from "$lib/Footer.svelte";
     import VirtualizedNifties from "$lib/VirtualizedNifties.svelte";
     import Fuse from "fuse.js";

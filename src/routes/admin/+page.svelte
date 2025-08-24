@@ -1,6 +1,8 @@
 <script lang="ts">
     import {enhance} from '$app/forms';
     import Card from "$lib/Card.svelte";
+    import {goto} from "$app/navigation";
+    import Focus from "$lib/Focus.svelte";
 
     let {form} = $props();
 
@@ -11,6 +13,10 @@
         }
     })
     let display_name = $state('');
+    let comment = $state('');
+    let warning = $state('');
+    let copyright = $state('');
+    let custom = $state('');
     let what_tags = $state('');
     let which_tags = $state('');
     let why_tags = $state('');
@@ -25,14 +31,103 @@
             ...(form?.data ?? {}),
             link,
             display_name,
+            comment,
+            warning,
+            copyright,
             tags
         };
     });
 
-    const dummyHandleFocus = () => {
-        console.log("grass");
+    // most of this kinda dependent on the main logic in routes/+page.svelte
+
+    let focus = $state(false);
+    let focusedNift = $derived(form?.data);
+    let focusedNiftTags = $derived(focusedNift?.tags);
+    let bodyElem = $state<HTMLElement | null>(null);
+
+    let isFocusLeft = $state(true);
+    let focusButtonSeg = $state(1);
+    const handleFocus = (e: Event, nift: typeof focusedNift) => {
+        focus = true;
+        focusedNift = nift;
+        let elem = e.target as HTMLElement | null;
+        if (!elem) return;
+        const rect = elem.getBoundingClientRect();
+
+        // if it's the link (clickable) let's just pretend it was the wrapper
+        if (elem.classList.contains('card-info-link')) {
+            elem = elem.closest('.card-wrapper') as HTMLElement | null;
+            if (!elem) return;
+        }
+
+        // scrolling with the element in the middle
+        const elemBottom = rect.bottom + window.scrollY - window.innerHeight;
+        const scrollToY = elemBottom + window.innerHeight / 2.4 - elem.offsetHeight / 2;
+        scrollTo({top: scrollToY, behavior: 'smooth'});
+
+        // checking if it's leave or right and applying styles appropriately
+        const elemRight = rect.right;
+        const elemCenter = rect.left + rect.width / 2;
+        isFocusLeft = elemRight > window.innerWidth / 2;
+
+        focusButtonSeg = Math.ceil(elemCenter/(window.innerWidth/4));
+
+        if (!bodyElem) return;
+        document.documentElement.classList.add('scroll-lock');
+    }
+
+
+    let descElem: HTMLElement | null = $state(null);
+    const handleUnfocus = (e: Event) => {
+        const target = e.target as HTMLElement;
+        if ((!descElem?.contains(target) || target.classList.contains("desc")) && !target.classList.contains("card") && !target.classList.contains("visit")) {
+            focus = false;
+
+            // fading out in 200 ms to prevent looking like a sudden unselection
+            setTimeout(() => {
+                focusedNift = null;
+            }, 200)
+
+            // timeout so the animation goes away to prevent a visible layout shift
+            setTimeout(() => {
+                if (!bodyElem) return;
+                if (focus) return;
+                document.documentElement.classList.remove('scroll-lock');
+            }, 400);
+        }
+    }
+
+    // Handle travel to the main page
+    // lost a bit of text when typing goose lmao, thus the slashes
+    const cheatCode = ['/', '/', '/', '/', 'G', 'O', 'O', 'S', 'E'];
+    let codeIx = 0;
+    const maxDelay = 3000;
+    let past = Date.now();
+
+    const handleCheatCode = (e: KeyboardEvent) => {
+        const now = Date.now();
+
+        if (now - past > maxDelay) {
+            codeIx = 0;
+        }
+
+        past = now;
+
+        if (e.key === cheatCode[codeIx] || e.key === cheatCode[codeIx].toLowerCase()) {
+            codeIx++;
+            if (codeIx === cheatCode.length) {
+                goto('/');
+                codeIx = 0;
+            }
+        } else {
+            codeIx = 0;
+        }
     }
 </script>
+
+
+<svelte:window onclick={focus ? (e) => {handleUnfocus(e)} : () => {}} onkeydown={(e) => {handleCheatCode(e);}}/>
+<svelte:body bind:this={bodyElem}/>
 
 <main>
     <div class="input-seg">
@@ -46,6 +141,18 @@
             <button formaction="?/preview">Get Preview</button>
             <label> Display name:
                 <input type="text" name="displayName" bind:value={display_name} placeholder="Display name...">
+            </label>
+            <label> Comment:
+                <input type="text" name="comment" bind:value={comment} placeholder="Comment...">
+            </label>
+            <label> Warning:
+                <input type="text" name="warning" bind:value={warning} placeholder="Warning...">
+            </label>
+            <label> Copyright:
+                <input type="text" name="copyright" bind:value={copyright} placeholder="Copyright...">
+            </label>
+            <label> Custom HTML:
+                <input type="text" name="customHtml" bind:value={custom} placeholder="Custom...">
             </label>
             <label> What tags:
                 <input type="text" name="whatTags" bind:value={what_tags} placeholder="What tags...">
@@ -66,7 +173,7 @@
     <div class="card-seg">
         {#if previewData}
             <div class="card-wrapper">
-                <Card nift={previewData} focusedNift={previewData} handleFocus={dummyHandleFocus}/>
+                <Card nift={previewData} focusedNift={previewData} {handleFocus}/>
             </div>
         {/if}
     </div>
@@ -74,6 +181,9 @@
 <div class="goose-fly">
     <img src="/img/peace-goose.webp" alt="goose">
 </div>
+{#if focus && focusedNift}
+    <Focus bind:descElem {focusedNift} {handleUnfocus} {isFocusLeft} {focusedNiftTags} {focusButtonSeg}  />
+{/if}
 <style>
     .goose-fly {
         position: fixed;
