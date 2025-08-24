@@ -267,9 +267,9 @@
                 <canvas id="confetti-canvas"></canvas>
             </div>
         {/if}
-        <h1>oh <span class="wowie" role="button" tabindex="-1" onclick={() => rotateWowies(true)}
-                     onkeydown={(e: KeyboardEvent) => {if (e.key === 'Enter') rotateWowies(true)}}>{wowie}</span>,<br>
-            that's useful</h1>
+        <h1><span>oh</span> <span class="wowie" role="button" tabindex="-1" onclick={() => rotateWowies(true)}
+                     onkeydown={(e: KeyboardEvent) => {if (e.key === 'Enter') rotateWowies(true)}}>{wowie}</span><span>,</span><br>
+            <span>that's</span> <span>useful</span></h1>
     </section>
     <TagSeg tags={data.tags} bind:query={query} bind:selectedTags={selectedTags}/>
     <section class="content-seg">
@@ -322,6 +322,10 @@
             width: 100%;
             margin-top: 7.125rem;
 
+            @media (max-width: 769px) {
+                margin-top: 8rem;
+            }
+
             & h1 {
                 font-size: 8.25rem;
                 /*this originally was Onest but apparently figma just uses */
@@ -333,17 +337,61 @@
                 text-align: center;
                 line-height: 1em;
 
-                /*force 2 lines*/
+                /*forcing 2 lines*/
                 min-height: 2em;
 
                 max-width: 60vw;
                 user-select: none;
+
+                & span:not(.wowie) {
+                    font-family: 'Rozanova', sans-serif;
+                    font-weight: bold;
+                    color: #151515;
+                }
+
+                @media (max-width: 769px) {
+                    font-size: 4rem;
+                    width: 100vw;
+                    max-width: 100vw;
+                    box-sizing: border-box;
+                    padding-left: 2rem;
+
+                    min-height: 4em;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: flex-start;
+
+
+                    & span {
+                        position: relative;
+
+                        display: block;
+                    }
+
+                    /* you could do that?!!??! */
+                    & br {
+                        display: none;
+                    }
+
+                    :nth-last-child(5):after {
+                        content: ",";
+                    }
+
+                    :nth-last-child(4) {
+                        display: none;
+                    }
+                }
 
                 & .wowie {
                     color: var(--header-highlight-color);
                     font-family: 'Rozanova', sans-serif;
                     -webkit-text-stroke: 1px black;
                     cursor: pointer;
+
+                    @media (max-width: 769px) {
+                        -webkit-text-stroke: 2px black;
+                    }
                 }
             }
         }

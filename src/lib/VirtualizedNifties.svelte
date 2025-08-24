@@ -104,9 +104,9 @@
     {@const honk = Math.floor(Math.random() * 3) === 0}
     <div class="no-results-seg">
         {#if honk}
-            <img src="/img/bootlegcellshadedgoosewsmokingpipeexcepthonk.webp" title="yes, i photoshopped a pipe to the untitled goose game goose" alt="Untitled goose game goose except i photoshopped a pipe in">
+            <img src="/img/bootlegcellshadedgoosewsmokingpipeexcepthonk.webp" title="yes, i photoshopped a pipe to a goose" alt="A goose except i photoshopped a pipe in">
         {:else}
-            <img src="/img/bootlegcellshadedgoosewsmokingpipe3.webp" title="yes, i photoshopped a pipe to the untitled goose game goose" alt="Untitled goose game goose except i photoshopped a pipe in">
+            <img src="/img/bootlegcellshadedgoosewsmokingpipe3.webp" title="yes, i photoshopped a pipe to a goose" alt="A goose except i photoshopped a pipe in">
         {/if}
         <p>Our scout geese have not found what you requested.</p>
         <p>Try a different query or shuffling some tags.</p>
