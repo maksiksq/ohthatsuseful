@@ -34,6 +34,7 @@
             comment,
             warning,
             copyright,
+            custom,
             tags
         };
     });
@@ -70,7 +71,7 @@
         const elemCenter = rect.left + rect.width / 2;
         isFocusLeft = elemRight > window.innerWidth / 2;
 
-        focusButtonSeg = Math.ceil(elemCenter/(window.innerWidth/4));
+        focusButtonSeg = Math.ceil(elemCenter / (window.innerWidth / 4));
 
         if (!bodyElem) return;
         document.documentElement.classList.add('scroll-lock');
@@ -163,6 +164,7 @@
             <label> Why tags:
                 <input type="text" name="whyTags" bind:value={why_tags} placeholder="Why tags...">
             </label>
+            <input type="hidden" name="tags" value={JSON.stringify(tags)}>
             <button>Add entry</button>
         </form>
 
@@ -182,7 +184,7 @@
     <img src="/img/peace-goose.webp" alt="goose">
 </div>
 {#if focus && focusedNift}
-    <Focus bind:descElem {focusedNift} {handleUnfocus} {isFocusLeft} {focusedNiftTags} {focusButtonSeg}  />
+    <Focus bind:descElem {focusedNift} {handleUnfocus} {isFocusLeft} {focusedNiftTags} {focusButtonSeg}/>
 {/if}
 <style>
     .goose-fly {

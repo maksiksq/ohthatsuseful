@@ -2,6 +2,7 @@ import {type Actions, error as sverror} from "@sveltejs/kit";
 import {createServerClient} from "@supabase/ssr";
 import {SECRET_API_CONTROL_KEY} from "$env/static/private";
 import {PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL} from "$env/static/public";
+import {updatePuppeteerData} from "$lib/utils/func/updatePuppeteerData";
 
 export const actions = {
     preview: async ({ cookies, request, fetch: eventFetch }) => {
@@ -82,11 +83,16 @@ export const actions = {
 
         const formData = await request.formData();
         const link = formData.get('link');
+        const display_name = formData.get('displayName');
         const comment = formData.get('comment');
-        const display_name = formData.get('display_name');
-        const tags = formData.get('tags');
         const warning = formData.get('warning');
         const copyright = formData.get('copyright');
+        const custom = formData.get('customHtml');
+        const strTags = formData.get('tags') as string;
+        if (!strTags) {
+            throw sverror(400, "Tags where?");
+        }
+        const tags = JSON.parse(strTags);
 
         if (typeof link !== 'string' || link.trim() === '') {
             throw sverror(400, "There is no link! Who is going to save Hyrule?");
@@ -100,14 +106,16 @@ export const actions = {
                 display_name,
                 tags,
                 warning,
-                copyright
+                copyright,
+                custom
             });
 
         if (inerror) {
             throw sverror(500, `Oh no. Could not add an entry: ${inerror.message}`);
         }
 
-        return {success: true, threat: `Added a brand new ${display_name} successfully.`};
+        await updatePuppeteerData(link);
+        return {success: true, threat: `Added and update brand new ${display_name} successfully.`};
     },
     stash: async ({ cookies, request }) => {
         // this one is admin to update
