@@ -134,6 +134,7 @@ export const updatePuppeteerData = async (link: string, nodb: boolean = false) =
         });
 
         const data = {
+            link: link,
             screenshot: `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/screenshots/${sanitizeFileName(title)}.webp`,
             screenshot_smol: `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/screenshots/smol-${sanitizeFileName(title)}.webp`,
             title: title,

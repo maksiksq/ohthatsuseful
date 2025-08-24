@@ -2,7 +2,14 @@
     import {enhance} from '$app/forms';
     import Card from "$lib/Card.svelte";
 
+    let {form} = $props();
+
     let link = $state('');
+    $effect(() => {
+        if (form?.data) {
+            link = form.data.link;
+        }
+    })
     let display_name = $state('');
     let what_tags = $state('');
     let which_tags = $state('');
@@ -12,7 +19,6 @@
         which: which_tags.split(",").map(s => s.trim()),
         why: why_tags.split(",").map(s => s.trim())
     }));
-    let {form} = $props();
 
     const previewData = $derived.by(() => {
         return {
@@ -27,8 +33,6 @@
     const dummyHandleFocus = () => {
         console.log("grass");
     }
-
-    $inspect(previewData);
 </script>
 
 <main>
@@ -68,10 +72,27 @@
         {/if}
     </div>
 </main>
-
+<div class="goose-fly">
+    <img src="/img/peace-goose.webp" alt="goose">
+</div>
 <style>
+    .goose-fly {
+        position: fixed;
+        right: 0;
+        top: 0;
+        transform: translateX(50%);
+        opacity: 0.8;
+        z-index: 0;
+
+        & img {
+            width: 16rem;
+            height: auto;
+        }
+    }
+
     main {
         display: flex;
+        background-color: #d6fff1;
 
         & .input-seg {
             width: 50%;
@@ -86,6 +107,26 @@
             & form {
                 display: flex;
                 flex-direction: column;
+
+                & label {
+                    margin-top: 0.2rem;
+                    width: 9rem;
+                }
+
+                & input {
+                    width: 10rem;
+                    padding: 0.2rem;
+                }
+
+                & button {
+                    background-color: #151515;
+                    border-radius: 1px;
+                    border: 1px solid black;
+                    width: 8rem;
+                    padding: 0.2rem 1rem;
+                    color: white;
+                    margin: 2rem 0.5rem 0.5rem 0;
+                }
             }
         }
 
