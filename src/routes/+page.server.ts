@@ -44,7 +44,7 @@ export const actions = {
 export const load = async () => {
     const supabase = getSupabaseDataClient();
 
-    const {data: nifties, error: selerror} = await supabase
+    let {data: nifties, error: selerror} = await supabase
         .from('nifties')
         .select('*');
 
@@ -62,9 +62,11 @@ export const load = async () => {
     type TagKey = typeof keys[number];
 
     const tags = keys.reduce((acc, key: TagKey) => {
-        acc[key] = [...new Set(nifties.flatMap(n => n.tags[key] || []))];
+        acc[key] = [...new Set(nifties?.flatMap(n => n.tags[key] || []))];
         return acc;
     }, {} as TagCategories);
+
+    nifties = nifties.filter((nift) => !nift.stashed);
 
     return {nifties, tags};
 }
