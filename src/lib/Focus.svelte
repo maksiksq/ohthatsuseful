@@ -95,7 +95,7 @@
         padding: 0 4rem 0 0;
         transform: translate(3rem, -50%);
 
-        @media (max-width: 569px) {
+        @media (max-width: 1024px) {
             padding: 0 1.5rem;
             left: 50%;
             transform: translateX(-50%);
@@ -107,7 +107,7 @@
         transform: translateY(-50%);
         padding: 0 4rem 0 0;
 
-        @media (max-width: 569px) {
+        @media (max-width: 1024px) {
             padding: 0 1.5rem;
             left: 50%;
             transform: translateX(-50%);
@@ -125,21 +125,22 @@
 
         display: flex;
         flex-direction: column;
+        max-height: 100dvh;
+        overflow-y: auto;
 
-        @media (max-width: 569px) {
+        @media (max-width: 1024px) {
             top: 0;
             width: 100vw;
             padding: 2rem 1.5rem 10rem 1.5rem;
             max-width: 100vw;
             height: 100%;
             max-height: 100dvh;
-            overflow-y: auto;
         }
 
         & h2 {
             font-size: 1.7rem;
 
-            @media (max-width: 569px) {
+            @media (max-width: 1023px) {
                 order: 1;
             }
         }
@@ -153,7 +154,7 @@
             line-height: 1.5em;
             margin-top: 1rem;
 
-            @media (max-width: 569px) {
+            @media (max-width: 1024px) {
                 margin-top: 0;
                 order: 4;
             }
@@ -165,7 +166,7 @@
             gap: 0.4rem;
             padding: 1.2rem 0 0 0;
 
-            @media (max-width: 569px) {
+            @media (max-width: 1024px) {
                 order: 6;
             }
 
@@ -185,7 +186,7 @@
         }
 
         & .desc-separator {
-            @media (max-width: 569px) {
+            @media (max-width: 1024px) {
                 order: 3;
             }
 
@@ -208,7 +209,7 @@
             margin: 1rem 0 1rem 0;
             color: #151515;
 
-            @media (max-width: 569px) {
+            @media (max-width: 1024px) {
                 margin: 1.5rem 0 1rem 0;
                 padding: 0.7rem 1.2rem;
                 order: 5;
@@ -218,7 +219,7 @@
                 width: 1.5rem;
                 height: auto;
 
-                @media (max-width: 569px) {
+                @media (max-width: 1024px) {
                     width: 3rem;
                 }
             }
@@ -227,7 +228,7 @@
                 padding-left: 0.4rem;
                 user-select: none;
 
-                @media (max-width: 569px) {
+                @media (max-width: 1024px) {
                     padding-left: 1rem;
                 }
             }
@@ -246,7 +247,13 @@
             font-size: 1.1rem;
             line-height: 1.5em;
 
-            @media (max-width: 569px) {
+            @media (max-width: 1024px) {
+                order: 2;
+            }
+        }
+
+        & .desc-custom {
+            @media (max-width: 1024px) {
                 order: 2;
             }
         }
@@ -256,7 +263,7 @@
             font-size: 0.8rem;
             color: #cccccc;
 
-            @media (max-width: 569px) {
+            @media (max-width: 1024px) {
                 margin-top: 2rem;
                 order: 7;
             }
@@ -269,7 +276,7 @@
         transform: translate(-37.5%, -50%);
         margin-left: -1rem;
 
-        @media (max-width: 569px) {
+        @media (max-width: 1024px) {
             margin-left: 0;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -281,7 +288,7 @@
         transform: translate(-12.5%, -50%);
         margin-left: -3rem;
 
-        @media (max-width: 569px) {
+        @media (max-width: 1024px) {
             margin-left: 0;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -293,7 +300,7 @@
         transform: translate(-87.5%, -50%);
         margin-left: 3rem;
 
-        @media (max-width: 569px) {
+        @media (max-width: 1024px) {
             margin-left: 0;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -305,7 +312,7 @@
         transform: translate(-62.5%, -50%);
         margin-left: 1rem;
 
-        @media (max-width: 569px) {
+        @media (max-width: 1024px) {
             margin-left: 0;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -332,7 +339,7 @@
         font-size: 2.7rem;
         transition: box-shadow, top 0.2s ease-in-out;
 
-        @media (max-width: 569px) {
+        @media (max-width: 1024px) {
             left: 50%;
             top: 80%;
             transform: translateX(-50%);
