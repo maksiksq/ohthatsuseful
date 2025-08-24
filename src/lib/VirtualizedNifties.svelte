@@ -154,6 +154,10 @@
         box-sizing: border-box;
         padding: 0 2rem 0 2rem;
 
+        @media (max-width: 569px) {
+            padding: 0 0.1rem 0 0.1rem;
+        }
+
         & .card-wrapper {
             flex: 1 1 25%;
             max-width: 25%;
@@ -163,6 +167,16 @@
             padding: 0.3rem;
 
             cursor: pointer;
+
+            @media (max-width: 769px) {
+                flex: 1 1 33.33%;
+                max-width: 33.33%;
+            }
+
+            @media (max-width: 569px) {
+                flex: 1 1 100%;
+                max-width: 100%;
+            }
 
             /* more inside Card.svelte */
         }

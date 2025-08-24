@@ -101,7 +101,6 @@
             "yippee",
             "boy",
             "la-la",
-            "booyah",
             "crisp",
             "wicked",
             "gremlin",
@@ -398,6 +397,8 @@
             display: flex;
             flex-direction: row;
             align-items: flex-start;
+
+            /* + virtualized nifties */
         }
     }
 </style>

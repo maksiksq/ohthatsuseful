@@ -1,5 +1,6 @@
 - [ ] : finish the thing
 - [ ] : don't forget to remove the debug buttons
+- [ ] : fix flip + v8n (it's funky on mobile at least*)   
 - [x] : add fuse.js search with tags client side
 - [x] : you forgot to change the row size for virtualization for responsive and it's all broken now how could you
 - [ ] : make everything responsive an nojs (pain)
