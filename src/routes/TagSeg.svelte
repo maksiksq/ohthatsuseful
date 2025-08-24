@@ -42,10 +42,22 @@
         margin-top: 2rem;
         flex-direction: row;
 
+        @media (max-width: 769px) {
+            width: 100%;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
         & .tag-seg-search {
             width: 40%;
             display: flex;
             justify-content: center;
+
+            @media (max-width: 769px) {
+                width: 100%;
+                margin-top: 3rem;
+                order: 2;
+            }
 
             & .search {
                 all: unset;
@@ -57,6 +69,13 @@
                 padding: 0.6rem 2rem 0.6rem 0.7rem;
                 margin-right: 3rem;
                 font-size: 1rem;
+
+                @media (max-width: 769px) {
+                    margin-right: 0;
+                    width: 70%;
+
+                    padding: 0.3rem 2rem 0.3rem 0.7rem;
+                }
             }
 
             & .search::placeholder {
@@ -74,8 +93,23 @@
 
             border-left: 1px solid #151515;
 
+            @media (max-width: 769px) {
+                padding-left: 0;
+                box-sizing: border-box;
+                padding-right: 1.5rem;
+                width: calc(100% - 2rem);
+                margin-left: 2rem;
+                align-items: center;
+            }
+
             & .tag-cat {
                 font-weight: bold;
+
+                @media (max-width: 769px) {
+                    box-sizing: border-box;
+                    padding-left: 1rem;
+                    border-left: 3px solid #151515;
+                }
             }
 
             & ul {
@@ -83,6 +117,10 @@
                 flex-wrap: wrap;
 
                 padding-left: 1rem;
+
+                @media (max-width: 769px) {
+                    padding-left: 0;
+                }
 
                 & li {
                     padding-left: 0.7rem;
@@ -94,6 +132,14 @@
                             transition: all 0.1s;
                             transform: scale(1.003);
                             color: black;
+                        }
+
+                        @media (max-width: 769px) {
+                            &:hover {
+                                transition: all 0.1s;
+                                transform: scale(1.003);
+                                color: #6F6F6F;
+                            }
                         }
                     }
                 }
