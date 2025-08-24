@@ -85,7 +85,7 @@
 
         & .tag-seg-tags {
             width: 60%;
-            padding-left: 3rem;
+            padding: 0.3rem 0 0.3rem 3rem;
 
             display: grid;
             grid-template-columns: auto 1fr;

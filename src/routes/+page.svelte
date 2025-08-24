@@ -98,15 +98,12 @@
             "goodness",
             "crumbs",
             "mercy",
-            "zoinks",
             "yippee",
             "boy",
             "la-la",
             "booyah",
             "crisp",
             "wicked",
-            "sleek",
-            "hai",
             "gremlin",
             "poppies",
             "hey",
@@ -116,10 +113,7 @@
             "dangit",
             "yowza",
             "derp",
-            "heckin",
             "zesty",
-            "shiny",
-            "dandy",
             "juices",
             "bling",
             "scoundrel",
@@ -320,7 +314,7 @@
 
         & .h1-seg {
             width: 100%;
-            margin-top: 7.125rem;
+            margin-top: 6.125rem;
 
             @media (max-width: 769px) {
                 margin-top: 8rem;
