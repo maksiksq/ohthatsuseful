@@ -183,9 +183,10 @@
 <div class="stash-seg">
     <h2>Stash</h2>
     {#each data?.nifties as nift}
-        <form method="POST" action="?/stash" use:enhance>
+        <form method="POST" action="?/controlStash" use:enhance>
             <p>{nift.display_name}</p>
             <input type="hidden" name="link" value={nift.link}>
+            <input type="hidden" name="unstash" value={nift.stashed}>
             {#if !nift.stashed}
                 <button>Stash</button>
             {:else}

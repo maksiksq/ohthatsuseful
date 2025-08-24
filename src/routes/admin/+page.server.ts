@@ -120,9 +120,7 @@ export const actions = {
         await updatePuppeteerData(link);
         return {success: true, threat: `Added and update brand new ${display_name} successfully.`};
     },
-    stash: async ({ cookies, request }) => {
-        // this one is admin to update
-
+    controlStash: async ({ cookies, request }) => {
         // @ts-ignore dear IDE, it's not deprecated, you misread
         const supabase = createServerClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
             global: {
@@ -149,6 +147,7 @@ export const actions = {
 
         const formData = await request.formData();
         const link = formData.get('link');
+        const unstash = formData.get('unstash');
 
         if (typeof link !== 'string' || link.trim() === '') {
             throw sverror(400, "There is no link! Who is going to destroy Hyrule?");
@@ -157,7 +156,7 @@ export const actions = {
         const {error: upderror} = await supabase
             .from('nifties')
             .update({
-                stashed: true
+                stashed: !(unstash === 'true')
             })
             .eq('link', link);
 
@@ -165,7 +164,7 @@ export const actions = {
             throw sverror(500, `Oh no. Could not stash entry: ${upderror}`);
         }
 
-        return {success: true, threat: `Stashed ${link} successfully.`};
+        return {success: true, threat: `${!unstash ? 'Stashed' : 'Unstashed'} ${link} successfully.`};
     }
 } satisfies Actions;
 
