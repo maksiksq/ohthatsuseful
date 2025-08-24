@@ -101,10 +101,40 @@
         <div style="flex-basis:100%; height:{Math.max(0, Math.ceil(nifties.length / cardsPerRow) * rowHeight - endRow * rowHeight)}px;"></div>
     </div>
 {:else}
-    no results 4 u;
+    {@const honk = Math.floor(Math.random() * 3) === 0}
+    <div class="no-results-seg">
+        {#if honk}
+            <img src="/img/bootlegcellshadedgoosewsmokingpipeexcepthonk.webp" title="yes, i photoshopped a pipe to the untitled goose game goose" alt="Untitled goose game goose except i photoshopped a pipe in">
+        {:else}
+            <img src="/img/bootlegcellshadedgoosewsmokingpipe3.webp" title="yes, i photoshopped a pipe to the untitled goose game goose" alt="Untitled goose game goose except i photoshopped a pipe in">
+        {/if}
+        <p>Our scout geese have not found what you requested.</p>
+        <p>Try a different query or shuffling some tags.</p>
+    </div>
 {/if}
 
 <style>
+    .no-results-seg {
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        & img {
+            margin-top: 2rem;
+            user-select: none;
+            width: 10vw;
+        }
+
+        & p {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            font-weight: 400;
+            text-align: center;
+        }
+    }
+
     .dummy {
         visibility: hidden;
         position: absolute;

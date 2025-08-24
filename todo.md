@@ -1,6 +1,7 @@
 - [ ] : finish the thing
 - [ ] : don't forget to remove the debug buttons
-- [ ] : add fuse.js search with tags client side
+- [x] : add fuse.js search with tags client side
+- [x] : you forgot to change the row size for virtualization for responsive and it's all broken now how could you
 - [ ] : make everything responsive an nojs (pain)
 - [x] : fix: you can scroll in modal sometimes (no idea what triggers it) why ; it doesn't apply the class (fuck) ; it was doing that if you clicked to fast
 - [ ] : mayb an alternatives field

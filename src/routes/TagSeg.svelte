@@ -124,6 +124,15 @@
 
                 & li {
                     padding-left: 0.7rem;
+
+                    @media (max-width: 769px) {
+                        .tag:hover {
+                            transition: all 0.1s;
+                            transform: scale(1.003);
+                            color: #6F6F6F;
+                        }
+                    }
+
                     & .tag {
                         color: #6F6F6F;
                         cursor: pointer;
@@ -132,14 +141,6 @@
                             transition: all 0.1s;
                             transform: scale(1.003);
                             color: black;
-                        }
-
-                        @media (max-width: 769px) {
-                            &:hover {
-                                transition: all 0.1s;
-                                transform: scale(1.003);
-                                color: #6F6F6F;
-                            }
                         }
                     }
                 }
