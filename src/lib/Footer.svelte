@@ -192,7 +192,7 @@
                 width: 100%;
                 box-sizing: border-box;
                 padding: 0 2rem;
-                margin-top: 1rem;
+                margin-top: 4rem;
             }
 
             & p, .sauce {
@@ -272,7 +272,7 @@
                     margin-bottom: 2rem;
                     padding: 2rem 2rem 0.8rem 2rem;
 
-                    border-bottom: 8px solid rgba(149, 149, 149, 0.71);
+                    border-bottom: 8px solid rgba(149, 149, 149, 0.33);
                 }
             }
 
