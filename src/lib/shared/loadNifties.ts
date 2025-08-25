@@ -15,6 +15,10 @@ export const loadNifties = async (includeStashed = false) => {
         throw sverror(500, "Could not get the nifty stuff!")
     }
 
+    if (!includeStashed) {
+        nifties = nifties.filter((nift) => !nift.stashed);
+    }
+
     type TagCategories = {
         what: string[];
         which: string[];
@@ -27,10 +31,6 @@ export const loadNifties = async (includeStashed = false) => {
         acc[key] = [...new Set(nifties?.flatMap(n => n.tags[key] || []))];
         return acc;
     }, {} as TagCategories);
-
-    if (!includeStashed) {
-        nifties = nifties.filter((nift) => !nift.stashed);
-    }
 
     nifties = shuffle(nifties);
 

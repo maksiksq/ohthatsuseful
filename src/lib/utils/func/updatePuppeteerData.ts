@@ -18,7 +18,7 @@ export const updatePuppeteerData = async (link: string, nodb: boolean = false) =
         // Getting all the data
         //
         const browser = await puppeteer.launch({
-            headless: false,
+            headless: true,
         });
         const page = await browser.newPage();
 
