@@ -97,6 +97,8 @@ export const updatePuppeteerData = async (link: string, nodb: boolean = false) =
 
         // Getting favicon and storing it in a bucket,
         // I would just get a link to it, but that would probably be bad performance-wise on-scale
+        await page.waitForSelector('link[rel~="icon"], link[rel="shortcut icon"]', { timeout: 5000 }).catch(() => {});
+
         let faviconUrl = await page.evaluate(() => {
             const iconLink: HTMLLinkElement | null = document.querySelector('link[rel~="icon"][type="image/svg+xml"]')
                 || document.querySelector('link[rel="icon"]')
