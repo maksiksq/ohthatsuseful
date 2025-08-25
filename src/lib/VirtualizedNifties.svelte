@@ -1,9 +1,9 @@
 <script lang="ts">
-    import {onMount} from "svelte";
+    import {onMount, tick} from "svelte";
     import {flip} from "svelte/animate"
     import Card from "$lib/Card.svelte";
 
-    const {nifties, focusedNift, handleFocus, cardsPerRow} = $props();
+    const {nifties, focusedNift, handleFocus, cardsPerRow, anim = 0} = $props();
 
     const remToPx = (rem: number) => parseFloat(getComputedStyle(document.documentElement).fontSize) * rem;
 
@@ -36,12 +36,15 @@
     const updateViewport = () => {
         viewportHeight = window.innerHeight;
         if (!containerElem) return;
+        anim = 0;
         scrollTop = window.scrollY - containerElem.offsetTop;
     }
 
     onMount(() => {
         updateViewport();
     })
+
+    //
 
     const rowsPerScreen = $derived.by(() => {
         if (!rowHeight) return;
@@ -66,8 +69,8 @@
     })
 
     const dummyNift = {
-        title: "Dummy",
-        display_name: "Dummy",
+        title: "Dummy dummy 2 line dummy dummy 2 line dummy a lot",
+        display_name: "Dummy dummy 2 line dummy dummy 2 line dummy a lot",
         link: "#",
         favicon: nifties[0].favicon,
         screenshot_smol: nifties[0].screenshot_smol,
@@ -89,8 +92,8 @@
         <div style="flex-basis:100%; height:{startRow * rowHeight}px;"></div>
 
         <!--make sure it's not in a parent from which is can calculate its position or offsetTop dies-->
-        {#each visibleCards as nift (nift.id)}
-            <div animate:flip={{ duration: 100, delay: 100 }} class="card-wrapper">
+        {#each visibleCards as nift, i (nift.id)}
+            <div animate:flip={{ duration: anim, delay: 100 }} class="card-wrapper">
                 <Card {nift} {focusedNift} {handleFocus} />
             </div>
         {/each}

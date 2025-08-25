@@ -19,6 +19,10 @@
         }
     };
 
+    //
+
+    let anim = $state(0);
+
     // search
     let query = $state('');
     let selectedTags = $state<Array<string>>([]);
@@ -49,6 +53,10 @@
         const q = query;
         const s = selectedTags;
 
+        // also handling the animation while it's at it
+        // works surprisingly well
+        anim = 100;
+
         clearTimeout(timeout);
 
         timeout = setTimeout(() => {
@@ -60,6 +68,8 @@
                 searchedNifties = fuse.search(q)
                     .map(r => r.item)
                     .filter(item => hasTags(item, s));
+
+                anim = 0;
             }
         }, 150);
     });
@@ -289,7 +299,7 @@
     </section>
     <TagSeg tags={data.tags} bind:query={query} bind:selectedTags={selectedTags}/>
     <section class="content-seg">
-        <VirtualizedNifties {cardsPerRow} nifties={searchedNifties} {focusedNift} {handleFocus}/>
+        <VirtualizedNifties {cardsPerRow} nifties={searchedNifties} {focusedNift} {handleFocus} {anim} />
     </section>
 </main>
 {#if focus && focusedNift}
