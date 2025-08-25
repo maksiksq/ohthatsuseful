@@ -75,7 +75,7 @@ export const updatePuppeteerData = async (link: string, nodb: boolean = false) =
 
         // width tied to imgs
         const secondBufferSmol = await sharp(firstBufferSmol)
-            .resize(600)
+            .resize(500)
             .webp({quality: 100, nearLossless: true})
             .toBuffer() as Uint8Array<ArrayBuffer> as Uint8Array<ArrayBuffer>;
 
