@@ -54,42 +54,34 @@ export const updatePuppeteerData = async (link: string, nodb: boolean = false) =
         });
 
         const buffer = await page.screenshot({
-            type: 'webp',
+            type: 'png',
             fullPage: false,
         }) as Uint8Array<ArrayBuffer>;
 
-        const blob = new Blob([buffer], {type: "image/webp"});
+        const blob = new Blob([buffer], {type: "image/png"});
 
         // we don't need to send the client the whole big screenshot but I want to store
         // it for historical purposes or if something goes wrong
-        // neverthless, I'm resizing it to be smol
+        // neverthless, I'm resizing the real thing to be smol
         // shrap time weee
 
-        // Doing two passes because the quality kinda sucks honestly
-        // Idk why but even after this the browser resize looks
-        // significantly less blurry for some reason
-        const firstBufferSmol = await sharp(buffer)
-            .resize(1000)
-            .webp({quality: 100, nearLossless: true})
-            .toBuffer() as Uint8Array<ArrayBuffer> as Uint8Array<ArrayBuffer>;
-
         // width tied to imgs
-        const secondBufferSmol = await sharp(firstBufferSmol)
-            .resize(500)
-            .webp({quality: 100, nearLossless: true})
+        const bufferSmol = await sharp(buffer)
+            .resize(600, null, { kernel: "lanczos3" })
+            .avif({quality: 100})
             .toBuffer() as Uint8Array<ArrayBuffer> as Uint8Array<ArrayBuffer>;
 
-        const blobSmol = new Blob([secondBufferSmol], {type: "image/webp"});
+        const blobSmol = new Blob([bufferSmol], {type: "image/avif"});
 
         // Storing the smol screenshot in a bucket
-        const resSmol = await storeImageInSupabaseBucket(blobSmol, 'screenshots', `smol-${title}`, 'webp');
+        const resSmol = await storeImageInSupabaseBucket(blobSmol, 'screenshots', `smol-${title}`, 'avif');
         if (!resSmol.success) {
             console.error('Failed to store screenshot miserably', resSmol);
             return {success: false};
         }
 
         // Storing the not smol screenshot in a bucket
-        const resOg = await storeImageInSupabaseBucket(blob, 'screenshots', title, 'webp');
+        const resOg = await storeImageInSupabaseBucket(blob, 'screenshots', title, 'avif');
         if (!resOg.success) {
             console.error('Failed to store screenshot miserably', resOg);
             return {success: false};
@@ -146,8 +138,8 @@ export const updatePuppeteerData = async (link: string, nodb: boolean = false) =
 
         const data = {
             link: link,
-            screenshot: `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/screenshots/${sanitizeFileName(title)}.webp`,
-            screenshot_smol: `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/screenshots/smol-${sanitizeFileName(title)}.webp`,
+            screenshot: `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/screenshots/${sanitizeFileName(title)}.avif`,
+            screenshot_smol: `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/screenshots/smol-${sanitizeFileName(title)}.avif`,
             title: title,
             favicon: dataImage ? faviconUrl : (favExtension ? `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/favicons/fav-${sanitizeFileName(title)}.${favExtension}` : `/img/favicon-skill-issue.svg`),
             metadesc: metadesc ?? 'No description provided by the site.',

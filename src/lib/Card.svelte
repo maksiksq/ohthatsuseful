@@ -19,7 +19,7 @@
         <a class="card-info-link" href={nift.link} target="_blank" rel="noopener">🔗</a>
     </div>
     <p class="card-screenshot-link-wrap">
-        <img class="card-screenshot" loading="lazy" src={nift.screenshot_smol} width="600" height="337"
+        <img class="card-screenshot" loading="lazy" src={nift.screenshot_smol} width="500" height="281"
              alt={nift.name}>
     </p>
 </div>
