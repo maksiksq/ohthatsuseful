@@ -173,7 +173,6 @@
     })
 
     const cardsPerRow = $derived(u569px ? 1 : (u769px ? 3 : 4));
-    $inspect(cardsPerRow)
 
     //
 

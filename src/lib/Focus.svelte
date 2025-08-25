@@ -29,7 +29,9 @@
          class={`desc ${isFocusLeft ? 'desc-left' : 'desc-right'}`}>
         <h2>{focusedNift.display_name}</h2>
         <p class="desc-comment">{@html replaceMdLinks(focusedNift.comment)}</p>
-        <div class="desc-custom">{@html focusedNift.custom}</div>
+        {#if focusedNift.custom}
+            <div class="desc-custom">{@html focusedNift.custom}</div>
+        {/if}
 
         <div class="desc-separator">
             <img src="/img/coolerseparator.svg" alt="separator">

@@ -1,4 +1,4 @@
-import puppeteer from "puppeteer";
+import puppeteer, {TimeoutError} from "puppeteer";
 import {storeImageInSupabaseBucket} from "$lib/utils/func/storeImageInSupabaseBucket";
 import {getSupabaseAdminClient} from "$lib/utils/getSupabaseAdminClient";
 import {PUBLIC_SUPABASE_URL} from "$env/static/public";
@@ -22,11 +22,22 @@ export const updatePuppeteerData = async (link: string, nodb: boolean = false) =
         });
         const page = await browser.newPage();
 
-        await page.goto(link, {waitUntil: "networkidle0"});
+        try {
+            await page.goto(link, {waitUntil: "networkidle0"});
+        } catch (err) {
+            console.error(500, 'debuggggg: ', link);
+            try {
+                await page.goto(link, {waitUntil: "domcontentloaded"});
+            } catch {
+                console.error(500, 'Failed to get page: ', link);
+                return {success: false}
+            }
+        }
+
         await page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/115 Safari/537.36");
         await page.setViewport({width: 1536, height: 864});
 
-        await delay(2000);
+        await delay(3000);
 
         // Getting title
         const title = await page.title();
