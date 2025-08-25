@@ -1,3 +1,3 @@
 export const sanitizeFileName = (name: string): string => {
-    return encodeURIComponent(name);
-}
+    return name.replace(/[^a-zA-Z0-9._\-\s/]/g, "_");
+};

@@ -21,7 +21,7 @@ export const storeImageInSupabaseBucket = async (blob: Blob, bucket: string, nam
         return {success: false};
     }
 
-    console.info(`Stored ${name}.${extension} successfully`);
+    console.info(`Stored ${sanitizeFileName(name)}.${extension} successfully`);
 
     return {success: true};
 }
