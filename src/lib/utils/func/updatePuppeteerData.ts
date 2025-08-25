@@ -68,7 +68,7 @@ export const updatePuppeteerData = async (link: string, nodb: boolean = false) =
         // width tied to imgs
         const bufferSmol = await sharp(buffer)
             .resize(600, null, { kernel: "lanczos3" })
-            .avif({quality: 100})
+            .avif({quality: 80})
             .toBuffer() as Uint8Array<ArrayBuffer> as Uint8Array<ArrayBuffer>;
 
         const blobSmol = new Blob([bufferSmol], {type: "image/avif"});
