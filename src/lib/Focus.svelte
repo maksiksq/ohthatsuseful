@@ -101,6 +101,12 @@
         z-index: 1000;
     }
 
+    :global {
+        .comment-link {
+            text-decoration: underline;
+        }
+    }
+
     .desc-left {
         left: 3rem;
         padding: 0 4rem 0 0;

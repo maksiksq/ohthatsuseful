@@ -44,11 +44,13 @@ export const updatePuppeteerData = async (link: string, nodb: boolean = false) =
         // Getting screenshot
 
         // First we're removing the scrollbar because ugly
-        await page.addStyleTag({
-            content: `
-                        ::-webkit-scrollbar { display: none !important; }
-                        body { scrollbar-width: none; -ms-overflow-style: none; }
-                     `
+        await page.evaluate(() => {
+            const style = document.createElement('style');
+            style.textContent = `
+        ::-webkit-scrollbar { display: none !important; }
+        body { scrollbar-width: none; -ms-overflow-style: none; }
+    `;
+            document.head.appendChild(style);
         });
 
         const buffer = await page.screenshot({
@@ -68,14 +70,14 @@ export const updatePuppeteerData = async (link: string, nodb: boolean = false) =
         // significantly less blurry for some reason
         const firstBufferSmol = await sharp(buffer)
             .resize(1000)
-            .webp({ quality: 100, nearLossless: true })
-            .toBuffer() as Uint8Array<ArrayBuffer>as Uint8Array<ArrayBuffer>;
+            .webp({quality: 100, nearLossless: true})
+            .toBuffer() as Uint8Array<ArrayBuffer> as Uint8Array<ArrayBuffer>;
 
         // width tied to imgs
         const secondBufferSmol = await sharp(firstBufferSmol)
             .resize(600)
-            .webp({ quality: 100, nearLossless: true })
-            .toBuffer() as Uint8Array<ArrayBuffer>as Uint8Array<ArrayBuffer>;
+            .webp({quality: 100, nearLossless: true})
+            .toBuffer() as Uint8Array<ArrayBuffer> as Uint8Array<ArrayBuffer>;
 
         const blobSmol = new Blob([secondBufferSmol], {type: "image/webp"});
 

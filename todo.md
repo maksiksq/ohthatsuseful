@@ -50,12 +50,12 @@
 - [ ] : 4: what: "website" | which: "collection", "domains", "dev", "web-dev" | why: "useful", "free"
 - [ ] : 5: what: "website" | which: "calculator", "converter", "dev" | why: "useful", "free"
 - [ ] : 6: what: "website" | which: "collection", "emoji", "dev" | why: "useful", "free"
-- 
+
 - [x] : https://umami.is/: If thy steal your data, thy steal politely. The most effortless, no-cookies, free, open-source analytics platform. You just plug it in. No need for an annoying pop-up (looking at you google analytics) and it just does its job instead of feeding the clankers or something. You can self-host it too! It's great.
 - [x] : https://thenicestplace.net/: THEY JUST GIVE YOU A HUG! ; what: website ; which: random ; why: free-hugs, fun
 - [x] : https://unsplash.com/: what: website, service ; collection, design, dev, stock-images ; why: useful, mostly-free ; Free beautiful stock images. Best for background images, cinematic images and etc. Similar to [Pexels](https://www.pexels.com/)
 - [x] : https://www.pexels.com/: Free beautiful stock images. Has lots of high-quality stock images. Including cats. Similar to [Unplash](https://unsplash.com/).
-- [ ] : https://oklch.com/: OKLCH color converter and picker. You don't know what OKLCH is? TL;DR: most color spaces we typically use suck because they don't align with the way our eyes work and that makes composing harmonical colors for whatever you do hard than it should be, OKLCH solves that problem.
+- [ ] : https://oklch.com/: OKLCH color converter and picker. You don't know what OKLCH is? TL;DR: most color spaces we typically use like RGB or HSL suck because they don't align with the way our eyes work, and that makes composing harmonic colors for whatever you do harder than it should be, OKLAB (and subsequently OKLCH) solves that problem by replicating the way our eyes work.
 - [ ] : https://yomitan.wiki/: Pop-up dictionary browser extension. You shift click the word and see its meanin Mosg. tly used for learning Japanese and is incredibly useful.
 - [ ] : https://github.com/donkuri/Kaishi: The best Anki (flash card software) deck for starting learning Japanese. I'm totally not biased whatsoever no no wdym (just kidding, it's really great).
 - [ ] : https://unsplash.com/: The title says it all. Free critter pics.
