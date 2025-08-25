@@ -8,6 +8,7 @@
     import Fuse from "fuse.js";
     import {goto} from "$app/navigation";
     import Focus from "$lib/Focus.svelte";
+    import {PUBLIC_DEV} from "$lib";
 
     const {data} = $props();
 
@@ -263,14 +264,16 @@
 </svelte:head>
 
 <!-- dev only -->
-<div class={`dev-overlay ${devOverlay ? '' : 'd-none'}`}>
-    <form method="POST" action="?/testApiUpdateAll" use:enhance>
-        <button type="submit">Update All (REEEEE)</button>
-    </form>
-    <form method="POST" action="?/testApiUpdateSpecific" use:enhance>
-        <button type="submit">Update Specific (REEE)</button>
-    </form>
-</div>
+{#if PUBLIC_DEV}
+    <div class={`dev-overlay ${devOverlay ? '' : 'd-none'}`}>
+        <form method="POST" action="?/testApiUpdateAll" use:enhance>
+            <button type="submit">Update All (CPU fry)</button>
+        </form>
+        <form method="POST" action="?/testApiUpdateSpecific" use:enhance>
+            <button type="submit">Update Specific (too inconvenient)</button>
+        </form>
+    </div>
+{/if}
 <!-- -->
 <main class="home-main">
     <section class="h1-seg">
