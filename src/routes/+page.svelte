@@ -48,6 +48,7 @@
     };
 
     let timeout: ReturnType<typeof setTimeout>;
+    let animTimeout: ReturnType<typeof setTimeout>;
     $effect(() => {
         // reactivity
         const q = query;
@@ -55,9 +56,11 @@
 
         // also handling the animation while it's at it
         // works surprisingly well
+        // note: it didn't work surprisingly well
         anim = 100;
 
         clearTimeout(timeout);
+        clearTimeout(animTimeout);
 
         timeout = setTimeout(() => {
             if (!q && s.length === 0) {
@@ -68,10 +71,12 @@
                 searchedNifties = fuse.search(q)
                     .map(r => r.item)
                     .filter(item => hasTags(item, s));
-
-                anim = 0;
             }
         }, 150);
+
+        animTimeout = setTimeout(() => {
+            anim = 0;
+        }, 270)
     });
 
 

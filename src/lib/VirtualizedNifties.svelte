@@ -74,6 +74,13 @@
         favicon: nifties[0].favicon,
         screenshot_smol: nifties[0].screenshot_smol,
     }
+
+    $inspect(anim);
+    $effect(() => {
+        console.log(startRow);
+        console.log(rowHeight);
+        console.log("becomes:", startRow * rowHeight);
+    })
 </script>
 
 <svelte:window onscroll={updateViewport} onresize={updateViewport}/>
@@ -92,7 +99,7 @@
 
         <!--make sure it's not in a parent from which is can calculate its position or offsetTop dies-->
         {#each visibleCards as nift, i (nift.id)}
-            <div animate:flip={{ duration: anim, delay: 100 }} class="card-wrapper">
+            <div animate:flip={{ duration: anim, delay: 20 }} class="card-wrapper">
                 <Card {nift} {focusedNift} {handleFocus} />
             </div>
         {/each}
