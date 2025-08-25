@@ -9,6 +9,12 @@
         which: focusedNiftTags.which,
         why: focusedNiftTags.why
     })
+
+    const replaceMdLinks = (input: string): string => {
+        return input.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, text, link) => {
+            return `<a href="${link}" class="comment-link">${text}</a>`;
+        });
+    }
 </script>
 
 <div class="focus">
@@ -22,7 +28,7 @@
     <div bind:this={descElem} transition:blur={{duration: 400}}
          class={`desc ${isFocusLeft ? 'desc-left' : 'desc-right'}`}>
         <h2>{focusedNift.display_name}</h2>
-        <p class="desc-comment">{focusedNift.comment}</p>
+        <p class="desc-comment">{@html replaceMdLinks(focusedNift.comment)}</p>
         <div class="desc-custom">{@html focusedNift.custom}</div>
 
         <div class="desc-separator">
