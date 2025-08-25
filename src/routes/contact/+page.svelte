@@ -76,9 +76,20 @@
 
         display: flex;
 
+        @media (max-width: 769px) {
+            background-position: 50% 50%;
+            padding: 3rem 1.2rem;
+        }
+
         & .text-seg {
             width: 50%;
             align-self: center;
+
+            @media (max-width: 1024px) {
+                position: relative;
+                z-index: 10;
+                width: 90%;
+            }
 
             p:first-child {
                 margin-top: 0;
@@ -86,6 +97,10 @@
 
             p, ul {
                 margin-top: 1rem;
+
+                @media (max-width: 1024px) {
+                    font-size: 1.2rem;
+                }
             }
 
             & svg {
@@ -111,6 +126,16 @@
             align-items: center;
             justify-content: flex-end;
 
+            @media (max-width: 1024px) {
+                width: 10%;
+
+                position: absolute;
+                left: 8rem;
+                margin-top: -3rem;
+
+                z-index: 0;
+            }
+
             h1 {
                 font-size: 10.6rem;
                 font-weight: bold;
@@ -121,6 +146,18 @@
                 padding-right: 3rem;
                 user-select: none;
                 pointer-events: none;
+
+                @media (max-width: 1024px) {
+                    width: 10%;
+                    font-size: 7rem;
+                    writing-mode: vertical-rl;
+                    text-orientation: upright;
+                    padding-right: 0;
+                    letter-spacing: -0.7em;
+
+                    opacity: 0.2;
+                    color: rgba(255, 172, 48, 0.01);
+                }
             }
         }
     }

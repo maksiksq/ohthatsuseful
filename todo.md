@@ -1,6 +1,7 @@
 - [ ] : finish the thing
 - [ ] : don't forget to remove the debug buttons
 - [ ] : fix flip + v8n (it's funky on mobile at least*)   
+- [ ] : seo
 - [x] : fix db order
 - [ ] : maybe swap disclaimers to top on mobile? (decide)
 - [x] : add fuse.js search with tags client side

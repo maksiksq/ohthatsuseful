@@ -158,6 +158,10 @@
                 font-weight: normal;
                 color: #6e6e6e;
                 bottom: 1.1rem;
+
+                @media (max-width: 769px) {
+                    bottom: 0;
+                }
             }
 
             & .crank-found {

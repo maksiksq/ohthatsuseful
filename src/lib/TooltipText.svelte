@@ -42,6 +42,9 @@
         if (!tooltip) return;
         tooltip.style.left = `${e.clientX + 10}px`;
         tooltip.style.top = `${e.clientY - 20}px`;
+
+        console.log(e.clientX, e.clientY);
+        console.log(tooltip.style.left, tooltip.style.top);
     }
 </script>
 <span class="tooltip-text" aria-label={`click to copy ${text}`} onmouseenter={handleTooltip} onpointermove={handleCopyMove} onclick={handleCopyClick}
@@ -63,7 +66,7 @@
         line-height: 1.5rem;
 
         & .tooltip {
-            position: absolute;
+            position: fixed;
             pointer-events: none;
             transition: none;
             background: var(--header-highlight-color);
