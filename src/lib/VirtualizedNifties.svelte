@@ -36,7 +36,6 @@
     const updateViewport = () => {
         viewportHeight = window.innerHeight;
         if (!containerElem) return;
-        anim = 0;
         scrollTop = window.scrollY - containerElem.offsetTop;
     }
 
@@ -126,6 +125,10 @@
             margin-top: 2rem;
             user-select: none;
             width: 10vw;
+
+            @media (max-width: 769px) {
+                width: 30vw;
+            }
         }
 
         & p {
