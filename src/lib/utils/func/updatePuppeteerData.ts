@@ -106,6 +106,7 @@ export const updatePuppeteerData = async (link: string, nodb: boolean = false) =
             if (!iconLink) {
                 return null;
             }
+
             return iconLink.href;
         });
 
@@ -114,18 +115,24 @@ export const updatePuppeteerData = async (link: string, nodb: boolean = false) =
             faviconUrl = `${link}/favicon.ico`;
         }
 
-        const favRes = await fetch(faviconUrl);
-        if (!favRes.ok) {
-            if (PUBLIC_DEV) console.error(favRes);
-            return {success: false}
+        let dataImage = false;
+        if (faviconUrl.startsWith('data:image')) {
+            dataImage = true;
         }
-
         const favExtension = faviconUrl.split('.').pop();
-        if (!favExtension) {
-            if (PUBLIC_DEV) console.warn("No favicon extension. Site has no favicon?: ", link);
-        } else {
-            const favBlob = await favRes.blob();
-            await storeImageInSupabaseBucket(favBlob, 'favicons', `fav-${title}`, favExtension);
+        if (!dataImage) {
+            const favRes = await fetch(faviconUrl);
+            if (!favRes.ok) {
+                if (PUBLIC_DEV) console.error(favRes);
+                return {success: false}
+            }
+
+            if (!favExtension) {
+                if (PUBLIC_DEV) console.warn("No favicon extension. Site has no favicon?: ", link);
+            } else {
+                const favBlob = await favRes.blob();
+                await storeImageInSupabaseBucket(favBlob, 'favicons', `fav-${title}`, favExtension);
+            }
         }
 
         // Storing the meta description
@@ -142,7 +149,7 @@ export const updatePuppeteerData = async (link: string, nodb: boolean = false) =
             screenshot: `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/screenshots/${sanitizeFileName(title)}.webp`,
             screenshot_smol: `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/screenshots/smol-${sanitizeFileName(title)}.webp`,
             title: title,
-            favicon: favExtension ? `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/favicons/fav-${sanitizeFileName(title)}.${favExtension}` : `/img/favicon-skill-issue.svg`,
+            favicon: dataImage ? faviconUrl : (favExtension ? `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/favicons/fav-${sanitizeFileName(title)}.${favExtension}` : `/img/favicon-skill-issue.svg`),
             metadesc: metadesc ?? 'No description provided by the site.',
         }
 
